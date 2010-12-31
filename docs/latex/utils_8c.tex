@@ -7,7 +7,7 @@
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{utils_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}{usage} (void)
-\begin{DoxyCompactList}\small\item\em Prints usage information. \item\end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Prints usage information and a listing of commands. \item\end{DoxyCompactList}\item 
 void \hyperlink{utils_8c_af986bd0575ec9b913dfab4b8422509ae}{version} (void)
 \begin{DoxyCompactList}\small\item\em Prints version information. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -24,7 +24,7 @@ void \hyperlink{utils_8c_af986bd0575ec9b913dfab4b8422509ae}{version} (void)
 \label{utils_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}
 
 
-Prints usage information. 
+Prints usage information and a listing of commands. 
 
 \hypertarget{utils_8c_af986bd0575ec9b913dfab4b8422509ae}{
 \index{utils.c@{utils.c}!version@{version}}
@@ -39,4 +39,3 @@ Prints usage information.
 
 Prints version information. 
 
-This function uses the C time library to get the current local time. It then formats it in a buffer that holds the day of the build. This is then printed out. We first initialize a raw time variable of type t\_\-time. We also initialize a tm struct which holds component time parts. We feed the the raw time to a localtime function. Finally we use the strftime() to format the local to time a C string. 

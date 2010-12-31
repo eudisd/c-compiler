@@ -17,6 +17,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -67,16 +68,50 @@ Defines</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the current version (semver.org).  <a href="#a1c6d5de492ac61ad29aec7aa9a436bbf"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a5bd9a30fc22d9a737ee060d41a4ec479">RELEASE</a>&#160;&#160;&#160;0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the current release candidate number.  <a href="#a5bd9a30fc22d9a737ee060d41a4ec479"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#ae7f90861d8c4d5b1cbdcf71d325feea2">BUILD_NUMBER</a>&#160;&#160;&#160;30</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the current build number.  <a href="#ae7f90861d8c4d5b1cbdcf71d325feea2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a7f43b36cfbbd59cd83b3193004616f7e">BUILD_DATE</a>&#160;&#160;&#160;20101230</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the current build date in Year-Month-Day format.  <a href="#a7f43b36cfbbd59cd83b3193004616f7e"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#ae8605e2b78cd4a81b6c6b5c30cb7366a">usage</a> (void)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints usage information.  <a href="#ae8605e2b78cd4a81b6c6b5c30cb7366a"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints usage information and a listing of commands.  <a href="#ae8605e2b78cd4a81b6c6b5c30cb7366a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#af986bd0575ec9b913dfab4b8422509ae">version</a> (void)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints version information.  <a href="#af986bd0575ec9b913dfab4b8422509ae"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>Interface that holds common functions and housekeeping operations. </p>
 <hr/><h2>Define Documentation</h2>
+<a class="anchor" id="a7f43b36cfbbd59cd83b3193004616f7e"></a><!-- doxytag: member="utils.h::BUILD_DATE" ref="a7f43b36cfbbd59cd83b3193004616f7e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BUILD_DATE&#160;&#160;&#160;20101230</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Holds the current build date in Year-Month-Day format. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae7f90861d8c4d5b1cbdcf71d325feea2"></a><!-- doxytag: member="utils.h::BUILD_NUMBER" ref="ae7f90861d8c4d5b1cbdcf71d325feea2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BUILD_NUMBER&#160;&#160;&#160;30</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Holds the current build number. </p>
+
+</div>
+</div>
 <a class="anchor" id="a5bd9a30fc22d9a737ee060d41a4ec479"></a><!-- doxytag: member="utils.h::RELEASE" ref="a5bd9a30fc22d9a737ee060d41a4ec479" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -123,7 +158,7 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Prints usage information. </p>
+<p>Prints usage information and a listing of commands. </p>
 
 </div>
 </div>
@@ -143,7 +178,6 @@ Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Prints version information. </p>
-<p>This function uses the C time library to get the current local time. It then formats it in a buffer that holds the day of the build. This is then printed out. We first initialize a raw time variable of type t_time. We also initialize a tm struct which holds component time parts. We feed the the raw time to a localtime function. Finally we use the strftime() to format the local to time a C string. </p>
 
 </div>
 </div>
@@ -153,7 +187,7 @@ Functions</h2></td></tr>
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -162,7 +196,7 @@ Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Dec 30 2010 21:24:31 for c-compiler by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Dec 30 2010 23:22:02 for c-compiler by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.2 </small></address>
 </body>
