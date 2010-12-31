@@ -7,21 +7,24 @@ CC := gcc
 LIBS := -lm
 FLAGS := -Wall -O2
 
-FILES := main.c main.h error.c error.h parser.c parser.h scanner.c scanner.h symbol.c symbol.h
+FILES := main.c main.h error.c error.h parser.c parser.h scanner.c scanner.h symbol.c symbol.h \
+         preprocessor.c preprocessor.h
 
-OBJS := main.o error.o parser.o scanner.o symbol.o
+OBJS := main.o error.o parser.o scanner.o symbol.o preprocessor.o
 
 .SILENT:
 .IGNORE:
 
 msg1:
-	@echo "Working..."
+	@echo "Building C Compiler..."
 	make $(TARGET)
 
 $(TARGET) : $(OBJS)
 	$(CC) $(FLAGS) $(OBJS) -o $(TARGET) $(LIBS)
-	@echo 
-	@echo "Done "
+	@echo "Done Building C Compiler."
+	-rm *.o
+	make -C cvm -f Makefile   # The -C flag changes to the directory and executes the makefile in there.
+
 	
 	
 main.o : main.c main.h
@@ -44,10 +47,9 @@ symbol.o : symbol.c symbol.h
 	@echo "(Modified) Compiling Translation Unit: symbol.c + symbol.h"
 	$(CC) -c symbol.c -o symbol.o
 	
-.PHONE : clean
-
-clean :
-	make -f Makefile
-	-rm *.o
-	@echo 
+preprocessor.o : preprocessor.c preprocessor.h
+	@echo "(Modified) Compiling Translation Unit: preprocessor.c + preprocessor.h"
+	$(CC) -c preprocessor.c -o preprocessor.o
+	
+	
 
