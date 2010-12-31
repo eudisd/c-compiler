@@ -7,7 +7,13 @@
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{error_8c_a198aa1b2faf133c6d6f4de83356f5355}{error} (char $\ast$file, int line, int column, char $\ast$msg)
-\begin{DoxyCompactList}\small\item\em Prints an error message in standard UNIX(GNU/GCC) format. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Prints an error message in standard UNIX(GNU/GCC) format. \item\end{DoxyCompactList}\item 
+void \hyperlink{error_8c_a4c1dcd0146ca51929225c9132c508eda}{warning} (char $\ast$file, int line, int column, char $\ast$msg)
+\begin{DoxyCompactList}\small\item\em Prints an warning message in standard UNIX(GNU/GCC) format. \item\end{DoxyCompactList}\item 
+int \hyperlink{error_8c_ac8c2749392ccd89ec4abb89b943f8b19}{get\_\-line} (char $\ast$file)
+\begin{DoxyCompactList}\small\item\em Get the line number where the error occurred. \item\end{DoxyCompactList}\item 
+int \hyperlink{error_8c_a60460d0989746dccbd1a17beafab0b70}{get\_\-column} (char $\ast$file)
+\begin{DoxyCompactList}\small\item\em Get the column number where the error occurred. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Function Documentation}
@@ -26,4 +32,46 @@ void \hyperlink{error_8c_a198aa1b2faf133c6d6f4de83356f5355}{error} (char $\ast$f
 
 
 Prints an error message in standard UNIX(GNU/GCC) format. 
+
+\hypertarget{error_8c_a60460d0989746dccbd1a17beafab0b70}{
+\index{error.c@{error.c}!get\_\-column@{get\_\-column}}
+\index{get\_\-column@{get\_\-column}!error.c@{error.c}}
+\subsubsection[{get\_\-column}]{\setlength{\rightskip}{0pt plus 5cm}int get\_\-column (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ file}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{error_8c_a60460d0989746dccbd1a17beafab0b70}
+
+
+Get the column number where the error occurred. 
+
+\hypertarget{error_8c_ac8c2749392ccd89ec4abb89b943f8b19}{
+\index{error.c@{error.c}!get\_\-line@{get\_\-line}}
+\index{get\_\-line@{get\_\-line}!error.c@{error.c}}
+\subsubsection[{get\_\-line}]{\setlength{\rightskip}{0pt plus 5cm}int get\_\-line (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ file}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{error_8c_ac8c2749392ccd89ec4abb89b943f8b19}
+
+
+Get the line number where the error occurred. 
+
+\hypertarget{error_8c_a4c1dcd0146ca51929225c9132c508eda}{
+\index{error.c@{error.c}!warning@{warning}}
+\index{warning@{warning}!error.c@{error.c}}
+\subsubsection[{warning}]{\setlength{\rightskip}{0pt plus 5cm}void warning (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ file, }
+\item[{int}]{ line, }
+\item[{int}]{ column, }
+\item[{char $\ast$}]{ msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{error_8c_a4c1dcd0146ca51929225c9132c508eda}
+
+
+Prints an warning message in standard UNIX(GNU/GCC) format. 
 

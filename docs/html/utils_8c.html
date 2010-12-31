@@ -58,8 +58,39 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints usage information and a listing of commands.  <a href="#ae8605e2b78cd4a81b6c6b5c30cb7366a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#af986bd0575ec9b913dfab4b8422509ae">version</a> (void)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints version information.  <a href="#af986bd0575ec9b913dfab4b8422509ae"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a937f7189307391dcebb5a933fd938944">scan_for_o</a> (int argc, char *argv[])</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scans the program input for the -o flag, and returnes its argument.  <a href="#a937f7189307391dcebb5a933fd938944"></a><br/></td></tr>
 </table>
 <hr/><h2>Function Documentation</h2>
+<a class="anchor" id="a937f7189307391dcebb5a933fd938944"></a><!-- doxytag: member="utils.c::scan_for_o" ref="a937f7189307391dcebb5a933fd938944" args="(int argc, char *argv[])" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* scan_for_o </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"> <em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"> <em>argv</em>[]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Scans the program input for the -o flag, and returnes its argument. </p>
+
+</div>
+</div>
 <a class="anchor" id="ae8605e2b78cd4a81b6c6b5c30cb7366a"></a><!-- doxytag: member="utils.c::usage" ref="ae8605e2b78cd4a81b6c6b5c30cb7366a" args="(void)" -->
 <div class="memitem">
 <div class="memproto">
@@ -113,7 +144,7 @@ Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Dec 30 2010 23:55:57 for c-compiler by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 31 2010 01:16:12 for c-compiler by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.2 </small></address>
 </body>

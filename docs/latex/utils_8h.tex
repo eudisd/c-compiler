@@ -18,9 +18,9 @@ Interface that holds common functions and housekeeping operations.
 \begin{DoxyCompactList}\small\item\em Holds the current version (semver.org). \item\end{DoxyCompactList}\item 
 \#define \hyperlink{utils_8h_a5bd9a30fc22d9a737ee060d41a4ec479}{RELEASE}~0
 \begin{DoxyCompactList}\small\item\em Holds the current release candidate number. \item\end{DoxyCompactList}\item 
-\#define \hyperlink{utils_8h_ae7f90861d8c4d5b1cbdcf71d325feea2}{BUILD\_\-NUMBER}~38
+\#define \hyperlink{utils_8h_ae7f90861d8c4d5b1cbdcf71d325feea2}{BUILD\_\-NUMBER}~50
 \begin{DoxyCompactList}\small\item\em Holds the current build number. \item\end{DoxyCompactList}\item 
-\#define \hyperlink{utils_8h_a7f43b36cfbbd59cd83b3193004616f7e}{BUILD\_\-DATE}~20101230
+\#define \hyperlink{utils_8h_a7f43b36cfbbd59cd83b3193004616f7e}{BUILD\_\-DATE}~20101231
 \begin{DoxyCompactList}\small\item\em Holds the current build date in Year-\/Month-\/Day format. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
@@ -28,7 +28,9 @@ Interface that holds common functions and housekeeping operations.
 void \hyperlink{utils_8h_ae8605e2b78cd4a81b6c6b5c30cb7366a}{usage} (void)
 \begin{DoxyCompactList}\small\item\em Prints usage information and a listing of commands. \item\end{DoxyCompactList}\item 
 void \hyperlink{utils_8h_af986bd0575ec9b913dfab4b8422509ae}{version} (void)
-\begin{DoxyCompactList}\small\item\em Prints version information. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Prints version information. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{utils_8h_a937f7189307391dcebb5a933fd938944}{scan\_\-for\_\-o} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Scans the program input for the -\/o flag, and returnes its argument. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -38,7 +40,7 @@ Interface that holds common functions and housekeeping operations.
 \hypertarget{utils_8h_a7f43b36cfbbd59cd83b3193004616f7e}{
 \index{utils.h@{utils.h}!BUILD\_\-DATE@{BUILD\_\-DATE}}
 \index{BUILD\_\-DATE@{BUILD\_\-DATE}!utils.h@{utils.h}}
-\subsubsection[{BUILD\_\-DATE}]{\setlength{\rightskip}{0pt plus 5cm}\#define BUILD\_\-DATE~20101230}}
+\subsubsection[{BUILD\_\-DATE}]{\setlength{\rightskip}{0pt plus 5cm}\#define BUILD\_\-DATE~20101231}}
 \label{utils_8h_a7f43b36cfbbd59cd83b3193004616f7e}
 
 
@@ -47,7 +49,7 @@ Holds the current build date in Year-\/Month-\/Day format.
 \hypertarget{utils_8h_ae7f90861d8c4d5b1cbdcf71d325feea2}{
 \index{utils.h@{utils.h}!BUILD\_\-NUMBER@{BUILD\_\-NUMBER}}
 \index{BUILD\_\-NUMBER@{BUILD\_\-NUMBER}!utils.h@{utils.h}}
-\subsubsection[{BUILD\_\-NUMBER}]{\setlength{\rightskip}{0pt plus 5cm}\#define BUILD\_\-NUMBER~38}}
+\subsubsection[{BUILD\_\-NUMBER}]{\setlength{\rightskip}{0pt plus 5cm}\#define BUILD\_\-NUMBER~50}}
 \label{utils_8h_ae7f90861d8c4d5b1cbdcf71d325feea2}
 
 
@@ -74,6 +76,20 @@ Holds the current version (semver.org).
 
 
 \subsection{Function Documentation}
+\hypertarget{utils_8h_a937f7189307391dcebb5a933fd938944}{
+\index{utils.h@{utils.h}!scan\_\-for\_\-o@{scan\_\-for\_\-o}}
+\index{scan\_\-for\_\-o@{scan\_\-for\_\-o}!utils.h@{utils.h}}
+\subsubsection[{scan\_\-for\_\-o}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ scan\_\-for\_\-o (
+\begin{DoxyParamCaption}
+\item[{int}]{ argc, }
+\item[{char $\ast$}]{ argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{utils_8h_a937f7189307391dcebb5a933fd938944}
+
+
+Scans the program input for the -\/o flag, and returnes its argument. 
+
 \hypertarget{utils_8h_ae8605e2b78cd4a81b6c6b5c30cb7366a}{
 \index{utils.h@{utils.h}!usage@{usage}}
 \index{usage@{usage}!utils.h@{utils.h}}

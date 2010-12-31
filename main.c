@@ -3,7 +3,9 @@
 int main(int argc, char *argv[])
 {
 	char *ofile;
+	char *infile;
 	size_t o_name_len;
+	
 	switch(argc){
 		case 1:
 			printf("c: no input files");
@@ -23,7 +25,12 @@ int main(int argc, char *argv[])
 			}
 			break;
 		case 3:
-			
+			if(strcmp(argv[1], "-c")){
+				/* Stop the linking process, output object files.
+				  (Highly unlikely that I'll implement this, but I'll keep it
+				   here for posterity anyway).
+				*/
+			}
 			break;
 		default:
 			/* These next few lines handle the -o flag */
@@ -36,7 +43,7 @@ int main(int argc, char *argv[])
 			break;
 		
 	}
-	/* Free all allocated variables here */
+	
 	
 	return EXIT_SUCCESS;
 }

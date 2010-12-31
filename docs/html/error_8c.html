@@ -56,6 +56,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8c.html#a198aa1b2faf133c6d6f4de83356f5355">error</a> (char *file, int line, int column, char *msg)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints an error message in standard UNIX(GNU/GCC) format.  <a href="#a198aa1b2faf133c6d6f4de83356f5355"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8c.html#a4c1dcd0146ca51929225c9132c508eda">warning</a> (char *file, int line, int column, char *msg)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints an warning message in standard UNIX(GNU/GCC) format.  <a href="#a4c1dcd0146ca51929225c9132c508eda"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8c.html#ac8c2749392ccd89ec4abb89b943f8b19">get_line</a> (char *file)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the line number where the error occurred.  <a href="#ac8c2749392ccd89ec4abb89b943f8b19"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8c.html#a60460d0989746dccbd1a17beafab0b70">get_column</a> (char *file)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the column number where the error occurred.  <a href="#a60460d0989746dccbd1a17beafab0b70"></a><br/></td></tr>
 </table>
 <hr/><h2>Function Documentation</h2>
 <a class="anchor" id="a198aa1b2faf133c6d6f4de83356f5355"></a><!-- doxytag: member="error.c::error" ref="a198aa1b2faf133c6d6f4de83356f5355" args="(char *file, int line, int column, char *msg)" -->
@@ -99,6 +105,85 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a60460d0989746dccbd1a17beafab0b70"></a><!-- doxytag: member="error.c::get_column" ref="a60460d0989746dccbd1a17beafab0b70" args="(char *file)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int get_column </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"> <em>file</em>&#160;)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the column number where the error occurred. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac8c2749392ccd89ec4abb89b943f8b19"></a><!-- doxytag: member="error.c::get_line" ref="ac8c2749392ccd89ec4abb89b943f8b19" args="(char *file)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int get_line </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"> <em>file</em>&#160;)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the line number where the error occurred. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4c1dcd0146ca51929225c9132c508eda"></a><!-- doxytag: member="error.c::warning" ref="a4c1dcd0146ca51929225c9132c508eda" args="(char *file, int line, int column, char *msg)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void warning </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"> <em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"> <em>line</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"> <em>column</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"> <em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Prints an warning message in standard UNIX(GNU/GCC) format. </p>
+
+</div>
+</div>
 </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -114,7 +199,7 @@ Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Dec 30 2010 23:55:57 for c-compiler by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 31 2010 01:16:12 for c-compiler by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.2 </small></address>
 </body>
