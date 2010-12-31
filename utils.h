@@ -11,8 +11,8 @@
 
 #define VERSION "0.0.1"     /**< Holds the current version (semver.org). */
 #define RELEASE 0           /**< Holds the current release candidate number. */
-#define BUILD_NUMBER 30     /**< Holds the current build number. */
-#define BUILD_DATE 20101230 /**< Holds the current build date in Year-Month-Day format. */
+#define BUILD_NUMBER 50     /**< Holds the current build number. */
+#define BUILD_DATE 20101231 /**< Holds the current build date in Year-Month-Day format. */
    
 /** Prints usage information and a listing of commands.
 */

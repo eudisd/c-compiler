@@ -17,7 +17,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -48,10 +47,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1>Desktop/gitrepos/compiler/error.h</h1>  </div>
 </div>
 <div class="contents">
-<a href="error_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef _ERROR_H_</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define _ERROR_H_</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="preprocessor">#endif</span>
+<a href="error_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<a name="l00005"></a>00005 <span class="preprocessor">#ifndef _ERROR_H_</span>
+<a name="l00006"></a>00006 <span class="preprocessor"></span><span class="preprocessor">#define _ERROR_H_</span>
+<a name="l00007"></a>00007 <span class="preprocessor"></span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011 <span class="keyword">enum</span> {
+<a name="l00012"></a><a class="code" href="error_8h.html#a06fc87d81c62e9abb8790b6e5713c55baada0ce294d3d0004087b5889452e1fde">00012</a>       <a class="code" href="error_8h.html#a06fc87d81c62e9abb8790b6e5713c55baada0ce294d3d0004087b5889452e1fde">TYPE_ERR</a>,
+<a name="l00013"></a><a class="code" href="error_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba4215e3a67a8283b2baff0b3223ea8ed1">00013</a>       <a class="code" href="error_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba4215e3a67a8283b2baff0b3223ea8ed1">TOKEN_ERR</a>,
+<a name="l00014"></a><a class="code" href="error_8h.html#a06fc87d81c62e9abb8790b6e5713c55bae2dd9f535a758fbcf549c690d908acec">00014</a>       <a class="code" href="error_8h.html#a06fc87d81c62e9abb8790b6e5713c55bae2dd9f535a758fbcf549c690d908acec">SYNTAX_ERR</a>,
+<a name="l00015"></a>00015     };
+<a name="l00016"></a>00016     
+<a name="l00017"></a>00017 <span class="keyword">enum</span> {
+<a name="l00018"></a><a class="code" href="error_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a02430ef34f41651469d8c09aa84db28e">00018</a>       <a class="code" href="error_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a02430ef34f41651469d8c09aa84db28e">TYPE_WARN</a>,
+<a name="l00019"></a><a class="code" href="error_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a56a3c2bd13dbced4a47a75b651f7b80e">00019</a>       <a class="code" href="error_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a56a3c2bd13dbced4a47a75b651f7b80e">TOKEN_WARN</a>,
+<a name="l00020"></a><a class="code" href="error_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a864fd3df0e9e7d38065403af750db59f">00020</a>       <a class="code" href="error_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a864fd3df0e9e7d38065403af750db59f">SYNTAX_WARN</a>
+<a name="l00021"></a>00021     };
+<a name="l00022"></a>00022     
+<a name="l00025"></a>00025 <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="error_8c.html#a198aa1b2faf133c6d6f4de83356f5355" title="Prints an error message in standard UNIX(GNU/GCC) format.">error</a>(<span class="keywordtype">char</span>* file, <span class="keywordtype">int</span> line, <span class="keywordtype">int</span> column, <span class="keywordtype">char</span> *msg);
+<a name="l00026"></a>00026 
+<a name="l00029"></a>00029 <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="error_8h.html#ac8c2749392ccd89ec4abb89b943f8b19" title="Get the line number where the error occurred.">get_line</a>(<span class="keywordtype">char</span> *file);
+<a name="l00030"></a>00030 
+<a name="l00033"></a>00033 <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="error_8h.html#a60460d0989746dccbd1a17beafab0b70" title="Get the column number where the error occurred.">get_column</a>(<span class="keywordtype">char</span> *file);
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036       
+<a name="l00037"></a>00037 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
 <!--- window showing the filter options -->
@@ -59,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -68,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Dec 30 2010 23:22:02 for c-compiler by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Dec 30 2010 23:55:57 for c-compiler by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.2 </small></address>
 </body>

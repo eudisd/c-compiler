@@ -2,3 +2,125 @@
 \section{Desktop/gitrepos/compiler/error.h File Reference}
 \label{error_8h}\index{Desktop/gitrepos/compiler/error.h@{Desktop/gitrepos/compiler/error.h}}
 }
+
+
+Header file containing all of the error handling primatives for the compiler.  
+
+
+{\ttfamily \#include $<$stdio.h$>$}\par
+{\ttfamily \#include $<$stdlib.h$>$}\par
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \hyperlink{error_8h_a06fc87d81c62e9abb8790b6e5713c55baada0ce294d3d0004087b5889452e1fde}{TYPE\_\-ERR}, 
+\hyperlink{error_8h_a06fc87d81c62e9abb8790b6e5713c55ba4215e3a67a8283b2baff0b3223ea8ed1}{TOKEN\_\-ERR}, 
+\hyperlink{error_8h_a06fc87d81c62e9abb8790b6e5713c55bae2dd9f535a758fbcf549c690d908acec}{SYNTAX\_\-ERR}
+ \}
+\item 
+enum \{ \hyperlink{error_8h_adf764cbdea00d65edcd07bb9953ad2b7a02430ef34f41651469d8c09aa84db28e}{TYPE\_\-WARN}, 
+\hyperlink{error_8h_adf764cbdea00d65edcd07bb9953ad2b7a56a3c2bd13dbced4a47a75b651f7b80e}{TOKEN\_\-WARN}, 
+\hyperlink{error_8h_adf764cbdea00d65edcd07bb9953ad2b7a864fd3df0e9e7d38065403af750db59f}{SYNTAX\_\-WARN}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{error_8h_a198aa1b2faf133c6d6f4de83356f5355}{error} (char $\ast$file, int line, int column, char $\ast$msg)
+\begin{DoxyCompactList}\small\item\em Prints an error message in standard UNIX(GNU/GCC) format. \item\end{DoxyCompactList}\item 
+int \hyperlink{error_8h_ac8c2749392ccd89ec4abb89b943f8b19}{get\_\-line} (char $\ast$file)
+\begin{DoxyCompactList}\small\item\em Get the line number where the error occurred. \item\end{DoxyCompactList}\item 
+int \hyperlink{error_8h_a60460d0989746dccbd1a17beafab0b70}{get\_\-column} (char $\ast$file)
+\begin{DoxyCompactList}\small\item\em Get the column number where the error occurred. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Header file containing all of the error handling primatives for the compiler. 
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{error_8h_a06fc87d81c62e9abb8790b6e5713c55b}{
+\subsubsection[{"@0}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}}
+\label{error_8h_a06fc87d81c62e9abb8790b6e5713c55b}
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{TYPE\_\-ERR@{TYPE\_\-ERR}!error.h@{error.h}}\index{error.h@{error.h}!TYPE\_\-ERR@{TYPE\_\-ERR}}\item[{\em 
+\hypertarget{error_8h_a06fc87d81c62e9abb8790b6e5713c55baada0ce294d3d0004087b5889452e1fde}{
+TYPE\_\-ERR}
+\label{error_8h_a06fc87d81c62e9abb8790b6e5713c55baada0ce294d3d0004087b5889452e1fde}
+}]\index{TOKEN\_\-ERR@{TOKEN\_\-ERR}!error.h@{error.h}}\index{error.h@{error.h}!TOKEN\_\-ERR@{TOKEN\_\-ERR}}\item[{\em 
+\hypertarget{error_8h_a06fc87d81c62e9abb8790b6e5713c55ba4215e3a67a8283b2baff0b3223ea8ed1}{
+TOKEN\_\-ERR}
+\label{error_8h_a06fc87d81c62e9abb8790b6e5713c55ba4215e3a67a8283b2baff0b3223ea8ed1}
+}]\index{SYNTAX\_\-ERR@{SYNTAX\_\-ERR}!error.h@{error.h}}\index{error.h@{error.h}!SYNTAX\_\-ERR@{SYNTAX\_\-ERR}}\item[{\em 
+\hypertarget{error_8h_a06fc87d81c62e9abb8790b6e5713c55bae2dd9f535a758fbcf549c690d908acec}{
+SYNTAX\_\-ERR}
+\label{error_8h_a06fc87d81c62e9abb8790b6e5713c55bae2dd9f535a758fbcf549c690d908acec}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{error_8h_adf764cbdea00d65edcd07bb9953ad2b7}{
+\subsubsection[{"@1}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}}
+\label{error_8h_adf764cbdea00d65edcd07bb9953ad2b7}
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{TYPE\_\-WARN@{TYPE\_\-WARN}!error.h@{error.h}}\index{error.h@{error.h}!TYPE\_\-WARN@{TYPE\_\-WARN}}\item[{\em 
+\hypertarget{error_8h_adf764cbdea00d65edcd07bb9953ad2b7a02430ef34f41651469d8c09aa84db28e}{
+TYPE\_\-WARN}
+\label{error_8h_adf764cbdea00d65edcd07bb9953ad2b7a02430ef34f41651469d8c09aa84db28e}
+}]\index{TOKEN\_\-WARN@{TOKEN\_\-WARN}!error.h@{error.h}}\index{error.h@{error.h}!TOKEN\_\-WARN@{TOKEN\_\-WARN}}\item[{\em 
+\hypertarget{error_8h_adf764cbdea00d65edcd07bb9953ad2b7a56a3c2bd13dbced4a47a75b651f7b80e}{
+TOKEN\_\-WARN}
+\label{error_8h_adf764cbdea00d65edcd07bb9953ad2b7a56a3c2bd13dbced4a47a75b651f7b80e}
+}]\index{SYNTAX\_\-WARN@{SYNTAX\_\-WARN}!error.h@{error.h}}\index{error.h@{error.h}!SYNTAX\_\-WARN@{SYNTAX\_\-WARN}}\item[{\em 
+\hypertarget{error_8h_adf764cbdea00d65edcd07bb9953ad2b7a864fd3df0e9e7d38065403af750db59f}{
+SYNTAX\_\-WARN}
+\label{error_8h_adf764cbdea00d65edcd07bb9953ad2b7a864fd3df0e9e7d38065403af750db59f}
+}]\end{description}
+\end{Desc}
+
+
+
+\subsection{Function Documentation}
+\hypertarget{error_8h_a198aa1b2faf133c6d6f4de83356f5355}{
+\index{error.h@{error.h}!error@{error}}
+\index{error@{error}!error.h@{error.h}}
+\subsubsection[{error}]{\setlength{\rightskip}{0pt plus 5cm}void error (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ file, }
+\item[{int}]{ line, }
+\item[{int}]{ column, }
+\item[{char $\ast$}]{ msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{error_8h_a198aa1b2faf133c6d6f4de83356f5355}
+
+
+Prints an error message in standard UNIX(GNU/GCC) format. 
+
+\hypertarget{error_8h_a60460d0989746dccbd1a17beafab0b70}{
+\index{error.h@{error.h}!get\_\-column@{get\_\-column}}
+\index{get\_\-column@{get\_\-column}!error.h@{error.h}}
+\subsubsection[{get\_\-column}]{\setlength{\rightskip}{0pt plus 5cm}int get\_\-column (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ file}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{error_8h_a60460d0989746dccbd1a17beafab0b70}
+
+
+Get the column number where the error occurred. 
+
+\hypertarget{error_8h_ac8c2749392ccd89ec4abb89b943f8b19}{
+\index{error.h@{error.h}!get\_\-line@{get\_\-line}}
+\index{get\_\-line@{get\_\-line}!error.h@{error.h}}
+\subsubsection[{get\_\-line}]{\setlength{\rightskip}{0pt plus 5cm}int get\_\-line (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ file}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{error_8h_ac8c2749392ccd89ec4abb89b943f8b19}
+
+
+Get the line number where the error occurred. 
+

@@ -17,7 +17,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -47,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li class="current"><a href="globals.html"><span>All</span></a></li>
       <li><a href="globals_func.html"><span>Functions</span></a></li>
+      <li><a href="globals_eval.html"><span>Enumerator</span></a></li>
       <li><a href="globals_defs.html"><span>Defines</span></a></li>
     </ul>
   </div>
@@ -59,12 +59,40 @@ Here is a list of all functions, variables, defines, enums, and typedefs with li
 <li>BUILD_NUMBER
 : <a class="el" href="utils_8h.html#ae7f90861d8c4d5b1cbdcf71d325feea2">utils.h</a>
 </li>
+<li>error()
+: <a class="el" href="error_8c.html#a198aa1b2faf133c6d6f4de83356f5355">error.c</a>
+, <a class="el" href="error_8h.html#a198aa1b2faf133c6d6f4de83356f5355">error.h</a>
+</li>
+<li>get_column()
+: <a class="el" href="error_8h.html#a60460d0989746dccbd1a17beafab0b70">error.h</a>
+</li>
+<li>get_line()
+: <a class="el" href="error_8h.html#ac8c2749392ccd89ec4abb89b943f8b19">error.h</a>
+</li>
 <li>main()
 : <a class="el" href="cvm_8c.html#a0ddf1224851353fc92bfbff6f499fa97">cvm.c</a>
 , <a class="el" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main.c</a>
 </li>
 <li>RELEASE
 : <a class="el" href="utils_8h.html#a5bd9a30fc22d9a737ee060d41a4ec479">utils.h</a>
+</li>
+<li>SYNTAX_ERR
+: <a class="el" href="error_8h.html#a06fc87d81c62e9abb8790b6e5713c55bae2dd9f535a758fbcf549c690d908acec">error.h</a>
+</li>
+<li>SYNTAX_WARN
+: <a class="el" href="error_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a864fd3df0e9e7d38065403af750db59f">error.h</a>
+</li>
+<li>TOKEN_ERR
+: <a class="el" href="error_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba4215e3a67a8283b2baff0b3223ea8ed1">error.h</a>
+</li>
+<li>TOKEN_WARN
+: <a class="el" href="error_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a56a3c2bd13dbced4a47a75b651f7b80e">error.h</a>
+</li>
+<li>TYPE_ERR
+: <a class="el" href="error_8h.html#a06fc87d81c62e9abb8790b6e5713c55baada0ce294d3d0004087b5889452e1fde">error.h</a>
+</li>
+<li>TYPE_WARN
+: <a class="el" href="error_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a02430ef34f41651469d8c09aa84db28e">error.h</a>
 </li>
 <li>usage()
 : <a class="el" href="utils_8c.html#ae8605e2b78cd4a81b6c6b5c30cb7366a">utils.c</a>
@@ -86,7 +114,7 @@ Here is a list of all functions, variables, defines, enums, and typedefs with li
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -95,7 +123,7 @@ Here is a list of all functions, variables, defines, enums, and typedefs with li
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Dec 30 2010 23:22:02 for c-compiler by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Dec 30 2010 23:55:58 for c-compiler by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.2 </small></address>
 </body>
