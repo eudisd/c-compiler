@@ -8,9 +8,9 @@ LIBS := -lm
 FLAGS := -Wall -O2
 
 FILES := main.c main.h error.c error.h parser.c parser.h scanner.c scanner.h symbol.c symbol.h \
-         preprocessor.c preprocessor.h
+         preprocessor.c preprocessor.h utils.c utils.h
 
-OBJS := main.o error.o parser.o scanner.o symbol.o preprocessor.o
+OBJS := main.o error.o parser.o scanner.o symbol.o preprocessor.o utils.o
 
 .SILENT:
 .IGNORE:
@@ -50,6 +50,11 @@ symbol.o : symbol.c symbol.h
 preprocessor.o : preprocessor.c preprocessor.h
 	@echo "(Modified) Compiling Translation Unit: preprocessor.c + preprocessor.h"
 	$(CC) -c preprocessor.c -o preprocessor.o
+	
+utils.o : utils.c utils.h
+	@echo "(Modified) Compiling Translation Unit: utils.c + utils.h"
+	$(CC) -c utils.c -o utils.o
+	
 	
 	
 
