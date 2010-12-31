@@ -13,19 +13,10 @@ void usage( void )
 
 void version( void )
 {
-	time_t raw_time;
-	struct tm *timeinfo;
-	char *build_date = ( char* )malloc( sizeof(char) * 9 );
 	
-	time( &raw_time );
-	timeinfo = localtime( &raw_time );
-	
-	strftime(build_date, 9, "%Y%m%d", timeinfo);
-	
-	printf("c (C Compiler) %s %s (release) %d\n"
+	printf("c (C Compiler) %s %d (release) %d - Build: %d\n"
 		   "Copyright (c) 2010 Eudis Duran\n"
 		   "See LICENSE file for details."
-		   , VERSION, build_date, RELEASE);
+		   ,VERSION, BUILD_DATE, RELEASE, BUILD_NUMBER);
 			
-	free(build_date);
 }

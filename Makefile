@@ -16,7 +16,9 @@ OBJS := main.o error.o parser.o scanner.o symbol.o preprocessor.o utils.o
 .IGNORE:
 
 msg1:
+	python config/build_date.py
 	@echo "Building C Compiler..."
+	
 	make $(TARGET)
 
 $(TARGET) : $(OBJS)
