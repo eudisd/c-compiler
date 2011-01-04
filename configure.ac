@@ -1,0 +1,13 @@
+AC_INIT(src/main.c)
+
+PACKAGE=helloworld
+VERSION=0.0.1
+
+AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
+
+
+AC_PROG_CC
+
+AC_LANG(C)
+
+AC_OUTPUT(Makefile src/Makefile)
