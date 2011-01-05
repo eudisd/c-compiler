@@ -1,0 +1,3 @@
+scanner.o: scanner.c scanner.h
+
+scanner.h:
