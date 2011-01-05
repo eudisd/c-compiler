@@ -8,6 +8,7 @@ void usage( void )
 		   "  --target-help\t\t\t Print target specific help information\n"
 		   "  --version\t\t\t Print version number\n"
 		   "  -o <file>\t\t\t Specify a file name"
+		   "\n"
 		   );
 }
 
@@ -15,7 +16,7 @@ void version( void )
 {
 	printf("c (C Compiler) %s %d (release) %d - Build: %d\n"
 		   "Copyright (c) 2010 Eudis Duran\n"
-		   "See LICENSE file for details."
+		   "See LICENSE file for details.\n"
 		   ,VERSION, BUILD_DATE, RELEASE, BUILD_NUMBER);
 			
 }
@@ -28,4 +29,11 @@ char *scan_for_o(int argc, char *argv[])
 			return argv[i + 1];
 		}
 	}
+}
+
+int get_filesize(char *filename)
+{
+	FILE *f = fopen(filename, "r");
+	fseek(f, 0, SEEK_END);
+	return ftell(f);	
 }

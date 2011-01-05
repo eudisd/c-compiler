@@ -25,4 +25,6 @@ inline void version(void);
 */
 inline char *scan_for_o(int argc, char *argv[]);
 
+int get_filesize(char *filename);
+
 #endif

@@ -17,7 +17,7 @@ main.o: main.c main.h /usr/include/stdlib.h /usr/include/features.h \
  /usr/include/bits/stdio.h /usr/include/bits/stdio2.h \
  /usr/include/string.h /usr/include/xlocale.h /usr/include/bits/string.h \
  /usr/include/bits/string2.h /usr/include/bits/string3.h \
- /usr/include/malloc.h utils.h
+ /usr/include/malloc.h utils.h preprocessor.h
 
 main.h:
 
@@ -102,3 +102,5 @@ main.h:
 /usr/include/malloc.h:
 
 utils.h:
+
+preprocessor.h:

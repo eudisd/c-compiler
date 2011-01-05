@@ -8,7 +8,8 @@ int main(int argc, char *argv[])
 	
 	switch(argc){
 		case 1:
-			printf("c: no input files");
+			printf("c: no input files\n");
+			run_preprocessor("tmp.txt", "out.data");
 			break;
 		case 2:
 			if(strcmp(argv[1], "--help") == 0){
