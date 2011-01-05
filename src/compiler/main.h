@@ -6,6 +6,7 @@
 #include <string.h>
 #include <malloc.h>
 
+#include "symbol.h"
 #include "utils.h"
 #include "preprocessor.h"
 

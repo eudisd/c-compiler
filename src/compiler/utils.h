@@ -27,6 +27,8 @@ inline void version(void);
   */
 inline char *scan_for_o(int argc, char *argv[]);
 
+inline char **get_files_from_argv(int argc, char *argv[]);
+
 /** Returns the current filesize of a file.  It does this by fseeking to the 
     last byte of the file, and return ftell().
   */
@@ -39,5 +41,17 @@ void *xmalloc(int size);
     modify the current file pointer
   */
 char fcpeek(FILE *f);
+
+/** Get the next word from the file stream, and increment the file pointer accordingly. 
+	All calls to this function return a malloc'ed string.  It _must_ be freed.
+*/
+char *getword(FILE *f);
+
+/** Peek the next word from the file stream, and do not increment the file pointer.
+	All calls to this function return a malloc'ed string.  It _must_ be freed.  
+    Further, 
+*/
+
+char *wordpeek(FILE *f);
 
 #endif

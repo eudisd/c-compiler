@@ -31,6 +31,11 @@ char *scan_for_o(int argc, char *argv[])
 	}
 }
 
+char **get_files_from_argv(int argc, char *argv[])
+{
+
+}
+
 int get_filesize(char *filename)
 {
 	FILE *f = fopen(filename, "r");
@@ -56,3 +61,14 @@ char fcpeek(FILE *f)
 	ungetc(c, f);
 	return c;
 }
+
+char *getword(FILE *f)
+{
+	return NULL;
+}
+
+char *wordpeek(FILE *f)
+{
+	return NULL;
+}
+

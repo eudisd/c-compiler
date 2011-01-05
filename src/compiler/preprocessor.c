@@ -1,6 +1,5 @@
 #include "preprocessor.h"
 
-const char *ident[MAX_PREPROC_IDENT] = {"define", "include"};
 
 void run_preprocessor(const char *ifilename, const char *ofilename)
 {
@@ -13,22 +12,30 @@ void run_preprocessor(const char *ifilename, const char *ofilename)
 	f = fopen("tmp.txt", "r");
 	o = fopen("out.data", "w");
 		
-	
+	remove_comments(f, o);
 	
 	fclose(f);
 	fclose(o);
 }
 
-char *get_next_word(FILE *f)
-{
-	return NULL;
-}
+
 
 void remove_comments(FILE *f, FILE *o)
 {
-	char c;
-	while ( (c = getc(f)) != EOF) ){
-		
+
+	/* These next few lines handle the multiline comments removal */
+	char c, c_tmp;
+	while ( (c = getc(f)) != EOF ){
+		if(c == '/' && (fcpeek(f) == '*')){
+			c_tmp = getc(f);  /* Holds '*' */
+			c_tmp = getc(f);  /* Knock that starter '*' off the file discriptor. */
+
+			while( ( (c_tmp != '*') && (fcpeek(f) != '/') ) && (c_tmp != EOF)){
+				c_tmp = getc(f);
+			}
+			c =  getc(f); /* Holds '*' */
+			c =  getc(f); /* Again, know the starter '*' off the file discriptor. */
+		}
 		putc(c, o);
 	}
 }

@@ -1,1 +1,9 @@
+/* This is a C comment and my compiler already handles it! */
+
+#define TWO 2
+
+/* This is another comment.  This is a multiline one
+   to test for this too!
+*/
+
 #define ONE 1
