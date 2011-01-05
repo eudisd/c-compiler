@@ -20,7 +20,8 @@ char *get_next_word(FILE *f)
 {
 	int get_out = 0;
 	char c;
-	
+	int start_pos = ftell(f);
+
 	while ( (c = getc(f)) != EOF ){
 		if(c == ' ' || c == '\t' || c == '\n')
 			continue;
