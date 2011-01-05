@@ -1,4 +1,82 @@
 \hypertarget{preprocessor_8h}{
-\section{Desktop/gitrepos/compiler/preprocessor.h File Reference}
-\label{preprocessor_8h}\index{Desktop/gitrepos/compiler/preprocessor.h@{Desktop/gitrepos/compiler/preprocessor.h}}
+\section{compiler/src/compiler/preprocessor.h File Reference}
+\label{preprocessor_8h}\index{compiler/src/compiler/preprocessor.h@{compiler/src/compiler/preprocessor.h}}
 }
+{\ttfamily \#include $<$stdio.h$>$}\par
+{\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include \char`\"{}utils.h\char`\"{}}\par
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{preprocessor_8h_a921f78413c891c0d7a6fd2d3d6c7f385}{MAX\_\-PREPROC\_\-IDENT}~2
+\item 
+\#define \hyperlink{preprocessor_8h_a1ab75b57395f7d3bede13c86f3c0697a}{PREPROC\_\-DEFINE}~0
+\item 
+\#define \hyperlink{preprocessor_8h_ab277e9ccde8280dde15f1d1a6d828eb7}{PREPROC\_\-INCLUDE}~1
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{preprocessor_8h_aa18192dc4c018f1a5abf00de916df304}{run\_\-preporcessor} (const char $\ast$ifilename, const char $\ast$ofilename)
+\begin{DoxyCompactList}\small\item\em Runs the preprocessor on the specified file. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{preprocessor_8h_a19a351606910e813597e6b1c1558cda7}{get\_\-next\_\-word} (FILE $\ast$f)
+\begin{DoxyCompactList}\small\item\em Get the next word from the file stream, and increment the file pointer accordingly. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{preprocessor_8h_a791177844a10ccb078b33232abe81b68}{get\_\-define\_\-value} (char $\ast$line)
+\end{DoxyCompactItemize}
+
+
+\subsection{Define Documentation}
+\hypertarget{preprocessor_8h_a921f78413c891c0d7a6fd2d3d6c7f385}{
+\index{preprocessor.h@{preprocessor.h}!MAX\_\-PREPROC\_\-IDENT@{MAX\_\-PREPROC\_\-IDENT}}
+\index{MAX\_\-PREPROC\_\-IDENT@{MAX\_\-PREPROC\_\-IDENT}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{MAX\_\-PREPROC\_\-IDENT}]{\setlength{\rightskip}{0pt plus 5cm}\#define MAX\_\-PREPROC\_\-IDENT~2}}
+\label{preprocessor_8h_a921f78413c891c0d7a6fd2d3d6c7f385}
+\hypertarget{preprocessor_8h_a1ab75b57395f7d3bede13c86f3c0697a}{
+\index{preprocessor.h@{preprocessor.h}!PREPROC\_\-DEFINE@{PREPROC\_\-DEFINE}}
+\index{PREPROC\_\-DEFINE@{PREPROC\_\-DEFINE}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{PREPROC\_\-DEFINE}]{\setlength{\rightskip}{0pt plus 5cm}\#define PREPROC\_\-DEFINE~0}}
+\label{preprocessor_8h_a1ab75b57395f7d3bede13c86f3c0697a}
+\hypertarget{preprocessor_8h_ab277e9ccde8280dde15f1d1a6d828eb7}{
+\index{preprocessor.h@{preprocessor.h}!PREPROC\_\-INCLUDE@{PREPROC\_\-INCLUDE}}
+\index{PREPROC\_\-INCLUDE@{PREPROC\_\-INCLUDE}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{PREPROC\_\-INCLUDE}]{\setlength{\rightskip}{0pt plus 5cm}\#define PREPROC\_\-INCLUDE~1}}
+\label{preprocessor_8h_ab277e9ccde8280dde15f1d1a6d828eb7}
+
+
+\subsection{Function Documentation}
+\hypertarget{preprocessor_8h_a791177844a10ccb078b33232abe81b68}{
+\index{preprocessor.h@{preprocessor.h}!get\_\-define\_\-value@{get\_\-define\_\-value}}
+\index{get\_\-define\_\-value@{get\_\-define\_\-value}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{get\_\-define\_\-value}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ get\_\-define\_\-value (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ line}
+\end{DoxyParamCaption}
+)}}
+\label{preprocessor_8h_a791177844a10ccb078b33232abe81b68}
+\hypertarget{preprocessor_8h_a19a351606910e813597e6b1c1558cda7}{
+\index{preprocessor.h@{preprocessor.h}!get\_\-next\_\-word@{get\_\-next\_\-word}}
+\index{get\_\-next\_\-word@{get\_\-next\_\-word}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{get\_\-next\_\-word}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ get\_\-next\_\-word (
+\begin{DoxyParamCaption}
+\item[{FILE $\ast$}]{ f}
+\end{DoxyParamCaption}
+)}}
+\label{preprocessor_8h_a19a351606910e813597e6b1c1558cda7}
+
+
+Get the next word from the file stream, and increment the file pointer accordingly. 
+
+\hypertarget{preprocessor_8h_aa18192dc4c018f1a5abf00de916df304}{
+\index{preprocessor.h@{preprocessor.h}!run\_\-preporcessor@{run\_\-preporcessor}}
+\index{run\_\-preporcessor@{run\_\-preporcessor}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{run\_\-preporcessor}]{\setlength{\rightskip}{0pt plus 5cm}void run\_\-preporcessor (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ ifilename, }
+\item[{const char $\ast$}]{ ofilename}
+\end{DoxyParamCaption}
+)}}
+\label{preprocessor_8h_aa18192dc4c018f1a5abf00de916df304}
+
+
+Runs the preprocessor on the specified file. 
+

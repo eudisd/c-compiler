@@ -1,5 +1,7 @@
 /** \file error.h
-	\brief Header file containing all of the error handling primatives for the compiler
+	\brief Header file containing all of the error handling primatives for the compiler.
+           These primatives are for error output in terms of the runtime compiler, not the 
+           development environment for this code.
 	*/
 	
 #ifndef _ERROR_H_

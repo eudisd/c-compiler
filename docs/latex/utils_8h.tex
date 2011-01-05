@@ -1,6 +1,6 @@
 \hypertarget{utils_8h}{
-\section{Desktop/gitrepos/compiler/utils.h File Reference}
-\label{utils_8h}\index{Desktop/gitrepos/compiler/utils.h@{Desktop/gitrepos/compiler/utils.h}}
+\section{compiler/src/compiler/utils.h File Reference}
+\label{utils_8h}\index{compiler/src/compiler/utils.h@{compiler/src/compiler/utils.h}}
 }
 
 
@@ -18,7 +18,7 @@ Interface that holds common functions and housekeeping operations.
 \begin{DoxyCompactList}\small\item\em Holds the current version (semver.org). \item\end{DoxyCompactList}\item 
 \#define \hyperlink{utils_8h_a5bd9a30fc22d9a737ee060d41a4ec479}{RELEASE}~0
 \begin{DoxyCompactList}\small\item\em Holds the current release candidate number. \item\end{DoxyCompactList}\item 
-\#define \hyperlink{utils_8h_ae7f90861d8c4d5b1cbdcf71d325feea2}{BUILD\_\-NUMBER}~50
+\#define \hyperlink{utils_8h_ae7f90861d8c4d5b1cbdcf71d325feea2}{BUILD\_\-NUMBER}~51
 \begin{DoxyCompactList}\small\item\em Holds the current build number. \item\end{DoxyCompactList}\item 
 \#define \hyperlink{utils_8h_a7f43b36cfbbd59cd83b3193004616f7e}{BUILD\_\-DATE}~20101231
 \begin{DoxyCompactList}\small\item\em Holds the current build date in Year-\/Month-\/Day format. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -30,7 +30,9 @@ void \hyperlink{utils_8h_ae8605e2b78cd4a81b6c6b5c30cb7366a}{usage} (void)
 void \hyperlink{utils_8h_af986bd0575ec9b913dfab4b8422509ae}{version} (void)
 \begin{DoxyCompactList}\small\item\em Prints version information. \item\end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{utils_8h_a937f7189307391dcebb5a933fd938944}{scan\_\-for\_\-o} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
-\begin{DoxyCompactList}\small\item\em Scans the program input for the -\/o flag, and returnes its argument. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Scans the program input for the -\/o flag, and returns its argument. \item\end{DoxyCompactList}\item 
+int \hyperlink{utils_8h_a176d350e10e71e3ef8410365e0e2823f}{get\_\-filesize} (char $\ast$filename)
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -49,7 +51,7 @@ Holds the current build date in Year-\/Month-\/Day format.
 \hypertarget{utils_8h_ae7f90861d8c4d5b1cbdcf71d325feea2}{
 \index{utils.h@{utils.h}!BUILD\_\-NUMBER@{BUILD\_\-NUMBER}}
 \index{BUILD\_\-NUMBER@{BUILD\_\-NUMBER}!utils.h@{utils.h}}
-\subsubsection[{BUILD\_\-NUMBER}]{\setlength{\rightskip}{0pt plus 5cm}\#define BUILD\_\-NUMBER~50}}
+\subsubsection[{BUILD\_\-NUMBER}]{\setlength{\rightskip}{0pt plus 5cm}\#define BUILD\_\-NUMBER~51}}
 \label{utils_8h_ae7f90861d8c4d5b1cbdcf71d325feea2}
 
 
@@ -76,6 +78,15 @@ Holds the current version (semver.org).
 
 
 \subsection{Function Documentation}
+\hypertarget{utils_8h_a176d350e10e71e3ef8410365e0e2823f}{
+\index{utils.h@{utils.h}!get\_\-filesize@{get\_\-filesize}}
+\index{get\_\-filesize@{get\_\-filesize}!utils.h@{utils.h}}
+\subsubsection[{get\_\-filesize}]{\setlength{\rightskip}{0pt plus 5cm}int get\_\-filesize (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ filename}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8h_a176d350e10e71e3ef8410365e0e2823f}
 \hypertarget{utils_8h_a937f7189307391dcebb5a933fd938944}{
 \index{utils.h@{utils.h}!scan\_\-for\_\-o@{scan\_\-for\_\-o}}
 \index{scan\_\-for\_\-o@{scan\_\-for\_\-o}!utils.h@{utils.h}}
@@ -88,7 +99,7 @@ Holds the current version (semver.org).
 \label{utils_8h_a937f7189307391dcebb5a933fd938944}
 
 
-Scans the program input for the -\/o flag, and returnes its argument. 
+Scans the program input for the -\/o flag, and returns its argument. 
 
 \hypertarget{utils_8h_ae8605e2b78cd4a81b6c6b5c30cb7366a}{
 \index{utils.h@{utils.h}!usage@{usage}}

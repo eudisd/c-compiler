@@ -16,4 +16,4 @@ refman.pdf: refman.tex
 
 
 clean:
-	del *.ps *.dvi *.aux *.toc *.idx *.ind *.ilg *.log *.out refman.pdf
+	rm -f *.ps *.dvi *.aux *.toc *.idx *.ind *.ilg *.log *.out refman.pdf

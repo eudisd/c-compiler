@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 				version();
 			}
 			else {
-				ofile = (char*)malloc(sizeof(char)*6);
+				ofile = (char*)xmalloc(sizeof(char)*6);
 				strcpy(ofile, "a.out");  /* No output name specified, we default to unix a.out */
 				printf("%s", ofile);
 				free(ofile);
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 			/* These next few lines handle the -o flag */
 			o_name_len = strlen((char*)scan_for_o(argc, argv));
 			if(o_name_len > 0){ 
-				ofile = (char*)malloc(sizeof(char)*o_name_len);
+				ofile = (char*)xmalloc(sizeof(char)*o_name_len);
 				strcpy(ofile, (char*)scan_for_o(argc, argv));
 			}
 			free(ofile);

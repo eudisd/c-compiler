@@ -1,6 +1,6 @@
 \hypertarget{utils_8c}{
-\section{Desktop/gitrepos/compiler/utils.c File Reference}
-\label{utils_8c}\index{Desktop/gitrepos/compiler/utils.c@{Desktop/gitrepos/compiler/utils.c}}
+\section{compiler/src/compiler/utils.c File Reference}
+\label{utils_8c}\index{compiler/src/compiler/utils.c@{compiler/src/compiler/utils.c}}
 }
 {\ttfamily \#include \char`\"{}utils.h\char`\"{}}\par
 \subsection*{Functions}
@@ -11,10 +11,21 @@ void \hyperlink{utils_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}{usage} (void)
 void \hyperlink{utils_8c_af986bd0575ec9b913dfab4b8422509ae}{version} (void)
 \begin{DoxyCompactList}\small\item\em Prints version information. \item\end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{utils_8c_a937f7189307391dcebb5a933fd938944}{scan\_\-for\_\-o} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
-\begin{DoxyCompactList}\small\item\em Scans the program input for the -\/o flag, and returnes its argument. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Scans the program input for the -\/o flag, and returns its argument. \item\end{DoxyCompactList}\item 
+int \hyperlink{utils_8c_a176d350e10e71e3ef8410365e0e2823f}{get\_\-filesize} (char $\ast$filename)
+\end{DoxyCompactItemize}
 
 
 \subsection{Function Documentation}
+\hypertarget{utils_8c_a176d350e10e71e3ef8410365e0e2823f}{
+\index{utils.c@{utils.c}!get\_\-filesize@{get\_\-filesize}}
+\index{get\_\-filesize@{get\_\-filesize}!utils.c@{utils.c}}
+\subsubsection[{get\_\-filesize}]{\setlength{\rightskip}{0pt plus 5cm}int get\_\-filesize (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ filename}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8c_a176d350e10e71e3ef8410365e0e2823f}
 \hypertarget{utils_8c_a937f7189307391dcebb5a933fd938944}{
 \index{utils.c@{utils.c}!scan\_\-for\_\-o@{scan\_\-for\_\-o}}
 \index{scan\_\-for\_\-o@{scan\_\-for\_\-o}!utils.c@{utils.c}}
@@ -27,7 +38,7 @@ char $\ast$ \hyperlink{utils_8c_a937f7189307391dcebb5a933fd938944}{scan\_\-for\_
 \label{utils_8c_a937f7189307391dcebb5a933fd938944}
 
 
-Scans the program input for the -\/o flag, and returnes its argument. 
+Scans the program input for the -\/o flag, and returns its argument. 
 
 \hypertarget{utils_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}{
 \index{utils.c@{utils.c}!usage@{usage}}

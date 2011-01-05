@@ -18,8 +18,13 @@
 void run_preporcessor(const char *ifilename, const char *ofilename);
 
 /** Get the next word from the file stream, and increment the file pointer accordingly. 
+	All calls to this function return a malloc'ed string.  It _must_ be freed.
 */
 char *get_next_word(FILE *f);
+
+void remove_comments(FILE *f);
+
+
 char *get_define_value(char *line);
 
 

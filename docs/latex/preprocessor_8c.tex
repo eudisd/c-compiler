@@ -1,5 +1,62 @@
 \hypertarget{preprocessor_8c}{
-\section{Desktop/gitrepos/compiler/preprocessor.c File Reference}
-\label{preprocessor_8c}\index{Desktop/gitrepos/compiler/preprocessor.c@{Desktop/gitrepos/compiler/preprocessor.c}}
+\section{compiler/src/compiler/preprocessor.c File Reference}
+\label{preprocessor_8c}\index{compiler/src/compiler/preprocessor.c@{compiler/src/compiler/preprocessor.c}}
 }
 {\ttfamily \#include \char`\"{}preprocessor.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{preprocessor_8c_a3b2379146cf1a4d25d1c3057d15d5db1}{run\_\-preprocessor} (const char $\ast$ifilename, const char $\ast$ofilename)
+\item 
+char $\ast$ \hyperlink{preprocessor_8c_a19a351606910e813597e6b1c1558cda7}{get\_\-next\_\-word} (FILE $\ast$f)
+\begin{DoxyCompactList}\small\item\em Get the next word from the file stream, and increment the file pointer accordingly. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{preprocessor_8c_a791177844a10ccb078b33232abe81b68}{get\_\-define\_\-value} (char $\ast$line)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \hyperlink{preprocessor_8c_a5bd7b48e47129aa72f9d926d2f6d796b}{ident} \mbox{[}MAX\_\-PREPROC\_\-IDENT\mbox{]} = \{\char`\"{}define\char`\"{}, \char`\"{}include\char`\"{}\}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{preprocessor_8c_a791177844a10ccb078b33232abe81b68}{
+\index{preprocessor.c@{preprocessor.c}!get\_\-define\_\-value@{get\_\-define\_\-value}}
+\index{get\_\-define\_\-value@{get\_\-define\_\-value}!preprocessor.c@{preprocessor.c}}
+\subsubsection[{get\_\-define\_\-value}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ get\_\-define\_\-value (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ line}
+\end{DoxyParamCaption}
+)}}
+\label{preprocessor_8c_a791177844a10ccb078b33232abe81b68}
+\hypertarget{preprocessor_8c_a19a351606910e813597e6b1c1558cda7}{
+\index{preprocessor.c@{preprocessor.c}!get\_\-next\_\-word@{get\_\-next\_\-word}}
+\index{get\_\-next\_\-word@{get\_\-next\_\-word}!preprocessor.c@{preprocessor.c}}
+\subsubsection[{get\_\-next\_\-word}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ get\_\-next\_\-word (
+\begin{DoxyParamCaption}
+\item[{FILE $\ast$}]{ f}
+\end{DoxyParamCaption}
+)}}
+\label{preprocessor_8c_a19a351606910e813597e6b1c1558cda7}
+
+
+Get the next word from the file stream, and increment the file pointer accordingly. 
+
+\hypertarget{preprocessor_8c_a3b2379146cf1a4d25d1c3057d15d5db1}{
+\index{preprocessor.c@{preprocessor.c}!run\_\-preprocessor@{run\_\-preprocessor}}
+\index{run\_\-preprocessor@{run\_\-preprocessor}!preprocessor.c@{preprocessor.c}}
+\subsubsection[{run\_\-preprocessor}]{\setlength{\rightskip}{0pt plus 5cm}void run\_\-preprocessor (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ ifilename, }
+\item[{const char $\ast$}]{ ofilename}
+\end{DoxyParamCaption}
+)}}
+\label{preprocessor_8c_a3b2379146cf1a4d25d1c3057d15d5db1}
+
+
+\subsection{Variable Documentation}
+\hypertarget{preprocessor_8c_a5bd7b48e47129aa72f9d926d2f6d796b}{
+\index{preprocessor.c@{preprocessor.c}!ident@{ident}}
+\index{ident@{ident}!preprocessor.c@{preprocessor.c}}
+\subsubsection[{ident}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ {\bf ident}\mbox{[}MAX\_\-PREPROC\_\-IDENT\mbox{]} = \{\char`\"{}define\char`\"{}, \char`\"{}include\char`\"{}\}}}
+\label{preprocessor_8c_a5bd7b48e47129aa72f9d926d2f6d796b}

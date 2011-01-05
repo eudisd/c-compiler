@@ -37,3 +37,22 @@ int get_filesize(char *filename)
 	fseek(f, 0, SEEK_END);
 	return ftell(f);	
 }
+
+void *xmalloc(int size)
+{
+	register void *value = malloc(size);
+	if (value == NULL){
+		fprintf(stderr, "Virtual Memory Exhausted!\n");
+		exit(1);
+	}
+	else {
+		return value;
+	}
+}
+
+char fcpeek(FILE *f)
+{
+	char c = getc(f);
+	ungetc(c, f);
+	return c;
+}
