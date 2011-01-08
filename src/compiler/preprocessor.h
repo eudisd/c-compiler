@@ -19,9 +19,14 @@
 
 /** Runs the preprocessor on the specified file.
 */
-void run_preporcessor(const char *ifilename, const char *ofilename);
+void run_preporcessor(const char *prog, const char *ifilename, const char *ofilename);
 
-void remove_comments(FILE *f, FILE *o);
+/** Removes all comments from the import source file, and outputs an intermediary file for 
+    further processing.
+*/
+void remove_comments(const char *prog, const char *ifilename, const char *ofilename);
+
+void include_headers(const char *prog, const char *ifilename, const char *ofilename);
 
 char *get_define_value(char *line);
 

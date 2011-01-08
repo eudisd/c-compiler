@@ -8,8 +8,8 @@ int main(int argc, char *argv[])
 	
 	switch(argc){
 		case 1:
-			printf("c: no input files\n");
-			//run_preprocessor("tmp.txt", "out.data");
+			printf("%s: no input files\n", argv[0]);
+			run_preprocessor(argv[0], "tmp.txt", "preproc.data");
 
 			break;
 		case 2:

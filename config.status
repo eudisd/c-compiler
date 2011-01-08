@@ -442,7 +442,7 @@ Copyright (C) 2010 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/usr/share/gitweb/repos/compiler'
+ac_pwd='/home/prototype/repos/compiler'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/bin/mkdir -p'
@@ -631,7 +631,7 @@ S["CFLAGS"]="-g -O2"
 S["CC"]="gcc"
 S["am__untar"]="${AMTAR} xf -"
 S["am__tar"]="${AMTAR} chof - \"$$tardir\""
-S["AMTAR"]="${SHELL} /usr/share/gitweb/repos/compiler/missing --run tar"
+S["AMTAR"]="${SHELL} /home/prototype/repos/compiler/missing --run tar"
 S["am__leading_dot"]="."
 S["SET_MAKE"]=""
 S["AWK"]="mawk"
@@ -639,12 +639,12 @@ S["mkdir_p"]="/bin/mkdir -p"
 S["MKDIR_P"]="/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]=""
-S["install_sh"]="${SHELL} /usr/share/gitweb/repos/compiler/install-sh"
-S["MAKEINFO"]="${SHELL} /usr/share/gitweb/repos/compiler/missing --run makeinfo"
-S["AUTOHEADER"]="${SHELL} /usr/share/gitweb/repos/compiler/missing --run autoheader"
-S["AUTOMAKE"]="${SHELL} /usr/share/gitweb/repos/compiler/missing --run automake-1.11"
-S["AUTOCONF"]="${SHELL} /usr/share/gitweb/repos/compiler/missing --run autoconf"
-S["ACLOCAL"]="${SHELL} /usr/share/gitweb/repos/compiler/missing --run aclocal-1.11"
+S["install_sh"]="${SHELL} /home/prototype/repos/compiler/install-sh"
+S["MAKEINFO"]="${SHELL} /home/prototype/repos/compiler/missing --run makeinfo"
+S["AUTOHEADER"]="${SHELL} /home/prototype/repos/compiler/missing --run autoheader"
+S["AUTOMAKE"]="${SHELL} /home/prototype/repos/compiler/missing --run automake-1.11"
+S["AUTOCONF"]="${SHELL} /home/prototype/repos/compiler/missing --run autoconf"
+S["ACLOCAL"]="${SHELL} /home/prototype/repos/compiler/missing --run aclocal-1.11"
 S["VERSION"]="0.0.1"
 S["PACKAGE"]="compiler"
 S["CYGPATH_W"]="echo"

@@ -54,4 +54,10 @@ char *getword(FILE *f);
 
 char *wordpeek(FILE *f);
 
+
+
+/* Debug Functions */
+
+
+
 #endif

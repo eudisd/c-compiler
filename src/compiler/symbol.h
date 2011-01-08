@@ -6,7 +6,7 @@
 #include <malloc.h>
 
 #define MAX_SLOTS 10000  
-#define EMPTY_SLOT -1 /**> This symbolic constant signifies empty slots in the hash map */
+#define EMPTY_SLOT -1 /**> This symbolic constant signifies empty slots in the hash map. */
 
 typedef struct record_TAG{
 	int addr;
@@ -18,7 +18,7 @@ typedef struct record_TAG{
 typedef struct symbol_table_TAG {
 	/* Public Fields */
 	double load_factor;
-	size_t in_use=0;
+	size_t in_use;
 	size_t size;
 	record *table;
 	
