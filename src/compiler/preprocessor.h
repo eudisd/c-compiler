@@ -24,9 +24,10 @@ void run_preporcessor(const char *prog, const char *ifilename, const char *ofile
 /** Removes all comments from the import source file, and outputs an intermediary file for 
     further processing.
 */
-void remove_comments(const char *prog, const char *ifilename, const char *ofilename);
 
 void include_headers(const char *prog, const char *ifilename, const char *ofilename);
+
+void remove_comments(const char *prog, const char *filename);
 
 char *get_define_value(char *line);
 

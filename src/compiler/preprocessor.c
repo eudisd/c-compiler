@@ -9,32 +9,55 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
 	//include_headers(prog, ifilename, ofilename);
 
 	/* Then we remove all C-Style comments from the file*/
-	remove_comments(prog, ifilename, ofilename);
+	remove_comments(prog, ifilename);
 
 	
 	
 	
 }
 
-
-
-void remove_comments(const char *prog, const char *ifilename, const char *ofilename)
+void include_headers(const char *prog, const char *ifilename, const char *ofilename)
 {
-	
-
 	FILE *i = fopen(ifilename, "r");
 	FILE *o = fopen(ofilename, "w");
 
 	if(!i){
-		fprintf(stderr, "%s: cannot open %s (for removing comments):\n No such file or directory.\n", prog, ifilename);
+		fprintf(stderr, "%s: cannot open %s (for removing inserting headers):\n No such file or directory.\n", prog, ifilename);
 		exit(EXIT_FAILURE);
 	}
 	if(!o){
-		fprintf(stderr, "%s: cannot write %s (preproc intermediate file): \n Unknown reason(possibly permissions).\n", prog, ofilename);
+		fprintf(stderr, "%s: cannot write %s (preproc intermediate file): \n"
+                        "Unknown reason(possibly permissions).\n", prog, ofilename);
 		exit(EXIT_FAILURE);
 	}
+	
 
-	/* These next few lines handle the multiline comments removal */
+	/* Stuff Goes Here */
+
+	fclose(i);
+	fclose(o);
+}
+
+
+
+void remove_comments(const char *prog, const char *filename)
+{
+
+	FILE *i = fopen(filename, "r");
+	FILE *o = fopen("data", "w");
+	
+	if(!i){
+		fprintf(stderr, "%s: cannot open %s (for removing comments):\n No such file or directory.\n", prog, filename);
+		exit(EXIT_FAILURE);
+	}
+	if(!o){
+		fprintf(stderr, "%s: cannot write %s (preproc intermediate file): \n"
+                        "Unknown reason(possibly permissions).\n", prog, filename);
+		exit(EXIT_FAILURE);
+	}
+	
+
+	/* This code handles the multiline comments removal */
 	char c, c_tmp;
 	while ( (c = getc(i)) != EOF ){
 		if(c == '/' && (fcpeek(i) == '*')){
@@ -52,28 +75,13 @@ void remove_comments(const char *prog, const char *ifilename, const char *ofilen
 
 	fclose(i);
 	fclose(o);
+
+	remove(filename);
+	rename("data", filename);
 }
 
 
-void include_headers(const char *prog, const char *ifilename, const char *ofilename)
-{
-	FILE *i = fopen(ifilename, "r");
-	FILE *o = fopen(ofilename, "w");
 
-	if(!i){
-		fprintf(stderr, "%s: cannot open %s (for removing inserting headers):\n No such file or directory.\n", prog, ifilename);
-		exit(EXIT_FAILURE);
-	}
-	if(!o){
-		fprintf(stderr, "%s: cannot write %s (preproc intermediate file): \n Unknown reason(possibly permissions).\n", prog, ofilename);
-		exit(EXIT_FAILURE);
-	}
-
-	/* Stuff Goes Here */
-
-	fclose(i);
-	fclose(o);
-}
 
 char *get_define_value(char *line)
 {
