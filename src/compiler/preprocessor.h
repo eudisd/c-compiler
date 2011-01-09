@@ -29,7 +29,7 @@ char *sys_lib_dir;
 void run_preporcessor(const char *prog, const char *ifilename, const char *ofilename);
 
 /** Removes all comments from the import source file, and outputs an intermediary file for 
-    further processing.
+    further processing.  At the moment, only handles 1 nested level of inclusion.
  */
 
 void include_headers(const char *prog, const char *ifilename, const char *ofilename);

@@ -3,8 +3,6 @@
 
 void run_preprocessor(const char *prog, const char *ifilename, const char *ofilename)
 {
-	
-	
 	int dir_flag = FALSE;
 	int lib_flag = FALSE;
 
@@ -35,7 +33,7 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
 	*/
 
 	/* After header files are included, we remove all C-Style comments from the tmp file*/
-	//remove_comments(prog, ifilename);
+	remove_comments(prog, ofilename); //ofilename);
 
 	
 	/* Memory Clean Up */
@@ -46,9 +44,6 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
 	if( !lib_flag ){
 		free(sys_lib_dir);
 	}
-	
-	
-	
 }
 
 void include_headers(const char *prog, const char *ifilename, const char *ofilename)
@@ -89,11 +84,11 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 				is_it_system = FALSE;
 			
 			inc_fname = (char*)get_inc_fname(full_filename);
-
+/*
 			printf("%s :\n", inc_keyword);
 			printf("'%s' :\n", inc_fname);
 			printf("Is it system file? %s\n\n", ((is_it_system)? "Yes": "No"));
-
+*/
 			if(is_it_system){
 				file_path = (char*)xmalloc(sizeof(char)* (strlen(sys_inc_dir) + strlen(inc_fname) + 1));
 				strcpy(file_path, sys_inc_dir);
@@ -106,9 +101,9 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 				strcat(file_path, inc_fname);
 				strcat(file_path, "\0");
 			}
-			
+			/*
 			printf("Full Path: %s\n", file_path);
-			
+			*/
 
 			includes = fopen(file_path, "r");
 			if (!includes){
@@ -126,17 +121,6 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 			free(inc_fname);	
 			//free(fname);
 			
-
-			/*
-			c = getc(i);
-			while( c != EOF && c != '\n' ){
-				if( fcpeek(i) == '<' ){
-					inc_fname = get_inc_fname(i);
-					printf("%s\n", inc_fname);
-					exit(1);
-				}
-				c = getc(i);
-			}*/
 
 			c = getc(i); /* We need to pop this off c (since it's the '#' character) from the 
                           * if conditional above.  Then it is safe to write out. */
@@ -161,20 +145,20 @@ void remove_comments(const char *prog, const char *filename)
 	if(!o)
 		file_error((char*)prog, "write", (char*)filename, "preproc intermediate file", "Unknown reason(possibly permissions");
 	
-	
-
 	/* This code handles the multiline comments removal */
 	char c, c_tmp;
 	while ( (c = getc(i)) != EOF ){
 		if(c == '/' && (fcpeek(i) == '*')){
-			c_tmp = getc(i);  /* Holds '*' */
-			c_tmp = getc(i);  /* Knock that starter '*' off the file discriptor. */
-
-			while( ( (c_tmp != '*') && (fcpeek(i) != '/') ) && (c_tmp != EOF)){
-				c_tmp = getc(i);
+			c = getc(i);  /* Holds '*' */
+			c = getc(i);  /* Knock that starter '*' off the file discriptor. */
+			while( c != EOF ){
+				if(c == '*' && fcpeek(i) == '/')
+					break;
+				c = getc(i);
 			}
-			c =  getc(i); /* Holds '*' */
-			c =  getc(i); /* Again, know the starter '*' off the file discriptor. */
+			
+			c = getc(i); /* Pop off the last '*' */
+			c = getc(i); /* Pop off the last '/' */
 		}
 		putc(c, o);
 	}
