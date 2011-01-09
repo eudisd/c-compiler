@@ -53,14 +53,19 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
 
 void include_headers(const char *prog, const char *ifilename, const char *ofilename)
 {
-	char c;
-	char c_inc;
-	char *inc_fname;
-	char *inc_keyword;
-	char *fname;
-	char *file_path;
+	char c;                    /**> Top level character stream container.  Holds the characters of ifilename. */
+	char c_inc;                /**> Nested character stream container.  Holds the characters of the included files to write. */
+	char *inc_fname;           /**> This is the stripped include file name. */
+	char *inc_keyword;         /**> This is for debugging, holds the include keyword file read so far. */
+	char *full_filename;       /**> This represents the directory (is_it_system?) and filename concatenated. */
+	char *fname;           
+	char *file_path;           /**> Holds the full pathname.*/
+	
+	int is_it_system = FALSE;  /**> (is it system files?)  Just a flag to specify system vs. user files. */
 
-	FILE *includes;
+	FILE *includes;            /**> Input file stream for all include files to be inserted. */
+
+
 
 	FILE *i = fopen(ifilename, "r");
 	FILE *o = fopen(ofilename, "w");
@@ -75,16 +80,39 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 	while( (c = getc(i)) != EOF ){
 		if(c == '#' && (fcpeek(i) == 'i')){
 			inc_keyword = getword(i);
-			inc_fname = (char*)get_inc_fname((char*)getword(i));
+			full_filename = getword(i);
 
+			/* Here, we determine if the include file is a system file, or user defined */
+			if(full_filename && full_filename[0] == '<')
+				is_it_system = TRUE;
+			else if (full_filename && full_filename[0] == '"')
+				is_it_system = FALSE;
+			
+			inc_fname = (char*)get_inc_fname(full_filename);
 
-			file_path = (char*)xmalloc(sizeof(char)* (strlen(sys_inc_dir) + strlen(inc_fname)));
-			strcpy(file_path, sys_inc_dir);
-			strcat(file_path, inc_fname);
-		
+			printf("%s :\n", inc_keyword);
+			printf("'%s' :\n", inc_fname);
+			printf("Is it system file? %s\n\n", ((is_it_system)? "Yes": "No"));
+
+			if(is_it_system){
+				file_path = (char*)xmalloc(sizeof(char)* (strlen(sys_inc_dir) + strlen(inc_fname) + 1));
+				strcpy(file_path, sys_inc_dir);
+				strcat(file_path, inc_fname);
+				strcat(file_path, "\0");
+			}
+			else if(!is_it_system){
+				file_path = (char*)xmalloc(sizeof(char)* (strlen(sys_inc_dir) + 3));
+				strcpy(file_path, "./");
+				strcat(file_path, inc_fname);
+				strcat(file_path, "\0");
+			}
+			
+			printf("Full Path: %s\n", file_path);
+			
+
 			includes = fopen(file_path, "r");
 			if (!includes){
-				file_error(prog, "open", file_path, "While doing header inclusions", "No such file or directory");
+				file_error((char*)prog, "open", (char*)file_path, "While doing header inclusions", "No such file or directory");
 			}
 
 			while ( (c_inc = getc(includes)) != EOF ) {
@@ -92,7 +120,6 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 			}
 			
 			fclose(includes);
-			
 			
 			
 			free(inc_keyword);
@@ -110,11 +137,13 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 				}
 				c = getc(i);
 			}*/
+
+			c = getc(i); /* We need to pop this off c (since it's the '#' character) from the 
+                          * if conditional above.  Then it is safe to write out. */
 		}
-		putc(c, o);
+		putc(c, o); 
 	}
 	
-
 	fclose(i);
 	fclose(o);
 }

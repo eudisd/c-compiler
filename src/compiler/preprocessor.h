@@ -18,8 +18,8 @@
 #define PREPROC_DEFINE  0
 #define PREPROC_INCLUDE 1
 
-#define DEFAULT_INC_DIR "/usr/local/include/"
-#define DEFAULT_LIB_DIR "/usr/local/lib/"
+#define DEFAULT_INC_DIR "/usr/include/"
+#define DEFAULT_LIB_DIR "/usr/lib/"
 
 char *sys_inc_dir;
 char *sys_lib_dir;
