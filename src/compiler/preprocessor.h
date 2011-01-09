@@ -29,6 +29,8 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 
 void remove_comments(const char *prog, const char *filename);
 
+char *get_inc_fname(FILE *i);
+
 char *get_define_value(char *line);
 
 

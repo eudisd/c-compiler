@@ -61,11 +61,12 @@ char fcpeek(FILE *f)
 	ungetc(c, f);
 	return c;
 }
+/*
 
-char *getword(FILE *f)
+char *getword(FILE *i)
 {
 	return NULL;
-}
+}*/
 
 char *wordpeek(FILE *f)
 {

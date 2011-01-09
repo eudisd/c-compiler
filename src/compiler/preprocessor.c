@@ -6,10 +6,10 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
 	/* First we import all included header files into the current c 
        file and output an intermediary file.  
      */
-	//include_headers(prog, ifilename, ofilename);
+	include_headers(prog, ifilename, ofilename);
 
 	/* Then we remove all C-Style comments from the file*/
-	remove_comments(prog, ifilename);
+	//remove_comments(prog, ifilename);
 
 	
 	
@@ -18,11 +18,14 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
 
 void include_headers(const char *prog, const char *ifilename, const char *ofilename)
 {
+	char c;
+	char *inc_fname;
 	FILE *i = fopen(ifilename, "r");
 	FILE *o = fopen(ofilename, "w");
 
 	if(!i){
-		fprintf(stderr, "%s: cannot open %s (for removing inserting headers):\n No such file or directory.\n", prog, ifilename);
+		fprintf(stderr, "%s: cannot open %s (for removing inserting headers):\n"
+                        "No such file or directory.\n", prog, ifilename);
 		exit(EXIT_FAILURE);
 	}
 	if(!o){
@@ -31,8 +34,21 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 		exit(EXIT_FAILURE);
 	}
 	
-
-	/* Stuff Goes Here */
+	/* Here we write out the included file to the intermediary preprocessor file */
+	while( (c = getc(i)) != EOF ){
+		if(c == '#' && (fcpeek(i) == 'i')){
+			c = getc(i);
+			while( c != EOF && c != '\n' ){
+				if( fcpeek(i) == '<' ){
+					inc_fname = get_inc_fname(i);
+					printf("%s\n", inc_fname);
+					exit(1);
+				}
+				c = getc(i);
+			}
+		}
+	}
+	
 
 	fclose(i);
 	fclose(o);
@@ -81,7 +97,34 @@ void remove_comments(const char *prog, const char *filename)
 }
 
 
+char *get_inc_fname(FILE *i)
+{
+	int j = 0;
+	char c;
+	char *name;
+	int size = 0;
+	int pos; /**> Used to save the start position of the filestream.
+                  Will be reverted after size is calculated */
 
+	c = getc(i); /* Pop off the '<' from the input stream */
+	pos = ftell(i);
+	while( (c = getc(i)) != EOF){  /* The 'c' here begins at position 0 of the filename string. */
+		size++;
+		if(fcpeek(i) == '>'){
+			break;
+		}
+	}
+	name = (char*)malloc(sizeof(char)*size);
+	while( (c = getc(i)) != EOF  && (j < size)){  
+		name[j] = c;
+		j++;
+		if(fcpeek(i) == '>'){
+			break;
+		}
+	}
+	
+	return name;
+}
 
 char *get_define_value(char *line)
 {

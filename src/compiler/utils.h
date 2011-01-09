@@ -45,7 +45,7 @@ char fcpeek(FILE *f);
 /** Get the next word from the file stream, and increment the file pointer accordingly. 
 	All calls to this function return a malloc'ed string.  It _must_ be freed.
 */
-char *getword(FILE *f);
+/* char *getword(FILE *i); */
 
 /** Peek the next word from the file stream, and do not increment the file pointer.
 	All calls to this function return a malloc'ed string.  It _must_ be freed.  
