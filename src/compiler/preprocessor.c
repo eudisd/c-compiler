@@ -3,14 +3,49 @@
 
 void run_preprocessor(const char *prog, const char *ifilename, const char *ofilename)
 {
-	/* First we import all included header files into the current c 
-       file and output an intermediary file.  
-     */
+	
+	
+	int dir_flag = FALSE;
+	int lib_flag = FALSE;
+
+	/* We need certain flags to be set here.  If they are not set, then we simply use
+     * the system defaults.  These flags deal with the standard directories, among others things
+	 */
+	/* set_flags(dir_flag, lib_flag); */
+
+	if( !dir_flag ){
+		sys_inc_dir = (char*)xmalloc(sizeof(char)*strlen(DEFAULT_INC_DIR) + 1);
+		strcpy(sys_inc_dir, DEFAULT_INC_DIR);
+	}
+	if( !lib_flag ){
+		sys_lib_dir = (char*)xmalloc(sizeof(char)*strlen(DEFAULT_LIB_DIR) + 1);
+		strcpy(sys_lib_dir, DEFAULT_LIB_DIR);
+	}
+
+
+	/********************************************************************
+     *  First we import all included header files into the current working c temp 
+     *  file and output an intermediary object file.  
+     ********************************************************************/
+
 	include_headers(prog, ifilename, ofilename);
 
-	/* Then we remove all C-Style comments from the file*/
+	/* This same interim file is then used for all subsequent operations, including
+       feeding it to the compiler (scanner, parser, etc etc).
+	*/
+
+	/* After header files are included, we remove all C-Style comments from the tmp file*/
 	//remove_comments(prog, ifilename);
 
+	
+	/* Memory Clean Up */
+
+	if( !dir_flag ){
+		free(sys_inc_dir);
+	}
+	if( !lib_flag ){
+		free(sys_lib_dir);
+	}
 	
 	
 	
@@ -19,23 +54,22 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
 void include_headers(const char *prog, const char *ifilename, const char *ofilename)
 {
 	char c;
+	char c_inc;
 	char *inc_fname;
 	char *inc_keyword;
 	char *fname;
+	char *file_path;
+
+	FILE *includes;
 
 	FILE *i = fopen(ifilename, "r");
 	FILE *o = fopen(ofilename, "w");
 
-	if(!i){
-		fprintf(stderr, "%s: cannot open %s (for removing inserting headers):\n"
-                        "No such file or directory.\n", prog, ifilename);
-		exit(EXIT_FAILURE);
-	}
-	if(!o){
-		fprintf(stderr, "%s: cannot write %s (preproc intermediate file): \n"
-                        "Unknown reason(possibly permissions).\n", prog, ofilename);
-		exit(EXIT_FAILURE);
-	}
+	if(!i)
+		file_error((char*)prog, "open", (char*)ifilename, "for inserting include headers", "No such file or directory");
+	if(!o)
+		file_error((char*)prog, "write", (char*)ofilename, "for inserting include headers(preproc intermediate file)\n", "Unknown reason.");
+		
 	
 	/* Here we write out the included file to the intermediary preprocessor file */
 	while( (c = getc(i)) != EOF ){
@@ -43,9 +77,21 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 			inc_keyword = getword(i);
 			inc_fname = (char*)get_inc_fname((char*)getword(i));
 
-			printf("%s = ", inc_keyword);
-			printf("'%s' \n", inc_fname);
+
+			file_path = (char*)xmalloc(sizeof(char)* (strlen(sys_inc_dir) + strlen(inc_fname)));
+			strcpy(file_path, sys_inc_dir);
+			strcat(file_path, inc_fname);
+		
+			includes = fopen(file_path, "r");
+			if (!includes){
+				file_error(prog, "open", file_path, "While doing header inclusions", "No such file or directory");
+			}
+
+			while ( (c_inc = getc(includes)) != EOF ) {
+				putc(c_inc, o);
+			}
 			
+			fclose(includes);
 			
 			
 			
@@ -65,6 +111,7 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 				c = getc(i);
 			}*/
 		}
+		putc(c, o);
 	}
 	
 
@@ -80,15 +127,11 @@ void remove_comments(const char *prog, const char *filename)
 	FILE *i = fopen(filename, "r");
 	FILE *o = fopen("data", "w");
 	
-	if(!i){
-		fprintf(stderr, "%s: cannot open %s (for removing comments):\n No such file or directory.\n", prog, filename);
-		exit(EXIT_FAILURE);
-	}
-	if(!o){
-		fprintf(stderr, "%s: cannot write %s (preproc intermediate file): \n"
-                        "Unknown reason(possibly permissions).\n", prog, filename);
-		exit(EXIT_FAILURE);
-	}
+	if(!i)
+		file_error((char*)prog, "open", (char*)filename, "for removing comments", "No such file or directory.");
+	if(!o)
+		file_error((char*)prog, "write", (char*)filename, "preproc intermediate file", "Unknown reason(possibly permissions");
+	
 	
 
 	/* This code handles the multiline comments removal */

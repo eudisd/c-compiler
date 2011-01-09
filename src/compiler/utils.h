@@ -13,6 +13,7 @@
 #define RELEASE 0           /**< Holds the current release candidate number. */
 #define BUILD_NUMBER 51     /**< Holds the current build number. */
 #define BUILD_DATE 20101231 /**< Holds the current build date in Year-Month-Day format. */
+
 #define TRUE 1
 #define FALSE 0
    
@@ -54,7 +55,7 @@ char *getword(FILE *i);
 
 char *wordpeek(FILE *f);
 
-
+void file_error(char *prog, char *do_this, char *ifilename, char *specifics, char *msg);
 
 /* Debug Functions */
 

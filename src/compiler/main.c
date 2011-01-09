@@ -23,6 +23,10 @@ int main(int argc, char *argv[])
 				ofile = (char*)xmalloc(sizeof(char)*6);
 				strcpy(ofile, "a.out");  /* No output name specified, we default to unix a.out */
 				printf("%s", ofile);
+
+				/* Do Stuff Here */
+
+
 				free(ofile);
 			}
 			break;
@@ -40,8 +44,13 @@ int main(int argc, char *argv[])
 			if(o_name_len > 0){ 
 				ofile = (char*)xmalloc(sizeof(char)*o_name_len);
 				strcpy(ofile, (char*)scan_for_o(argc, argv));
+
+				/* Do stuff here */
+
+
+				free(ofile);
 			}
-			free(ofile);
+			
 			break;
 		
 	}

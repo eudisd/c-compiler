@@ -102,5 +102,12 @@ char *wordpeek(FILE *f)
 	return NULL;
 }
 
+void file_error(char *prog, char *do_this, char *ifilename, char *specifics, char *msg)
+{
+	fprintf(stderr, "%s: cannot %s %s (%s):\n"
+                        "%s.\n", prog, do_this, ifilename, specifics, msg);
+	exit(EXIT_FAILURE);
+}
+
 
 
