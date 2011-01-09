@@ -61,12 +61,41 @@ char fcpeek(FILE *f)
 	ungetc(c, f);
 	return c;
 }
-/*
 
 char *getword(FILE *i)
 {
-	return NULL;
-}*/
+	int j = 0;
+	char c;
+	char *word;
+	int pos;
+	size_t size = 0;
+	
+	pos = ftell(i);
+	c = getc(i);
+	//printf("CHECKING: \n\n");
+	/* We first calculate the size of the word */
+	while ( (c != EOF) && !isspace(c) ){
+		//printf("%c|", c);
+		size++;
+		c = getc(i);
+		
+	}
+	//printf("\n\nEND\n\n");
+	fseek(i, -(ftell(i) - pos), SEEK_CUR);
+
+	word = (char*)xmalloc(sizeof(char)*size+1);
+	c = getc(i);
+
+	/* Then we copy the word the to malloc'ed space */
+	while ( ((c != EOF) && !isspace(c)) && (j < size) ){
+		word[j] = c;
+		j++;
+		c = getc(i);
+	}
+	
+	word[size] = '\0';
+	return word;
+}
 
 char *wordpeek(FILE *f)
 {

@@ -20,6 +20,9 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 {
 	char c;
 	char *inc_fname;
+	char *inc_keyword;
+	char *fname;
+
 	FILE *i = fopen(ifilename, "r");
 	FILE *o = fopen(ofilename, "w");
 
@@ -37,6 +40,21 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 	/* Here we write out the included file to the intermediary preprocessor file */
 	while( (c = getc(i)) != EOF ){
 		if(c == '#' && (fcpeek(i) == 'i')){
+			inc_keyword = getword(i);
+			inc_fname = (char*)get_inc_fname((char*)getword(i));
+
+			printf("%s = ", inc_keyword);
+			printf("'%s' \n", inc_fname);
+			
+			
+			
+			
+			free(inc_keyword);
+			free(inc_fname);	
+			//free(fname);
+			
+
+			/*
 			c = getc(i);
 			while( c != EOF && c != '\n' ){
 				if( fcpeek(i) == '<' ){
@@ -45,7 +63,7 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 					exit(1);
 				}
 				c = getc(i);
-			}
+			}*/
 		}
 	}
 	
@@ -96,35 +114,23 @@ void remove_comments(const char *prog, const char *filename)
 	rename("data", filename);
 }
 
-
-char *get_inc_fname(FILE *i)
+char *get_inc_fname(char *n)
 {
-	int j = 0;
-	char c;
-	char *name;
-	int size = 0;
-	int pos; /**> Used to save the start position of the filestream.
-                  Will be reverted after size is calculated */
-
-	c = getc(i); /* Pop off the '<' from the input stream */
-	pos = ftell(i);
-	while( (c = getc(i)) != EOF){  /* The 'c' here begins at position 0 of the filename string. */
-		size++;
-		if(fcpeek(i) == '>'){
-			break;
-		}
-	}
-	name = (char*)malloc(sizeof(char)*size);
-	while( (c = getc(i)) != EOF  && (j < size)){  
-		name[j] = c;
-		j++;
-		if(fcpeek(i) == '>'){
-			break;
-		}
-	}
+	int i;
+	size_t size = strlen(n);
+	char *new_word = (char*)xmalloc(sizeof(char)*(size-2)); /* + 1 for the '\0' terminator */
 	
-	return name;
+	
+	for(i = 0; i < (size-2); i++){
+		new_word[i] = n[i+1];
+		
+	}
+
+	new_word[size-2] = '\0';
+	free(n);
+	return new_word;
 }
+
 
 char *get_define_value(char *line)
 {
