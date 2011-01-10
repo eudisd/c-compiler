@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 	switch(argc){
 		case 1:
 			printf("%s: no input files\n", argv[0]);
-
+			/*
 			symbol_table *stab = create_stab(100);
 			record *rec = get_record("ONE", "1", 't', 0, "Global");
 
@@ -19,7 +19,8 @@ int main(int argc, char *argv[])
 			stab_insert( get_record("THREE", "3", 't', 1, "Global"), stab);
 
 			print_stab(stab);
-			//run_preprocessor("input", "output");
+			*/
+			run_preprocessor("input", "output");
 			break;
 		case 2:
 			if(strcmp(argv[1], "--help") == 0){

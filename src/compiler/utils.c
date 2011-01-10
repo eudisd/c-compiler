@@ -109,5 +109,9 @@ void file_error(char *prog, char *do_this, char *ifilename, char *specifics, cha
 	exit(EXIT_FAILURE);
 }
 
+char *strip_whitesp(char *str)
+{
+	return 0;
+}
 
 

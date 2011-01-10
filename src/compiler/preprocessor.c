@@ -59,29 +59,55 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
 char *handle_defines(char* prog, char *filename)
 {
 	char c;
+	int j;
 	char *def_keyword;
 	char *def_name;
 	char *def_value;
+
+	char *def_name_tmp;
+	int paren_flag = FALSE;
 		
-	record define_table;
+	/* create preprocessor symbol table here */
+	symbol_table *defines_stab = create_stab(MAX_SLOTS);
 
 	FILE *i = fopen(filename, "r");
 
+	/* This bit handles the defines */
 	while( (c = getc(i)) != EOF ){
 	
 		if( c == '#' && (tolower(fcpeek(i)) == 'd') ) {
 			def_keyword = getword(i);
 			def_name = getword(i);
+			
+			/* does the first macro-word have '(' ? */
+			/* If so then: */
+			/*
+			if(strchr(def_name, '(')){
+				def_name_tmp = getword(i);
+				while(!strchr(def_name_tmp, ')')){
+					strcat(def_name, def_name_tmp);
+					free(def_name_tmp);	
+					def_name_tmp = getword(i);
+				}
+				strcat(def_name, def_name_tmp);
+				free(def_name_tmp);
+			}*/
+		
 			def_value = getword(i);
-			printf("%s : %s = %s\n", def_keyword, def_name, def_value);
+		
+			stab_insert( get_record(def_name, def_value, 't', 0, "Global"), defines_stab );
+
+			
 
 			free(def_keyword);
 			free(def_name);
 			free(def_value);
 		}
 		
-	}
+	}	
 
+	print_stab(defines_stab);
+	/* This bit handles the defines */
 
 
 

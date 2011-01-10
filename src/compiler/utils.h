@@ -61,6 +61,7 @@ void file_error(char *prog, char *do_this, char *ifilename, char *specifics, cha
 
 /* Debug Functions */
 
+char *strip_whitesp(char *str);
 
 
 #endif
