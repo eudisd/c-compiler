@@ -45,16 +45,18 @@ char fcpeek(FILE *f);
 
 /** Get the next word from the file stream, and increment the file pointer accordingly. 
 	All calls to this function return a malloc'ed string.  It _must_ be freed.
-*/
+  */
 char *getword(FILE *i); 
 
 /** Peek the next word from the file stream, and do not increment the file pointer.
 	All calls to this function return a malloc'ed string.  It _must_ be freed.  
     Further, 
-*/
+  */
 
 char *wordpeek(FILE *f);
 
+/** General file error function.
+  */
 void file_error(char *prog, char *do_this, char *ifilename, char *specifics, char *msg);
 
 /* Debug Functions */

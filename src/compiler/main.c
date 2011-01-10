@@ -1,16 +1,25 @@
 #include "main.h"
 
+
 int main(int argc, char *argv[])
 {
 	char *ofile;
 	char *infile;
 	size_t o_name_len;
-	
+	//record *get_record(char *name, char*val, char type, int slot, char *scope)
 	switch(argc){
 		case 1:
 			printf("%s: no input files\n", argv[0]);
-			run_preprocessor(argv[0], "tmp.txt", "preproc.data");
 
+			symbol_table *stab = create_stab(100);
+			record *rec = get_record("ONE", "1", 't', 0, "Global");
+
+			stab_insert( get_record("ONE", "1", 't', 0, "Global"), stab);
+			stab_insert( get_record("TWO", "2", 't', 1, "Global"), stab);
+			stab_insert( get_record("THREE", "3", 't', 1, "Global"), stab);
+
+			print_stab(stab);
+			//run_preprocessor("input", "output");
 			break;
 		case 2:
 			if(strcmp(argv[1], "--help") == 0){
@@ -20,14 +29,8 @@ int main(int argc, char *argv[])
 				version();
 			}
 			else {
-				ofile = (char*)xmalloc(sizeof(char)*6);
-				strcpy(ofile, "a.out");  /* No output name specified, we default to unix a.out */
-				printf("%s", ofile);
-
-				/* Do Stuff Here */
-
-
-				free(ofile);
+				//run_preprocessor(argv[1], "a.out"); /* No output name specified, we default to unix a.out */
+				
 			}
 			break;
 		case 3:
@@ -46,13 +49,11 @@ int main(int argc, char *argv[])
 				strcpy(ofile, (char*)scan_for_o(argc, argv));
 
 				/* Do stuff here */
-
-
+				
 				free(ofile);
 			}
 			
 			break;
-		
 	}
 	
 	

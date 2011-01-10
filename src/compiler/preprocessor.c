@@ -26,14 +26,24 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
      *  file and output an intermediary object file.  
      ********************************************************************/
 
-	include_headers(prog, ifilename, ofilename);
+	//include_headers(prog, ifilename, ofilename);
 
 	/* This same interim file is then used for all subsequent operations, including
        feeding it to the compiler (scanner, parser, etc etc).
 	*/
 
 	/* After header files are included, we remove all C-Style comments from the tmp file*/
-	remove_comments(prog, ofilename); //ofilename);
+	//remove_comments(prog, ofilename); //ofilename);
+
+
+	/* At this point, we have to handle #defines.  There are two types of cases here.
+       One is a symbolic constant, the other is a macro.  I will handle the costant case
+       first, and leave stubs for macro, as I'm not sure if I'll implement it fully yet
+    */
+
+	handle_defines((char*)prog, "tmp.txt");
+		
+	
 
 	
 	/* Memory Clean Up */
@@ -44,6 +54,38 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
 	if( !lib_flag ){
 		free(sys_lib_dir);
 	}
+}
+
+char *handle_defines(char* prog, char *filename)
+{
+	char c;
+	char *def_keyword;
+	char *def_name;
+	char *def_value;
+		
+	record define_table;
+
+	FILE *i = fopen(filename, "r");
+
+	while( (c = getc(i)) != EOF ){
+	
+		if( c == '#' && (tolower(fcpeek(i)) == 'd') ) {
+			def_keyword = getword(i);
+			def_name = getword(i);
+			def_value = getword(i);
+			printf("%s : %s = %s\n", def_keyword, def_name, def_value);
+
+			free(def_keyword);
+			free(def_name);
+			free(def_value);
+		}
+		
+	}
+
+
+
+
+	return NULL;
 }
 
 void include_headers(const char *prog, const char *ifilename, const char *ofilename)
@@ -188,7 +230,4 @@ char *get_inc_fname(char *n)
 }
 
 
-char *get_define_value(char *line)
-{
-	return NULL;
-}
+

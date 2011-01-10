@@ -10,6 +10,7 @@
 #include <string.h>
 
 #include "utils.h"
+#include "symbol.h"
 
 /* First Pass */
 
@@ -41,7 +42,8 @@ void remove_comments(const char *prog, const char *filename);
   */
 char *get_inc_fname(char *n);
 
-char *get_define_value(char *line);
+
+char *handle_defines(char *prog, char *filename);
 
 
 #endif
