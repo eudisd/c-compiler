@@ -2,9 +2,16 @@
 \section{compiler/src/compiler/preprocessor.h File Reference}
 \label{preprocessor_8h}\index{compiler/src/compiler/preprocessor.h@{compiler/src/compiler/preprocessor.h}}
 }
+
+
+Preprocessor defines all the operations necessary for the first pass in the compiler.  
+
+
 {\ttfamily \#include $<$stdio.h$>$}\par
 {\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include $<$string.h$>$}\par
 {\ttfamily \#include \char`\"{}utils.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}symbol.h\char`\"{}}\par
 \subsection*{Defines}
 \begin{DoxyCompactItemize}
 \item 
@@ -13,19 +20,47 @@
 \#define \hyperlink{preprocessor_8h_a1ab75b57395f7d3bede13c86f3c0697a}{PREPROC\_\-DEFINE}~0
 \item 
 \#define \hyperlink{preprocessor_8h_ab277e9ccde8280dde15f1d1a6d828eb7}{PREPROC\_\-INCLUDE}~1
+\item 
+\#define \hyperlink{preprocessor_8h_a27b46e7703841efc9d233177675955f7}{DEFAULT\_\-INC\_\-DIR}~\char`\"{}/usr/include/\char`\"{}
+\item 
+\#define \hyperlink{preprocessor_8h_a8b7b416cacc2a302243fedb22009ddfb}{DEFAULT\_\-LIB\_\-DIR}~\char`\"{}/usr/lib/\char`\"{}
 \end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{preprocessor_8h_aa18192dc4c018f1a5abf00de916df304}{run\_\-preporcessor} (const char $\ast$ifilename, const char $\ast$ofilename)
+void \hyperlink{preprocessor_8h_a901f597a67c1e4c62a667f470c367297}{run\_\-preporcessor} (const char $\ast$prog, const char $\ast$ifilename, const char $\ast$ofilename)
 \begin{DoxyCompactList}\small\item\em Runs the preprocessor on the specified file. \item\end{DoxyCompactList}\item 
-char $\ast$ \hyperlink{preprocessor_8h_a19a351606910e813597e6b1c1558cda7}{get\_\-next\_\-word} (FILE $\ast$f)
-\begin{DoxyCompactList}\small\item\em Get the next word from the file stream, and increment the file pointer accordingly. \item\end{DoxyCompactList}\item 
-char $\ast$ \hyperlink{preprocessor_8h_a791177844a10ccb078b33232abe81b68}{get\_\-define\_\-value} (char $\ast$line)
+void \hyperlink{preprocessor_8h_a51cb4d1224182e5629cd7af91ee5e6d8}{include\_\-headers} (const char $\ast$prog, const char $\ast$ifilename, const char $\ast$ofilename)
+\begin{DoxyCompactList}\small\item\em Removes all comments from the import source file, and outputs an intermediary file for further processing. \item\end{DoxyCompactList}\item 
+void \hyperlink{preprocessor_8h_ac220c5b1e5d7613e91220874a7f57d30}{remove\_\-comments} (const char $\ast$prog, const char $\ast$filename)
+\item 
+char $\ast$ \hyperlink{preprocessor_8h_af277303e134f0688eb94a95c2a52a551}{get\_\-inc\_\-fname} (char $\ast$n)
+\begin{DoxyCompactList}\small\item\em This gets the next include name from the include preprocessor directive. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{preprocessor_8h_a6b9c4b46220e8cc74d257cbbea2097fe}{handle\_\-defines} (char $\ast$prog, char $\ast$filename)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{preprocessor_8h_a306041b675d67912cba4e270ae645be9}{sys\_\-inc\_\-dir}
+\item 
+char $\ast$ \hyperlink{preprocessor_8h_a5f5af6a3df3bf9b3108b6702cc9a5801}{sys\_\-lib\_\-dir}
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+Preprocessor defines all the operations necessary for the first pass in the compiler. 
+
 \subsection{Define Documentation}
+\hypertarget{preprocessor_8h_a27b46e7703841efc9d233177675955f7}{
+\index{preprocessor.h@{preprocessor.h}!DEFAULT\_\-INC\_\-DIR@{DEFAULT\_\-INC\_\-DIR}}
+\index{DEFAULT\_\-INC\_\-DIR@{DEFAULT\_\-INC\_\-DIR}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{DEFAULT\_\-INC\_\-DIR}]{\setlength{\rightskip}{0pt plus 5cm}\#define DEFAULT\_\-INC\_\-DIR~\char`\"{}/usr/include/\char`\"{}}}
+\label{preprocessor_8h_a27b46e7703841efc9d233177675955f7}
+\hypertarget{preprocessor_8h_a8b7b416cacc2a302243fedb22009ddfb}{
+\index{preprocessor.h@{preprocessor.h}!DEFAULT\_\-LIB\_\-DIR@{DEFAULT\_\-LIB\_\-DIR}}
+\index{DEFAULT\_\-LIB\_\-DIR@{DEFAULT\_\-LIB\_\-DIR}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{DEFAULT\_\-LIB\_\-DIR}]{\setlength{\rightskip}{0pt plus 5cm}\#define DEFAULT\_\-LIB\_\-DIR~\char`\"{}/usr/lib/\char`\"{}}}
+\label{preprocessor_8h_a8b7b416cacc2a302243fedb22009ddfb}
 \hypertarget{preprocessor_8h_a921f78413c891c0d7a6fd2d3d6c7f385}{
 \index{preprocessor.h@{preprocessor.h}!MAX\_\-PREPROC\_\-IDENT@{MAX\_\-PREPROC\_\-IDENT}}
 \index{MAX\_\-PREPROC\_\-IDENT@{MAX\_\-PREPROC\_\-IDENT}!preprocessor.h@{preprocessor.h}}
@@ -44,39 +79,97 @@ char $\ast$ \hyperlink{preprocessor_8h_a791177844a10ccb078b33232abe81b68}{get\_\
 
 
 \subsection{Function Documentation}
-\hypertarget{preprocessor_8h_a791177844a10ccb078b33232abe81b68}{
-\index{preprocessor.h@{preprocessor.h}!get\_\-define\_\-value@{get\_\-define\_\-value}}
-\index{get\_\-define\_\-value@{get\_\-define\_\-value}!preprocessor.h@{preprocessor.h}}
-\subsubsection[{get\_\-define\_\-value}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ get\_\-define\_\-value (
+\hypertarget{preprocessor_8h_af277303e134f0688eb94a95c2a52a551}{
+\index{preprocessor.h@{preprocessor.h}!get\_\-inc\_\-fname@{get\_\-inc\_\-fname}}
+\index{get\_\-inc\_\-fname@{get\_\-inc\_\-fname}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{get\_\-inc\_\-fname}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ get\_\-inc\_\-fname (
 \begin{DoxyParamCaption}
-\item[{char $\ast$}]{ line}
+\item[{char $\ast$}]{ n}
 \end{DoxyParamCaption}
 )}}
-\label{preprocessor_8h_a791177844a10ccb078b33232abe81b68}
-\hypertarget{preprocessor_8h_a19a351606910e813597e6b1c1558cda7}{
-\index{preprocessor.h@{preprocessor.h}!get\_\-next\_\-word@{get\_\-next\_\-word}}
-\index{get\_\-next\_\-word@{get\_\-next\_\-word}!preprocessor.h@{preprocessor.h}}
-\subsubsection[{get\_\-next\_\-word}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ get\_\-next\_\-word (
+\label{preprocessor_8h_af277303e134f0688eb94a95c2a52a551}
+
+
+This gets the next include name from the include preprocessor directive. 
+
+It is malloced internally. It \_\-MUST\_\- be freed after each use. \hypertarget{preprocessor_8h_a6b9c4b46220e8cc74d257cbbea2097fe}{
+\index{preprocessor.h@{preprocessor.h}!handle\_\-defines@{handle\_\-defines}}
+\index{handle\_\-defines@{handle\_\-defines}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{handle\_\-defines}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ handle\_\-defines (
 \begin{DoxyParamCaption}
-\item[{FILE $\ast$}]{ f}
+\item[{char $\ast$}]{ prog, }
+\item[{char $\ast$}]{ filename}
 \end{DoxyParamCaption}
 )}}
-\label{preprocessor_8h_a19a351606910e813597e6b1c1558cda7}
-
-
-Get the next word from the file stream, and increment the file pointer accordingly. 
-
-\hypertarget{preprocessor_8h_aa18192dc4c018f1a5abf00de916df304}{
-\index{preprocessor.h@{preprocessor.h}!run\_\-preporcessor@{run\_\-preporcessor}}
-\index{run\_\-preporcessor@{run\_\-preporcessor}!preprocessor.h@{preprocessor.h}}
-\subsubsection[{run\_\-preporcessor}]{\setlength{\rightskip}{0pt plus 5cm}void run\_\-preporcessor (
+\label{preprocessor_8h_a6b9c4b46220e8cc74d257cbbea2097fe}
+\hypertarget{preprocessor_8h_a51cb4d1224182e5629cd7af91ee5e6d8}{
+\index{preprocessor.h@{preprocessor.h}!include\_\-headers@{include\_\-headers}}
+\index{include\_\-headers@{include\_\-headers}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{include\_\-headers}]{\setlength{\rightskip}{0pt plus 5cm}void include\_\-headers (
 \begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ prog, }
 \item[{const char $\ast$}]{ ifilename, }
 \item[{const char $\ast$}]{ ofilename}
 \end{DoxyParamCaption}
 )}}
-\label{preprocessor_8h_aa18192dc4c018f1a5abf00de916df304}
+\label{preprocessor_8h_a51cb4d1224182e5629cd7af91ee5e6d8}
+
+
+Removes all comments from the import source file, and outputs an intermediary file for further processing. 
+
+At the moment, only handles 1 nested level of inclusion. 
+
+$>$ Top level character stream container. Holds the characters of ifilename.
+
+$>$ Nested character stream container. Holds the characters of the included files to write.
+
+$>$ This is the stripped include file name.
+
+$>$ This is for debugging, holds the include keyword file read so far.
+
+$>$ This represents the directory (is\_\-it\_\-system?) and filename concatenated.
+
+$>$ Holds the full pathname.
+
+$>$ (is it system files?) Just a flag to specify system vs. user files.
+
+$>$ Input file stream for all include files to be inserted. 
+
+\hypertarget{preprocessor_8h_ac220c5b1e5d7613e91220874a7f57d30}{
+\index{preprocessor.h@{preprocessor.h}!remove\_\-comments@{remove\_\-comments}}
+\index{remove\_\-comments@{remove\_\-comments}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{remove\_\-comments}]{\setlength{\rightskip}{0pt plus 5cm}void remove\_\-comments (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ prog, }
+\item[{const char $\ast$}]{ filename}
+\end{DoxyParamCaption}
+)}}
+\label{preprocessor_8h_ac220c5b1e5d7613e91220874a7f57d30}
+\hypertarget{preprocessor_8h_a901f597a67c1e4c62a667f470c367297}{
+\index{preprocessor.h@{preprocessor.h}!run\_\-preporcessor@{run\_\-preporcessor}}
+\index{run\_\-preporcessor@{run\_\-preporcessor}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{run\_\-preporcessor}]{\setlength{\rightskip}{0pt plus 5cm}void run\_\-preporcessor (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ prog, }
+\item[{const char $\ast$}]{ ifilename, }
+\item[{const char $\ast$}]{ ofilename}
+\end{DoxyParamCaption}
+)}}
+\label{preprocessor_8h_a901f597a67c1e4c62a667f470c367297}
 
 
 Runs the preprocessor on the specified file. 
 
+
+
+\subsection{Variable Documentation}
+\hypertarget{preprocessor_8h_a306041b675d67912cba4e270ae645be9}{
+\index{preprocessor.h@{preprocessor.h}!sys\_\-inc\_\-dir@{sys\_\-inc\_\-dir}}
+\index{sys\_\-inc\_\-dir@{sys\_\-inc\_\-dir}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{sys\_\-inc\_\-dir}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ {\bf sys\_\-inc\_\-dir}}}
+\label{preprocessor_8h_a306041b675d67912cba4e270ae645be9}
+\hypertarget{preprocessor_8h_a5f5af6a3df3bf9b3108b6702cc9a5801}{
+\index{preprocessor.h@{preprocessor.h}!sys\_\-lib\_\-dir@{sys\_\-lib\_\-dir}}
+\index{sys\_\-lib\_\-dir@{sys\_\-lib\_\-dir}!preprocessor.h@{preprocessor.h}}
+\subsubsection[{sys\_\-lib\_\-dir}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ {\bf sys\_\-lib\_\-dir}}}
+\label{preprocessor_8h_a5f5af6a3df3bf9b3108b6702cc9a5801}

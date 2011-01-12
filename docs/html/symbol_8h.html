@@ -17,6 +17,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
+      <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -44,21 +45,261 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Defines</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <h1>compiler/src/compiler/symbol.h File Reference</h1>  </div>
 </div>
 <div class="contents">
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;malloc.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
 
 <p><a href="symbol_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrecord__TAG.html">record_TAG</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymbol__table__TAG.html">symbol_table_TAG</a></td></tr>
+<tr><td colspan="2"><h2><a name="define-members"></a>
+Defines</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="symbol_8h.html#a487ed1795a5ca9744954435f788569e2">MAX_SLOTS</a>&nbsp;&nbsp;&nbsp;10000</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="symbol_8h.html#a3510ebed9ac06b45eb86b1783e8fb837">EMPTY_SLOT</a>&nbsp;&nbsp;&nbsp;-1</td></tr>
+<tr><td colspan="2"><h2><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structrecord__TAG.html">record_TAG</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="symbol_8h.html#ae7c6ad48ac17e41f6b8716bc57e7c7bc">record</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structsymbol__table__TAG.html">symbol_table_TAG</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="symbol_8h.html#a4977bfe4887a72e1cc9b18d125b53197">symbol_table</a></td></tr>
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="symbol_8h.html#ad4df67a5ddaa44ee29cf652a0c540bf4">print_stab</a> (<a class="el" href="structsymbol__table__TAG.html">symbol_table</a> *stab)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsymbol__table__TAG.html">symbol_table</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="symbol_8h.html#a4fb28334c76b5a6a03638098869f241c">create_stab</a> (size_t max)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="symbol_8h.html#aad7bb5414d640f568d627994d167ab03">stab_insert</a> (<a class="el" href="structrecord__TAG.html">record</a> *rec, <a class="el" href="structsymbol__table__TAG.html">symbol_table</a> *stab)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structrecord__TAG.html">record</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="symbol_8h.html#a9d5622c6433cbb355202fd2fa82ab4d6">get_record</a> (char *name, char *val, char type, int slot, char *scope)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="symbol_8h.html#a301dc40475dfb745421d4cd8aa1e2b5a">purge_record</a> (<a class="el" href="structrecord__TAG.html">record</a> *rec)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="symbol_8h.html#aa3b00c6be8c7b92830da32095f6e601b">hash</a> (char *key, size_t limit)</td></tr>
 </table>
+<hr/><h2>Define Documentation</h2>
+<a class="anchor" id="a3510ebed9ac06b45eb86b1783e8fb837"></a><!-- doxytag: member="symbol.h::EMPTY_SLOT" ref="a3510ebed9ac06b45eb86b1783e8fb837" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EMPTY_SLOT&nbsp;&nbsp;&nbsp;-1</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a487ed1795a5ca9744954435f788569e2"></a><!-- doxytag: member="symbol.h::MAX_SLOTS" ref="a487ed1795a5ca9744954435f788569e2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_SLOTS&nbsp;&nbsp;&nbsp;10000</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<hr/><h2>Typedef Documentation</h2>
+<a class="anchor" id="ae7c6ad48ac17e41f6b8716bc57e7c7bc"></a><!-- doxytag: member="symbol.h::record" ref="ae7c6ad48ac17e41f6b8716bc57e7c7bc" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structrecord__TAG.html">record_TAG</a> <a class="el" href="structrecord__TAG.html">record</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4977bfe4887a72e1cc9b18d125b53197"></a><!-- doxytag: member="symbol.h::symbol_table" ref="a4977bfe4887a72e1cc9b18d125b53197" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structsymbol__table__TAG.html">symbol_table_TAG</a>  <a class="el" href="structsymbol__table__TAG.html">symbol_table</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<hr/><h2>Function Documentation</h2>
+<a class="anchor" id="a4fb28334c76b5a6a03638098869f241c"></a><!-- doxytag: member="symbol.h::create_stab" ref="a4fb28334c76b5a6a03638098869f241c" args="(size_t max)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsymbol__table__TAG.html">symbol_table</a>* create_stab </td>
+          <td>(</td>
+          <td class="paramtype">size_t&nbsp;</td>
+          <td class="paramname"> <em>max</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9d5622c6433cbb355202fd2fa82ab4d6"></a><!-- doxytag: member="symbol.h::get_record" ref="a9d5622c6433cbb355202fd2fa82ab4d6" args="(char *name, char *val, char type, int slot, char *scope)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structrecord__TAG.html">record</a>* get_record </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>val</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&nbsp;</td>
+          <td class="paramname"> <em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>slot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>scope</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa3b00c6be8c7b92830da32095f6e601b"></a><!-- doxytag: member="symbol.h::hash" ref="aa3b00c6be8c7b92830da32095f6e601b" args="(char *key, size_t limit)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t hash </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&nbsp;</td>
+          <td class="paramname"> <em>limit</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad4df67a5ddaa44ee29cf652a0c540bf4"></a><!-- doxytag: member="symbol.h::print_stab" ref="ad4df67a5ddaa44ee29cf652a0c540bf4" args="(symbol_table *stab)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void print_stab </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structsymbol__table__TAG.html">symbol_table</a> *&nbsp;</td>
+          <td class="paramname"> <em>stab</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a301dc40475dfb745421d4cd8aa1e2b5a"></a><!-- doxytag: member="symbol.h::purge_record" ref="a301dc40475dfb745421d4cd8aa1e2b5a" args="(record *rec)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void purge_record </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrecord__TAG.html">record</a> *&nbsp;</td>
+          <td class="paramname"> <em>rec</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aad7bb5414d640f568d627994d167ab03"></a><!-- doxytag: member="symbol.h::stab_insert" ref="aad7bb5414d640f568d627994d167ab03" args="(record *rec, symbol_table *stab)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void stab_insert </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrecord__TAG.html">record</a> *&nbsp;</td>
+          <td class="paramname"> <em>rec</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structsymbol__table__TAG.html">symbol_table</a> *&nbsp;</td>
+          <td class="paramname"> <em>stab</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p><p>&gt; Either EMPTY_SLOT or NOT_EMPTY </p>
+</p>
+
+</div>
+</div>
 </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&nbsp;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -67,7 +308,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 5 2011 12:13:09 for c-compiler by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 9 2011 22:24:41 for c-compiler by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

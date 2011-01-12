@@ -103,6 +103,8 @@ char *handle_defines(char* prog, char *filename)
 			free(def_name);
 			free(def_value);
 		}
+
+		
 		
 	}	
 

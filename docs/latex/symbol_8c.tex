@@ -3,3 +3,96 @@
 \label{symbol_8c}\index{compiler/src/compiler/symbol.c@{compiler/src/compiler/symbol.c}}
 }
 {\ttfamily \#include \char`\"{}symbol.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{symbol_8c_ad4df67a5ddaa44ee29cf652a0c540bf4}{print\_\-stab} (\hyperlink{structsymbol__table__TAG}{symbol\_\-table} $\ast$stab)
+\item 
+size\_\-t \hyperlink{symbol_8c_aa3b00c6be8c7b92830da32095f6e601b}{hash} (char $\ast$key, size\_\-t limit)
+\item 
+\hyperlink{structsymbol__table__TAG}{symbol\_\-table} $\ast$ \hyperlink{symbol_8c_a4fb28334c76b5a6a03638098869f241c}{create\_\-stab} (size\_\-t max)
+\item 
+void \hyperlink{symbol_8c_aad7bb5414d640f568d627994d167ab03}{stab\_\-insert} (\hyperlink{structrecord__TAG}{record} $\ast$rec, \hyperlink{structsymbol__table__TAG}{symbol\_\-table} $\ast$stab)
+\item 
+\hyperlink{structrecord__TAG}{record} $\ast$ \hyperlink{symbol_8c_a9d5622c6433cbb355202fd2fa82ab4d6}{get\_\-record} (char $\ast$name, char $\ast$val, char type, int slot, char $\ast$scope)
+\item 
+void \hyperlink{symbol_8c_a301dc40475dfb745421d4cd8aa1e2b5a}{purge\_\-record} (\hyperlink{structrecord__TAG}{record} $\ast$rec)
+\item 
+void \hyperlink{symbol_8c_a3efe6c277d8f2de4caf64c935cbe9914}{destroy\_\-stab} (\hyperlink{structsymbol__table__TAG}{symbol\_\-table} $\ast$stab)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{symbol_8c_a4fb28334c76b5a6a03638098869f241c}{
+\index{symbol.c@{symbol.c}!create\_\-stab@{create\_\-stab}}
+\index{create\_\-stab@{create\_\-stab}!symbol.c@{symbol.c}}
+\subsubsection[{create\_\-stab}]{\setlength{\rightskip}{0pt plus 5cm}{\bf symbol\_\-table}$\ast$ create\_\-stab (
+\begin{DoxyParamCaption}
+\item[{size\_\-t}]{ max}
+\end{DoxyParamCaption}
+)}}
+\label{symbol_8c_a4fb28334c76b5a6a03638098869f241c}
+\hypertarget{symbol_8c_a3efe6c277d8f2de4caf64c935cbe9914}{
+\index{symbol.c@{symbol.c}!destroy\_\-stab@{destroy\_\-stab}}
+\index{destroy\_\-stab@{destroy\_\-stab}!symbol.c@{symbol.c}}
+\subsubsection[{destroy\_\-stab}]{\setlength{\rightskip}{0pt plus 5cm}void destroy\_\-stab (
+\begin{DoxyParamCaption}
+\item[{{\bf symbol\_\-table} $\ast$}]{ stab}
+\end{DoxyParamCaption}
+)}}
+\label{symbol_8c_a3efe6c277d8f2de4caf64c935cbe9914}
+\hypertarget{symbol_8c_a9d5622c6433cbb355202fd2fa82ab4d6}{
+\index{symbol.c@{symbol.c}!get\_\-record@{get\_\-record}}
+\index{get\_\-record@{get\_\-record}!symbol.c@{symbol.c}}
+\subsubsection[{get\_\-record}]{\setlength{\rightskip}{0pt plus 5cm}{\bf record}$\ast$ get\_\-record (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ name, }
+\item[{char $\ast$}]{ val, }
+\item[{char}]{ type, }
+\item[{int}]{ slot, }
+\item[{char $\ast$}]{ scope}
+\end{DoxyParamCaption}
+)}}
+\label{symbol_8c_a9d5622c6433cbb355202fd2fa82ab4d6}
+\hypertarget{symbol_8c_aa3b00c6be8c7b92830da32095f6e601b}{
+\index{symbol.c@{symbol.c}!hash@{hash}}
+\index{hash@{hash}!symbol.c@{symbol.c}}
+\subsubsection[{hash}]{\setlength{\rightskip}{0pt plus 5cm}size\_\-t hash (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ key, }
+\item[{size\_\-t}]{ limit}
+\end{DoxyParamCaption}
+)}}
+\label{symbol_8c_aa3b00c6be8c7b92830da32095f6e601b}
+\hypertarget{symbol_8c_ad4df67a5ddaa44ee29cf652a0c540bf4}{
+\index{symbol.c@{symbol.c}!print\_\-stab@{print\_\-stab}}
+\index{print\_\-stab@{print\_\-stab}!symbol.c@{symbol.c}}
+\subsubsection[{print\_\-stab}]{\setlength{\rightskip}{0pt plus 5cm}void print\_\-stab (
+\begin{DoxyParamCaption}
+\item[{{\bf symbol\_\-table} $\ast$}]{ stab}
+\end{DoxyParamCaption}
+)}}
+\label{symbol_8c_ad4df67a5ddaa44ee29cf652a0c540bf4}
+\hypertarget{symbol_8c_a301dc40475dfb745421d4cd8aa1e2b5a}{
+\index{symbol.c@{symbol.c}!purge\_\-record@{purge\_\-record}}
+\index{purge\_\-record@{purge\_\-record}!symbol.c@{symbol.c}}
+\subsubsection[{purge\_\-record}]{\setlength{\rightskip}{0pt plus 5cm}void purge\_\-record (
+\begin{DoxyParamCaption}
+\item[{{\bf record} $\ast$}]{ rec}
+\end{DoxyParamCaption}
+)}}
+\label{symbol_8c_a301dc40475dfb745421d4cd8aa1e2b5a}
+\hypertarget{symbol_8c_aad7bb5414d640f568d627994d167ab03}{
+\index{symbol.c@{symbol.c}!stab\_\-insert@{stab\_\-insert}}
+\index{stab\_\-insert@{stab\_\-insert}!symbol.c@{symbol.c}}
+\subsubsection[{stab\_\-insert}]{\setlength{\rightskip}{0pt plus 5cm}void stab\_\-insert (
+\begin{DoxyParamCaption}
+\item[{{\bf record} $\ast$}]{ rec, }
+\item[{{\bf symbol\_\-table} $\ast$}]{ stab}
+\end{DoxyParamCaption}
+)}}
+\label{symbol_8c_aad7bb5414d640f568d627994d167ab03}
+
+
+$>$ Either EMPTY\_\-SLOT or NOT\_\-EMPTY 
+

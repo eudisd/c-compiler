@@ -21,7 +21,11 @@ Interface that holds common functions and housekeeping operations.
 \#define \hyperlink{utils_8h_ae7f90861d8c4d5b1cbdcf71d325feea2}{BUILD\_\-NUMBER}~51
 \begin{DoxyCompactList}\small\item\em Holds the current build number. \item\end{DoxyCompactList}\item 
 \#define \hyperlink{utils_8h_a7f43b36cfbbd59cd83b3193004616f7e}{BUILD\_\-DATE}~20101231
-\begin{DoxyCompactList}\small\item\em Holds the current build date in Year-\/Month-\/Day format. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Holds the current build date in Year-\/Month-\/Day format. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{utils_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}~1
+\item 
+\#define \hyperlink{utils_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}~0
+\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -31,7 +35,21 @@ void \hyperlink{utils_8h_af986bd0575ec9b913dfab4b8422509ae}{version} (void)
 \begin{DoxyCompactList}\small\item\em Prints version information. \item\end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{utils_8h_a937f7189307391dcebb5a933fd938944}{scan\_\-for\_\-o} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
 \begin{DoxyCompactList}\small\item\em Scans the program input for the -\/o flag, and returns its argument. \item\end{DoxyCompactList}\item 
+char $\ast$$\ast$ \hyperlink{utils_8h_a6d19a13a1c78d54e86dc5ba38889d852}{get\_\-files\_\-from\_\-argv} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
 int \hyperlink{utils_8h_a176d350e10e71e3ef8410365e0e2823f}{get\_\-filesize} (char $\ast$filename)
+\begin{DoxyCompactList}\small\item\em Returns the current filesize of a file. \item\end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{utils_8h_a377d5ff72d28c54737b47000493a3932}{xmalloc} (int size)
+\begin{DoxyCompactList}\small\item\em Safety wrapper for malloc. \item\end{DoxyCompactList}\item 
+char \hyperlink{utils_8h_af3485bf9853c4c5c96b4613c4d794461}{fcpeek} (FILE $\ast$f)
+\begin{DoxyCompactList}\small\item\em Returns the current character pointed to by the file discriptor. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{utils_8h_ac053065d186d2eb5048a1d28d831cf7c}{getword} (FILE $\ast$i)
+\begin{DoxyCompactList}\small\item\em Get the next word from the file stream, and increment the file pointer accordingly. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{utils_8h_a32013c4b84b7e137a0c268235c4526ae}{wordpeek} (FILE $\ast$f)
+\begin{DoxyCompactList}\small\item\em Peek the next word from the file stream, and do not increment the file pointer. \item\end{DoxyCompactList}\item 
+void \hyperlink{utils_8h_ae9ba27fb02b2b65f34fccb57738fea0b}{file\_\-error} (char $\ast$prog, char $\ast$do\_\-this, char $\ast$ifilename, char $\ast$specifics, char $\ast$msg)
+\begin{DoxyCompactList}\small\item\em General file error function. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{utils_8h_ae0e1f7c12c959de153c9199ed62a98f7}{strip\_\-whitesp} (char $\ast$str)
 \end{DoxyCompactItemize}
 
 
@@ -57,6 +75,11 @@ Holds the current build date in Year-\/Month-\/Day format.
 
 Holds the current build number. 
 
+\hypertarget{utils_8h_aa93f0eb578d23995850d61f7d61c55c1}{
+\index{utils.h@{utils.h}!FALSE@{FALSE}}
+\index{FALSE@{FALSE}!utils.h@{utils.h}}
+\subsubsection[{FALSE}]{\setlength{\rightskip}{0pt plus 5cm}\#define FALSE~0}}
+\label{utils_8h_aa93f0eb578d23995850d61f7d61c55c1}
 \hypertarget{utils_8h_a5bd9a30fc22d9a737ee060d41a4ec479}{
 \index{utils.h@{utils.h}!RELEASE@{RELEASE}}
 \index{RELEASE@{RELEASE}!utils.h@{utils.h}}
@@ -66,6 +89,11 @@ Holds the current build number.
 
 Holds the current release candidate number. 
 
+\hypertarget{utils_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{
+\index{utils.h@{utils.h}!TRUE@{TRUE}}
+\index{TRUE@{TRUE}!utils.h@{utils.h}}
+\subsubsection[{TRUE}]{\setlength{\rightskip}{0pt plus 5cm}\#define TRUE~1}}
+\label{utils_8h_aa8cecfc5c5c054d2875c03e77b7be15d}
 \hypertarget{utils_8h_a1c6d5de492ac61ad29aec7aa9a436bbf}{
 \index{utils.h@{utils.h}!VERSION@{VERSION}}
 \index{VERSION@{VERSION}!utils.h@{utils.h}}
@@ -78,6 +106,46 @@ Holds the current version (semver.org).
 
 
 \subsection{Function Documentation}
+\hypertarget{utils_8h_af3485bf9853c4c5c96b4613c4d794461}{
+\index{utils.h@{utils.h}!fcpeek@{fcpeek}}
+\index{fcpeek@{fcpeek}!utils.h@{utils.h}}
+\subsubsection[{fcpeek}]{\setlength{\rightskip}{0pt plus 5cm}char fcpeek (
+\begin{DoxyParamCaption}
+\item[{FILE $\ast$}]{ f}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8h_af3485bf9853c4c5c96b4613c4d794461}
+
+
+Returns the current character pointed to by the file discriptor. 
+
+Does not modify the current file pointer \hypertarget{utils_8h_ae9ba27fb02b2b65f34fccb57738fea0b}{
+\index{utils.h@{utils.h}!file\_\-error@{file\_\-error}}
+\index{file\_\-error@{file\_\-error}!utils.h@{utils.h}}
+\subsubsection[{file\_\-error}]{\setlength{\rightskip}{0pt plus 5cm}void file\_\-error (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ prog, }
+\item[{char $\ast$}]{ do\_\-this, }
+\item[{char $\ast$}]{ ifilename, }
+\item[{char $\ast$}]{ specifics, }
+\item[{char $\ast$}]{ msg}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8h_ae9ba27fb02b2b65f34fccb57738fea0b}
+
+
+General file error function. 
+
+\hypertarget{utils_8h_a6d19a13a1c78d54e86dc5ba38889d852}{
+\index{utils.h@{utils.h}!get\_\-files\_\-from\_\-argv@{get\_\-files\_\-from\_\-argv}}
+\index{get\_\-files\_\-from\_\-argv@{get\_\-files\_\-from\_\-argv}!utils.h@{utils.h}}
+\subsubsection[{get\_\-files\_\-from\_\-argv}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$$\ast$ get\_\-files\_\-from\_\-argv (
+\begin{DoxyParamCaption}
+\item[{int}]{ argc, }
+\item[{char $\ast$}]{ argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{utils_8h_a6d19a13a1c78d54e86dc5ba38889d852}
 \hypertarget{utils_8h_a176d350e10e71e3ef8410365e0e2823f}{
 \index{utils.h@{utils.h}!get\_\-filesize@{get\_\-filesize}}
 \index{get\_\-filesize@{get\_\-filesize}!utils.h@{utils.h}}
@@ -87,7 +155,24 @@ Holds the current version (semver.org).
 \end{DoxyParamCaption}
 )}}
 \label{utils_8h_a176d350e10e71e3ef8410365e0e2823f}
-\hypertarget{utils_8h_a937f7189307391dcebb5a933fd938944}{
+
+
+Returns the current filesize of a file. 
+
+It does this by fseeking to the last byte of the file, and return ftell(). \hypertarget{utils_8h_ac053065d186d2eb5048a1d28d831cf7c}{
+\index{utils.h@{utils.h}!getword@{getword}}
+\index{getword@{getword}!utils.h@{utils.h}}
+\subsubsection[{getword}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ getword (
+\begin{DoxyParamCaption}
+\item[{FILE $\ast$}]{ i}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8h_ac053065d186d2eb5048a1d28d831cf7c}
+
+
+Get the next word from the file stream, and increment the file pointer accordingly. 
+
+All calls to this function return a malloc'ed string. It \_\-must\_\- be freed. \hypertarget{utils_8h_a937f7189307391dcebb5a933fd938944}{
 \index{utils.h@{utils.h}!scan\_\-for\_\-o@{scan\_\-for\_\-o}}
 \index{scan\_\-for\_\-o@{scan\_\-for\_\-o}!utils.h@{utils.h}}
 \subsubsection[{scan\_\-for\_\-o}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ scan\_\-for\_\-o (
@@ -101,6 +186,15 @@ Holds the current version (semver.org).
 
 Scans the program input for the -\/o flag, and returns its argument. 
 
+\hypertarget{utils_8h_ae0e1f7c12c959de153c9199ed62a98f7}{
+\index{utils.h@{utils.h}!strip\_\-whitesp@{strip\_\-whitesp}}
+\index{strip\_\-whitesp@{strip\_\-whitesp}!utils.h@{utils.h}}
+\subsubsection[{strip\_\-whitesp}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ strip\_\-whitesp (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ str}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8h_ae0e1f7c12c959de153c9199ed62a98f7}
 \hypertarget{utils_8h_ae8605e2b78cd4a81b6c6b5c30cb7366a}{
 \index{utils.h@{utils.h}!usage@{usage}}
 \index{usage@{usage}!utils.h@{utils.h}}
@@ -127,3 +221,30 @@ Prints usage information and a listing of commands.
 
 Prints version information. 
 
+\hypertarget{utils_8h_a32013c4b84b7e137a0c268235c4526ae}{
+\index{utils.h@{utils.h}!wordpeek@{wordpeek}}
+\index{wordpeek@{wordpeek}!utils.h@{utils.h}}
+\subsubsection[{wordpeek}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ wordpeek (
+\begin{DoxyParamCaption}
+\item[{FILE $\ast$}]{ f}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8h_a32013c4b84b7e137a0c268235c4526ae}
+
+
+Peek the next word from the file stream, and do not increment the file pointer. 
+
+All calls to this function return a malloc'ed string. It \_\-must\_\- be freed. Further, \hypertarget{utils_8h_a377d5ff72d28c54737b47000493a3932}{
+\index{utils.h@{utils.h}!xmalloc@{xmalloc}}
+\index{xmalloc@{xmalloc}!utils.h@{utils.h}}
+\subsubsection[{xmalloc}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ xmalloc (
+\begin{DoxyParamCaption}
+\item[{int}]{ size}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8h_a377d5ff72d28c54737b47000493a3932}
+
+
+Safety wrapper for malloc. 
+
+Exits on error allocation. 

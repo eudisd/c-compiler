@@ -12,11 +12,65 @@ void \hyperlink{utils_8c_af986bd0575ec9b913dfab4b8422509ae}{version} (void)
 \begin{DoxyCompactList}\small\item\em Prints version information. \item\end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{utils_8c_a937f7189307391dcebb5a933fd938944}{scan\_\-for\_\-o} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
 \begin{DoxyCompactList}\small\item\em Scans the program input for the -\/o flag, and returns its argument. \item\end{DoxyCompactList}\item 
+char $\ast$$\ast$ \hyperlink{utils_8c_a6d19a13a1c78d54e86dc5ba38889d852}{get\_\-files\_\-from\_\-argv} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
 int \hyperlink{utils_8c_a176d350e10e71e3ef8410365e0e2823f}{get\_\-filesize} (char $\ast$filename)
+\begin{DoxyCompactList}\small\item\em Returns the current filesize of a file. \item\end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{utils_8c_a377d5ff72d28c54737b47000493a3932}{xmalloc} (int size)
+\begin{DoxyCompactList}\small\item\em Safety wrapper for malloc. \item\end{DoxyCompactList}\item 
+char \hyperlink{utils_8c_af3485bf9853c4c5c96b4613c4d794461}{fcpeek} (FILE $\ast$f)
+\begin{DoxyCompactList}\small\item\em Returns the current character pointed to by the file discriptor. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{utils_8c_ac053065d186d2eb5048a1d28d831cf7c}{getword} (FILE $\ast$i)
+\begin{DoxyCompactList}\small\item\em Get the next word from the file stream, and increment the file pointer accordingly. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{utils_8c_a32013c4b84b7e137a0c268235c4526ae}{wordpeek} (FILE $\ast$f)
+\begin{DoxyCompactList}\small\item\em Peek the next word from the file stream, and do not increment the file pointer. \item\end{DoxyCompactList}\item 
+void \hyperlink{utils_8c_ae9ba27fb02b2b65f34fccb57738fea0b}{file\_\-error} (char $\ast$prog, char $\ast$do\_\-this, char $\ast$ifilename, char $\ast$specifics, char $\ast$msg)
+\begin{DoxyCompactList}\small\item\em General file error function. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{utils_8c_ae0e1f7c12c959de153c9199ed62a98f7}{strip\_\-whitesp} (char $\ast$str)
 \end{DoxyCompactItemize}
 
 
 \subsection{Function Documentation}
+\hypertarget{utils_8c_af3485bf9853c4c5c96b4613c4d794461}{
+\index{utils.c@{utils.c}!fcpeek@{fcpeek}}
+\index{fcpeek@{fcpeek}!utils.c@{utils.c}}
+\subsubsection[{fcpeek}]{\setlength{\rightskip}{0pt plus 5cm}char fcpeek (
+\begin{DoxyParamCaption}
+\item[{FILE $\ast$}]{ f}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8c_af3485bf9853c4c5c96b4613c4d794461}
+
+
+Returns the current character pointed to by the file discriptor. 
+
+Does not modify the current file pointer \hypertarget{utils_8c_ae9ba27fb02b2b65f34fccb57738fea0b}{
+\index{utils.c@{utils.c}!file\_\-error@{file\_\-error}}
+\index{file\_\-error@{file\_\-error}!utils.c@{utils.c}}
+\subsubsection[{file\_\-error}]{\setlength{\rightskip}{0pt plus 5cm}void file\_\-error (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ prog, }
+\item[{char $\ast$}]{ do\_\-this, }
+\item[{char $\ast$}]{ ifilename, }
+\item[{char $\ast$}]{ specifics, }
+\item[{char $\ast$}]{ msg}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8c_ae9ba27fb02b2b65f34fccb57738fea0b}
+
+
+General file error function. 
+
+\hypertarget{utils_8c_a6d19a13a1c78d54e86dc5ba38889d852}{
+\index{utils.c@{utils.c}!get\_\-files\_\-from\_\-argv@{get\_\-files\_\-from\_\-argv}}
+\index{get\_\-files\_\-from\_\-argv@{get\_\-files\_\-from\_\-argv}!utils.c@{utils.c}}
+\subsubsection[{get\_\-files\_\-from\_\-argv}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$$\ast$ get\_\-files\_\-from\_\-argv (
+\begin{DoxyParamCaption}
+\item[{int}]{ argc, }
+\item[{char $\ast$}]{ argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{utils_8c_a6d19a13a1c78d54e86dc5ba38889d852}
 \hypertarget{utils_8c_a176d350e10e71e3ef8410365e0e2823f}{
 \index{utils.c@{utils.c}!get\_\-filesize@{get\_\-filesize}}
 \index{get\_\-filesize@{get\_\-filesize}!utils.c@{utils.c}}
@@ -26,7 +80,24 @@ int \hyperlink{utils_8c_a176d350e10e71e3ef8410365e0e2823f}{get\_\-filesize} (cha
 \end{DoxyParamCaption}
 )}}
 \label{utils_8c_a176d350e10e71e3ef8410365e0e2823f}
-\hypertarget{utils_8c_a937f7189307391dcebb5a933fd938944}{
+
+
+Returns the current filesize of a file. 
+
+It does this by fseeking to the last byte of the file, and return ftell(). \hypertarget{utils_8c_ac053065d186d2eb5048a1d28d831cf7c}{
+\index{utils.c@{utils.c}!getword@{getword}}
+\index{getword@{getword}!utils.c@{utils.c}}
+\subsubsection[{getword}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ getword (
+\begin{DoxyParamCaption}
+\item[{FILE $\ast$}]{ i}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8c_ac053065d186d2eb5048a1d28d831cf7c}
+
+
+Get the next word from the file stream, and increment the file pointer accordingly. 
+
+All calls to this function return a malloc'ed string. It \_\-must\_\- be freed. \hypertarget{utils_8c_a937f7189307391dcebb5a933fd938944}{
 \index{utils.c@{utils.c}!scan\_\-for\_\-o@{scan\_\-for\_\-o}}
 \index{scan\_\-for\_\-o@{scan\_\-for\_\-o}!utils.c@{utils.c}}
 \subsubsection[{scan\_\-for\_\-o}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ scan\_\-for\_\-o (
@@ -40,6 +111,15 @@ int \hyperlink{utils_8c_a176d350e10e71e3ef8410365e0e2823f}{get\_\-filesize} (cha
 
 Scans the program input for the -\/o flag, and returns its argument. 
 
+\hypertarget{utils_8c_ae0e1f7c12c959de153c9199ed62a98f7}{
+\index{utils.c@{utils.c}!strip\_\-whitesp@{strip\_\-whitesp}}
+\index{strip\_\-whitesp@{strip\_\-whitesp}!utils.c@{utils.c}}
+\subsubsection[{strip\_\-whitesp}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ strip\_\-whitesp (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ str}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8c_ae0e1f7c12c959de153c9199ed62a98f7}
 \hypertarget{utils_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}{
 \index{utils.c@{utils.c}!usage@{usage}}
 \index{usage@{usage}!utils.c@{utils.c}}
@@ -66,3 +146,30 @@ Prints usage information and a listing of commands.
 
 Prints version information. 
 
+\hypertarget{utils_8c_a32013c4b84b7e137a0c268235c4526ae}{
+\index{utils.c@{utils.c}!wordpeek@{wordpeek}}
+\index{wordpeek@{wordpeek}!utils.c@{utils.c}}
+\subsubsection[{wordpeek}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ wordpeek (
+\begin{DoxyParamCaption}
+\item[{FILE $\ast$}]{ f}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8c_a32013c4b84b7e137a0c268235c4526ae}
+
+
+Peek the next word from the file stream, and do not increment the file pointer. 
+
+All calls to this function return a malloc'ed string. It \_\-must\_\- be freed. Further, \hypertarget{utils_8c_a377d5ff72d28c54737b47000493a3932}{
+\index{utils.c@{utils.c}!xmalloc@{xmalloc}}
+\index{xmalloc@{xmalloc}!utils.c@{utils.c}}
+\subsubsection[{xmalloc}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ xmalloc (
+\begin{DoxyParamCaption}
+\item[{int}]{ size}
+\end{DoxyParamCaption}
+)}}
+\label{utils_8c_a377d5ff72d28c54737b47000493a3932}
+
+
+Safety wrapper for malloc. 
+
+Exits on error allocation. 

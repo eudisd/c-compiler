@@ -17,6 +17,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
+      <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -60,9 +61,117 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Prints version information.  <a href="#af986bd0575ec9b913dfab4b8422509ae"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a937f7189307391dcebb5a933fd938944">scan_for_o</a> (int argc, char *argv[])</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Scans the program input for the -o flag, and returns its argument.  <a href="#a937f7189307391dcebb5a933fd938944"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">char **&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a6d19a13a1c78d54e86dc5ba38889d852">get_files_from_argv</a> (int argc, char *argv[])</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a176d350e10e71e3ef8410365e0e2823f">get_filesize</a> (char *filename)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the current filesize of a file.  <a href="#a176d350e10e71e3ef8410365e0e2823f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a377d5ff72d28c54737b47000493a3932">xmalloc</a> (int size)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Safety wrapper for malloc.  <a href="#a377d5ff72d28c54737b47000493a3932"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#af3485bf9853c4c5c96b4613c4d794461">fcpeek</a> (FILE *f)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the current character pointed to by the file discriptor.  <a href="#af3485bf9853c4c5c96b4613c4d794461"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#ac053065d186d2eb5048a1d28d831cf7c">getword</a> (FILE *i)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the next word from the file stream, and increment the file pointer accordingly.  <a href="#ac053065d186d2eb5048a1d28d831cf7c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a32013c4b84b7e137a0c268235c4526ae">wordpeek</a> (FILE *f)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Peek the next word from the file stream, and do not increment the file pointer.  <a href="#a32013c4b84b7e137a0c268235c4526ae"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#ae9ba27fb02b2b65f34fccb57738fea0b">file_error</a> (char *prog, char *do_this, char *ifilename, char *specifics, char *msg)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">General file error function.  <a href="#ae9ba27fb02b2b65f34fccb57738fea0b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#ae0e1f7c12c959de153c9199ed62a98f7">strip_whitesp</a> (char *str)</td></tr>
 </table>
 <hr/><h2>Function Documentation</h2>
+<a class="anchor" id="af3485bf9853c4c5c96b4613c4d794461"></a><!-- doxytag: member="utils.c::fcpeek" ref="af3485bf9853c4c5c96b4613c4d794461" args="(FILE *f)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char fcpeek </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&nbsp;</td>
+          <td class="paramname"> <em>f</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Returns the current character pointed to by the file discriptor. </p>
+<p>Does not modify the current file pointer </p>
+
+</div>
+</div>
+<a class="anchor" id="ae9ba27fb02b2b65f34fccb57738fea0b"></a><!-- doxytag: member="utils.c::file_error" ref="ae9ba27fb02b2b65f34fccb57738fea0b" args="(char *prog, char *do_this, char *ifilename, char *specifics, char *msg)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void file_error </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>prog</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>do_this</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>ifilename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>specifics</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>msg</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>General file error function. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6d19a13a1c78d54e86dc5ba38889d852"></a><!-- doxytag: member="utils.c::get_files_from_argv" ref="a6d19a13a1c78d54e86dc5ba38889d852" args="(int argc, char *argv[])" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char** get_files_from_argv </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>argv</em>[]</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a176d350e10e71e3ef8410365e0e2823f"></a><!-- doxytag: member="utils.c::get_filesize" ref="a176d350e10e71e3ef8410365e0e2823f" args="(char *filename)" -->
 <div class="memitem">
 <div class="memproto">
@@ -78,6 +187,30 @@ Functions</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+
+<p>Returns the current filesize of a file. </p>
+<p>It does this by fseeking to the last byte of the file, and return ftell(). </p>
+
+</div>
+</div>
+<a class="anchor" id="ac053065d186d2eb5048a1d28d831cf7c"></a><!-- doxytag: member="utils.c::getword" ref="ac053065d186d2eb5048a1d28d831cf7c" args="(FILE *i)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* getword </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&nbsp;</td>
+          <td class="paramname"> <em>i</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the next word from the file stream, and increment the file pointer accordingly. </p>
+<p>All calls to this function return a malloc'ed string. It _must_ be freed. </p>
 
 </div>
 </div>
@@ -107,6 +240,24 @@ Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Scans the program input for the -o flag, and returns its argument. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae0e1f7c12c959de153c9199ed62a98f7"></a><!-- doxytag: member="utils.c::strip_whitesp" ref="ae0e1f7c12c959de153c9199ed62a98f7" args="(char *str)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* strip_whitesp </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>str</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
 
 </div>
 </div>
@@ -150,13 +301,55 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a32013c4b84b7e137a0c268235c4526ae"></a><!-- doxytag: member="utils.c::wordpeek" ref="a32013c4b84b7e137a0c268235c4526ae" args="(FILE *f)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* wordpeek </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&nbsp;</td>
+          <td class="paramname"> <em>f</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Peek the next word from the file stream, and do not increment the file pointer. </p>
+<p>All calls to this function return a malloc'ed string. It _must_ be freed. Further, </p>
+
+</div>
+</div>
+<a class="anchor" id="a377d5ff72d28c54737b47000493a3932"></a><!-- doxytag: member="utils.c::xmalloc" ref="a377d5ff72d28c54737b47000493a3932" args="(int size)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* xmalloc </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>size</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Safety wrapper for malloc. </p>
+<p>Exits on error allocation. </p>
+
+</div>
+</div>
 </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&nbsp;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -165,7 +358,7 @@ Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 5 2011 12:13:09 for c-compiler by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 9 2011 22:24:41 for c-compiler by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
