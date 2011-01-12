@@ -1,3 +1,0 @@
-semantic.o: semantic.c semantic.h
-
-semantic.h:

@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
 			print_stab(stab);
 			*/
-			run_preprocessor("input", "output");
+			run_preprocessor(argv[0], "input", "output");
 			break;
 		case 2:
 			if(strcmp(argv[1], "--help") == 0){

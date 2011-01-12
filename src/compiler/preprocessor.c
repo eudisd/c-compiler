@@ -3,12 +3,22 @@
 
 void run_preprocessor(const char *prog, const char *ifilename, const char *ofilename)
 {
+
+	/* Order of file processing ("data" is the name of the intermediary file"): 
+     **********************************************************************
+     * ifilename(open the stream) -->  include_headers("data") --> data --> 
+     * remove_comments("data") --> data --> handle_defines("data") -->
+     * data
+     */
+
+	/* We need certain flags to be set here.  If they are not set, then we simply use
+     * the system defaults.  These flags deal with the standard directories, among others things.
+	 */
+
 	int dir_flag = FALSE;
 	int lib_flag = FALSE;
 
-	/* We need certain flags to be set here.  If they are not set, then we simply use
-     * the system defaults.  These flags deal with the standard directories, among others things
-	 */
+	
 	/* set_flags(dir_flag, lib_flag); */
 
 	if( !dir_flag ){
@@ -26,22 +36,22 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
      *  file and output an intermediary object file.  
      ********************************************************************/
 
-	//include_headers(prog, ifilename, ofilename);
+	//include_headers(prog, ifilename, "data");
 
 	/* This same interim file is then used for all subsequent operations, including
        feeding it to the compiler (scanner, parser, etc etc).
 	*/
 
 	/* After header files are included, we remove all C-Style comments from the tmp file*/
-	//remove_comments(prog, ofilename); //ofilename);
+	//remove_comments(prog, "data");
 
 
 	/* At this point, we have to handle #defines.  There are two types of cases here.
-       One is a symbolic constant, the other is a macro.  I will handle the costant case
+       One is a symbolic constant, the other is a macro.  I will handle the constant case
        first, and leave stubs for macro, as I'm not sure if I'll implement it fully yet
     */
 
-	handle_defines((char*)prog, "tmp.txt");
+	//handle_defines((char*)prog, "tmp.txt");
 		
 	
 
@@ -208,7 +218,7 @@ void remove_comments(const char *prog, const char *filename)
 {
 
 	FILE *i = fopen(filename, "r");
-	FILE *o = fopen("data", "w");
+	FILE *o = fopen("data.tmp", "w");
 	
 	if(!i)
 		file_error((char*)prog, "open", (char*)filename, "for removing comments", "No such file or directory.");
@@ -237,7 +247,7 @@ void remove_comments(const char *prog, const char *filename)
 	fclose(o);
 
 	remove(filename);
-	rename("data", filename);
+	rename("data.tmp", filename);
 }
 
 char *get_inc_fname(char *n)
