@@ -1,3 +1,7 @@
+/** \file symbol.c
+	\brief Defines all of the symbol table primitives.
+*/
+
 #include "symbol.h"
 
 void print_stab(symbol_table *stab)

@@ -1,11 +1,12 @@
 /** \file scanner.h 
     \brief Lists the associativity and precedence of all tokens
 	
-	The defines here are grouped in order of associativity, and listed
 	in order of precedence, with the defines at the top with the highest
+	The defines here are grouped in order of associativity, and listed
 	and with descending precedence as we go down.
 	
-*/
+	The rest are token values for keywords and the like.
+  */
 
 #ifndef _SCANNER_H_
 #define _SCANNER_H_
@@ -87,11 +88,47 @@
 /* Left To Right Associativity */
 #define TK_COMMA
 
+/* Precedence and Associative Irrelavent */
 
-        
+#define TK_KEYWORD
+#define TK_IDENTIFIER
+#define TK_CONST  
+#define TK_STRING
 
+/* ************************************* */
 
-   
-#define 
+#define TK_AUTO
+#define TK_BREAK
+#define TK_CASE
+#define TK_CHAR
+#define TK_CONST
+#define TK_CONTINUE
+#define TK_DEFAULT
+#define TK_DO
+#define TK_DOUBLE
+#define TK_ELSE
+#define TK_ENUM
+#define TK_EXTERN
+#define TK_FLOAT
+#define TK_FOR
+#define TK_GOTO
+#define TK_IF
+#define TK_INT
+#define TK_LONG
+#define TK_REGISTER
+#define TK_RETURN
+#define TK_SHORT
+#define TK_SIGNED
+#define TK_SIZEOF
+#define TK_STATIC
+#define TK_STRUCT
+#define TK_SWITCH
+#define TK_TYPEDEF
+#define TK_UNION
+#define TK_UNSIGNED
+#define TK_VOID
+#define TK_VOLATILE
+#define TK_WHILE
+
 
 #endif
