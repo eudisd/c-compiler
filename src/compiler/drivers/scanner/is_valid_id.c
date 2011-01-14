@@ -18,6 +18,7 @@ int is_valid_id(char *word)
 		if( !isalpha(word[i]) && !isdigit(word[i]) && word[i] != '_' ){
 			return 0;
 		}
+		else if(
 	}
 	return size;
 }

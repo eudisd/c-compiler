@@ -52,14 +52,16 @@ void run_scanner(char *filename)
 	
 			case 'i':
 				/* int */
-				/* if */
+				
 				
 				if( !strcmp(word, "int") ){	
 					sprintf(tk_buffer0, "%d", TK_KEYWORD);
 					sprintf(tk_buffer1, "%d", TK_INT);
 
 					put_lexeme(o, tk_buffer0, tk_buffer1);
+				
 				}
+				/* if */
 				else if ( !strcmp(word, "if") ){
 					sprintf(tk_buffer0, "%d", TK_KEYWORD);
 					sprintf(tk_buffer1, "%d", TK_INT);
@@ -70,8 +72,6 @@ void run_scanner(char *filename)
 				/* Else try to extract the keywords,
 				   else error */
 				}
-				
-				
 				
 				break;
 
@@ -247,6 +247,15 @@ void put_lexeme(FILE *o, char *tk_name, char *tk_value)
 	fwrite(tk_name, sizeof(char), tk_name_size, o);
 	putc(',', o);
 	fwrite(tk_value, sizeof(char), tk_value_size, o);
+	putc('>', o);
+}
+
+void put_ulexeme(FILE *o, char *tk_name)
+{
+	size_t tk_name_size = strlen(tk_name);
+	
+	putc('<', o);
+	fwrite(tk_name, sizeof(char), tk_name_size, o);
 	putc('>', o);
 }
 int is_valid_id(char *word)

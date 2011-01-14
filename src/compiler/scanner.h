@@ -154,6 +154,10 @@ void run_scanner(char *filename);
   */
 void put_lexeme(FILE *o, char *tk_name, char *tk_value);
 
+/** Writes a uanry lexeme out to file, given a name.
+  */
+void put_ulexeme(FILE *o, char *tk_name);
+
 /** Tests if the given word is a valid C symbol, or identifier.
   *	If false, returns 0, if true returns the size of the identifier.
   *	This is useful because we can use the size to handle the function
