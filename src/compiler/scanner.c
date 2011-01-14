@@ -7,13 +7,17 @@
 void run_scanner(char *filename)
 {
 	char c;
+	char *word;
 
 	FILE *i = fopen(filename, "r");
 	FILE *o = fopen(INTERIM_FILENAME, "w");
-	
-	while( (c = fcpeek(i)) != EOF ){
-		switch(c){
 
+	/* Get word returns a string, so a NULL signifies that
+     * nothing useful was retrieved from the input stream 
+	 */
+	while( (word = getword(i)) != NULL ){
+		switch(word[0]){
+		
 			/* First, the possible keyword tokens */
 			case 'a':
 				break;
@@ -47,8 +51,26 @@ void run_scanner(char *filename)
 				break;
 	
 			case 'i':
+				
+				if( !strcmp(word, "int") ){	
+					sprintf(tk_buffer0, "%d", TK_KEYWORD);
+					sprintf(tk_buffer1, "%d", TK_INT);
+
+					put_lexeme(o, tk_buffer0, tk_buffer1);
+				}
+				else if ( !strcmp(word, "if") ){
+					sprintf(tk_buffer0, "%d", TK_KEYWORD);
+					sprintf(tk_buffer1, "%d", TK_INT);
+
+					put_lexeme(o, tk_buffer0, tk_buffer1);
+				}
+				else {
+				/* Else try to extract the keywords,
+				   else error */
+				}
+				
 				/* if */
-				/* int */
+				
 				break;
 
 			case 'l':
@@ -148,7 +170,7 @@ void run_scanner(char *filename)
 				/* /= */
 				break;
 			
-			case '%'::
+			case '%':
 				/* % */
 				/* %= */
 				break;
@@ -191,7 +213,7 @@ void run_scanner(char *filename)
 
 			/* Constants */
 
-			case ''':
+			case '\'':
 				break;
 		
 			/* String Literals */
@@ -199,17 +221,22 @@ void run_scanner(char *filename)
 				break;
 
 			default:
-
-			/* ERROR! Given token is not part of the lang def */
+			/* Try To See if it's a identifier, if not: 
+			 ERROR! Given token is not part of the lang def. */
 
 				break;
 				
 		}
+		free(word);
 	}
+	
+	fclose(i);
+	fclose(o);
 }
 
 void put_lexeme(FILE *o, char *tk_name, char *tk_value)
 {
+	printf("EXEC\n\n");
 	size_t tk_name_size = strlen(tk_name);
 	size_t tk_value_size = strlen(tk_value);
 	

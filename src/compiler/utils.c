@@ -73,6 +73,10 @@ char *getword(FILE *i)
 	char *word;
 	int pos;
 	size_t size = 0;
+
+	if(fcpeek(i) == EOF){
+		return NULL;
+	}
 	
 	pos = ftell(i);
 	c = getc(i);
@@ -87,17 +91,18 @@ char *getword(FILE *i)
 	//printf("\n\nEND\n\n");
 	fseek(i, -(ftell(i) - pos), SEEK_CUR);
 
-	word = (char*)xmalloc(sizeof(char)*size+1);
+	word = (char*)xmalloc(sizeof(char)*size + 1);
 	c = getc(i);
 
 	/* Then we copy the word the to malloc'ed space */
-	while ( ((c != EOF) && !isspace(c)) && (j < size) ){
+	while ( ((c != EOF) && !isspace(c)) && (j < size) ){	
 		word[j] = c;
 		j++;
 		c = getc(i);
 	}
-	
 	word[size] = '\0';
+
+	
 	return word;
 }
 

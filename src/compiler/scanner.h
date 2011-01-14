@@ -21,6 +21,9 @@
 #include "utils.h"
 
 /* Token Defininitions */
+char tk_buffer0[5];            /**> Used to write the interger values below as strings (easier). */
+char tk_buffer1[5];           
+
 
 /* Scope */
 #define TK_LEFTBRACKET         0
@@ -149,6 +152,8 @@ void run_scanner(char *filename);
 /** Writes a lexeme out to file, given a name-value pair.
   */
 void put_lexeme(FILE *o, char *tk_name, char *tk_value);
+
+int is_valid_id(char *word);
 
 /* This is part of the parser! (FIX IT LATER)*/
 
