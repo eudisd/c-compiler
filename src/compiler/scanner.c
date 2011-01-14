@@ -51,6 +51,8 @@ void run_scanner(char *filename)
 				break;
 	
 			case 'i':
+				/* int */
+				/* if */
 				
 				if( !strcmp(word, "int") ){	
 					sprintf(tk_buffer0, "%d", TK_KEYWORD);
@@ -69,7 +71,7 @@ void run_scanner(char *filename)
 				   else error */
 				}
 				
-				/* if */
+				
 				
 				break;
 
@@ -247,7 +249,6 @@ void put_lexeme(FILE *o, char *tk_name, char *tk_value)
 	fwrite(tk_value, sizeof(char), tk_value_size, o);
 	putc('>', o);
 }
-
 int is_valid_id(char *word)
 {
 	size_t size = strlen(word);
