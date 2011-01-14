@@ -234,9 +234,10 @@ void run_scanner(char *filename)
 	fclose(o);
 }
 
+
+
 void put_lexeme(FILE *o, char *tk_name, char *tk_value)
 {
-	printf("EXEC\n\n");
 	size_t tk_name_size = strlen(tk_name);
 	size_t tk_value_size = strlen(tk_value);
 	
@@ -245,6 +246,18 @@ void put_lexeme(FILE *o, char *tk_name, char *tk_value)
 	putc(',', o);
 	fwrite(tk_value, sizeof(char), tk_value_size, o);
 	putc('>', o);
+}
+
+int is_valid_id(char *word)
+{
+	size_t size = strlen(word);
+	int i;
+	for(i = 0; i < size; i++){
+		if( !isalpha(word[i]) || !isdigit(word[i]) || word[i] != '_' ){
+			return 0;
+		}
+	}
+	return size;
 }
 
 

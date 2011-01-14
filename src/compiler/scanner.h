@@ -1,14 +1,14 @@
 /** \file scanner.h 
-    \brief Lists the associativity and precedence of all tokens.
-
-	This is done i order of precedence, with the defines at the top with the highest.
-
-	The defines here are grouped in order of associativity, and listed
-	with descending precedence as we go down.
-	
-	The rest are token values for keywords and the like.
-
-	Everything else normally in a header file comes after.
+  * \brief Lists the associativity and precedence of all tokens.
+  *
+  * This is done i order of precedence, with the defines at the top with the highest.
+  *
+  * The defines here are grouped in order of associativity, and listed
+  *	with descending precedence as we go down.
+  *
+  * The rest are token values for keywords and the like.
+  *
+  *Everything else normally in a header file comes after.
   */
 
 #ifndef _SCANNER_H_
@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "utils.h"
 
@@ -153,6 +154,12 @@ void run_scanner(char *filename);
   */
 void put_lexeme(FILE *o, char *tk_name, char *tk_value);
 
+/** Tests if the given word is a valid C symbol, or identifier.
+  *	If false, returns 0, if true returns the size of the identifier.
+  *	This is useful because we can use the size to handle the function
+  *	case, in which an identifier can have '(' directly concatenated (no space)
+  * with the identifier.  (i.e.  main() vs main () )
+  */
 int is_valid_id(char *word);
 
 /* This is part of the parser! (FIX IT LATER)*/
