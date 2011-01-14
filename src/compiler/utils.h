@@ -1,6 +1,6 @@
 /** \file utils.h 
     \brief Interface that holds common functions and housekeeping operations.
-*/
+  */
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
@@ -13,6 +13,8 @@
 #define RELEASE 0           /**< Holds the current release candidate number. */
 #define BUILD_NUMBER 51     /**< Holds the current build number. */
 #define BUILD_DATE 20101231 /**< Holds the current build date in Year-Month-Day format. */
+
+#define INTERIM_FILENAME "data"
 
 #define TRUE 1
 #define FALSE 0

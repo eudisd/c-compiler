@@ -48,11 +48,133 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1>compiler/src/compiler/scanner.h</h1>  </div>
 </div>
 <div class="contents">
-<a href="scanner_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef _SCANNER_H_</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define _SCANNER_H_</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 
-<a name="l00005"></a>00005 <span class="preprocessor">#endif</span>
+<a href="scanner_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<a name="l00010"></a>00010 <span class="preprocessor">#ifndef _SCANNER_H_</span>
+<a name="l00011"></a>00011 <span class="preprocessor"></span><span class="preprocessor">#define _SCANNER_H_</span>
+<a name="l00012"></a>00012 <span class="preprocessor"></span>
+<a name="l00013"></a>00013 <span class="comment">/* Token Defininitions */</span>
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="comment">/* Scope */</span>
+<a name="l00016"></a><a class="code" href="scanner_8h.html#a8a80abf7191f7bca48a8ef8072ab6f07">00016</a> <span class="preprocessor">#define TK_LEFTBRACKET         0</span>
+<a name="l00017"></a><a class="code" href="scanner_8h.html#af6c922368c079b4303787ee29a263d69">00017</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_RIGHTBRACKET        1</span>
+<a name="l00018"></a>00018 <span class="preprocessor"></span>
+<a name="l00019"></a>00019 <span class="comment">/* Left To Right Associativity */</span>
+<a name="l00020"></a><a class="code" href="scanner_8h.html#a6e731777cc2620c3350a5fd8892ace48">00020</a> <span class="preprocessor">#define TK_LEFTPAREN           2</span>
+<a name="l00021"></a><a class="code" href="scanner_8h.html#ad30c1217bb36d9610623effbf4489f46">00021</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_RIGHTPAREN          3</span>
+<a name="l00022"></a><a class="code" href="scanner_8h.html#ab042f6df86b1e1d87da8e53b914a3481">00022</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_LEFT_SQR_BRACKET    4</span>
+<a name="l00023"></a><a class="code" href="scanner_8h.html#a808bc9575b1e1ca6d6e390ccf6778a46">00023</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_RIGHT_SQR_BRACKET   5</span>
+<a name="l00024"></a><a class="code" href="scanner_8h.html#a41093e546c611510c67b3f5c74ba9eb8">00024</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_DOT                 6</span>
+<a name="l00025"></a>00025 <span class="preprocessor"></span>   
+<a name="l00026"></a>00026 <span class="comment">/* Right To Left Associativity */</span>
+<a name="l00027"></a><a class="code" href="scanner_8h.html#a6fc09313769d317852417ce8049b1e94">00027</a> <span class="preprocessor">#define TK_UNARY_EXCLAMATION   7</span>
+<a name="l00028"></a><a class="code" href="scanner_8h.html#a6c1088887f8f5d7fef9d074ea7b401bb">00028</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_UNARY_TILDA         8</span>
+<a name="l00029"></a><a class="code" href="scanner_8h.html#a105abffcad292b030e4d1b07f4f625a5">00029</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_UNARY_PLUSPLUS      9 </span>
+<a name="l00030"></a><a class="code" href="scanner_8h.html#aac3c9be62c0f87d5cd374e7031b28d2f">00030</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_UNARY_MINUSMINUS    10</span>
+<a name="l00031"></a><a class="code" href="scanner_8h.html#ac5c4c9ed75638dd4bff5302f3d9483d1">00031</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_UNARY_PLUS          11</span>
+<a name="l00032"></a><a class="code" href="scanner_8h.html#a3a284520ba1c2ccdc67a9ada64f98e6a">00032</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_UNARY_MINUS         12</span>
+<a name="l00033"></a><a class="code" href="scanner_8h.html#acc3c0dcd57534cb88233818c700d22fe">00033</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_UNARY_STAR          13</span>
+<a name="l00034"></a><a class="code" href="scanner_8h.html#ac5bec82a68bac1dc80896e2b1dc00777">00034</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_UNARY_AMPERSAND     14</span>
+<a name="l00035"></a><a class="code" href="scanner_8h.html#a59703dc2484903d68015594c682901f9">00035</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_UNARY_CASTING       15</span>
+<a name="l00036"></a><a class="code" href="scanner_8h.html#a560c9c9b78fb341641c5d73a8e6ca803">00036</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_UNARY_SIZEOF        16</span>
+<a name="l00037"></a>00037 <span class="preprocessor"></span>
+<a name="l00038"></a>00038 <span class="comment">/* Left To Right Associativity */</span>
+<a name="l00039"></a><a class="code" href="scanner_8h.html#a2611687e1403e2e7e73fb397378774cf">00039</a> <span class="preprocessor">#define TK_MULT_STAR           17</span>
+<a name="l00040"></a><a class="code" href="scanner_8h.html#a0ef7bb7af0b5de7fd1850304f0a0e8be">00040</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_DIV                 18</span>
+<a name="l00041"></a><a class="code" href="scanner_8h.html#af726b4666a1cd0dcd185b6caf057620c">00041</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_MOD                 19</span>
+<a name="l00042"></a>00042 <span class="preprocessor"></span>
+<a name="l00043"></a>00043 <span class="comment">/* Left To Right Associativity */</span>
+<a name="l00044"></a><a class="code" href="scanner_8h.html#a4f2c64b6344c27d6fedb5ccba238e612">00044</a> <span class="preprocessor">#define TK_PLUS                20</span>
+<a name="l00045"></a><a class="code" href="scanner_8h.html#ac444a1caaa6b2f52ba9ac31ff1a9d494">00045</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_MINUS               21</span>
+<a name="l00046"></a>00046 <span class="preprocessor"></span>
+<a name="l00047"></a>00047 <span class="comment">/* Left To Right Associativity */</span>
+<a name="l00048"></a><a class="code" href="scanner_8h.html#a9d7f5710af283f1e28c689b2ce8394f6">00048</a> <span class="preprocessor">#define TK_LEFT_SHIFT          22</span>
+<a name="l00049"></a><a class="code" href="scanner_8h.html#acddf13f2a6a35e848b52d1a9f795b7fb">00049</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_RIGHT_SHIFT         23</span>
+<a name="l00050"></a>00050 <span class="preprocessor"></span>
+<a name="l00051"></a>00051 <span class="comment">/* Left To Right Associativity */</span>
+<a name="l00052"></a><a class="code" href="scanner_8h.html#a315a94353df8bac3ecba4a858f814a66">00052</a> <span class="preprocessor">#define TK_LESS_LOGIC          24</span>
+<a name="l00053"></a><a class="code" href="scanner_8h.html#aeec99c18d38c04b19f511cedf9912e82">00053</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_RIGHT_LOGIC         25</span>
+<a name="l00054"></a><a class="code" href="scanner_8h.html#ab4f4969737c71dee9af4b2165eaf169f">00054</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_RIGHT_EQU_LOGIC     26</span>
+<a name="l00055"></a><a class="code" href="scanner_8h.html#ae2f743be3c2eaf4491606bc2fde95dac">00055</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_LEFT_EQU_LOGIC      27</span>
+<a name="l00056"></a>00056 <span class="preprocessor"></span>
+<a name="l00057"></a>00057 <span class="comment">/* Left To Right Associativity */</span>
+<a name="l00058"></a><a class="code" href="scanner_8h.html#ae31b0e6dd7481747ac51f7a484e05fda">00058</a> <span class="preprocessor">#define TK_EQU_EQU_LOGIC       28</span>
+<a name="l00059"></a><a class="code" href="scanner_8h.html#ac9a7cac1bedbde2bb3845b2da953152c">00059</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_NOT_EQU_LOGIC       29</span>
+<a name="l00060"></a>00060 <span class="preprocessor"></span>
+<a name="l00061"></a>00061 <span class="comment">/* Left To Right Associativity */</span>  
+<a name="l00062"></a><a class="code" href="scanner_8h.html#a3b02389f372cf746ab1f95559d457df0">00062</a> <span class="preprocessor">#define TK_BIT_AMPERSAND       30</span>
+<a name="l00063"></a><a class="code" href="scanner_8h.html#a84aab60a9feca8283492a09875113469">00063</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_BIT_XOR             31</span>
+<a name="l00064"></a><a class="code" href="scanner_8h.html#abf771afae05ede4fd4a8e1750a0a02e6">00064</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_BIT_OR              32</span>
+<a name="l00065"></a>00065 <span class="preprocessor"></span>
+<a name="l00066"></a>00066 <span class="comment">/* Left To Right Associativity */</span>
+<a name="l00067"></a><a class="code" href="scanner_8h.html#a8d703b69dca3031580773d1305168ca6">00067</a> <span class="preprocessor">#define TK_LOGIC_AND           33</span>
+<a name="l00068"></a><a class="code" href="scanner_8h.html#a4c10b4eb924010ea6355ac00bd8c3d1b">00068</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_LOGIC_OR            34</span>
+<a name="l00069"></a>00069 <span class="preprocessor"></span>
+<a name="l00070"></a>00070 <span class="comment">/* Left To Right Associativity */</span> 
+<a name="l00071"></a><a class="code" href="scanner_8h.html#a4a0637e5af0da813e74492d39271f9d6">00071</a> <span class="preprocessor">#define TK_QUESTION            35</span>
+<a name="l00072"></a><a class="code" href="scanner_8h.html#aa761c93890bc423488a937179ee97501">00072</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_COLON               36</span>
+<a name="l00073"></a>00073 <span class="preprocessor"></span>
+<a name="l00074"></a>00074 <span class="comment">/* Right To Left Associativity */</span>
+<a name="l00075"></a><a class="code" href="scanner_8h.html#a44476f1dd0c314c222de4458ffe68daa">00075</a> <span class="preprocessor">#define TK_EQU                 37</span>
+<a name="l00076"></a><a class="code" href="scanner_8h.html#a5e8fa0beb407db61d3959d1985faf8ae">00076</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_PLUS_EQU            38</span>
+<a name="l00077"></a><a class="code" href="scanner_8h.html#ab3dd9e733610df38a7bcb05b0996e44b">00077</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_MINUS_EQU           39</span>
+<a name="l00078"></a><a class="code" href="scanner_8h.html#a0ab69287f842c47a96fdecd6f3c285a2">00078</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_STAR_EQU            40</span>
+<a name="l00079"></a><a class="code" href="scanner_8h.html#a13c1913d692dad781093b67115256b4e">00079</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_DIV_EQU             41</span>
+<a name="l00080"></a><a class="code" href="scanner_8h.html#abd898998030ba1d74f15f85684d9b29b">00080</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_MOD_EQU             42</span>
+<a name="l00081"></a><a class="code" href="scanner_8h.html#a3dbd90ef402215062a85473ce5664961">00081</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_AND_EQU             43</span>
+<a name="l00082"></a><a class="code" href="scanner_8h.html#a21f38ed1ff9d24b589ae60753a4da9e3">00082</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_XOR_EQU             44</span>
+<a name="l00083"></a><a class="code" href="scanner_8h.html#a63f7ba96f2407f851f5ff9440c475cde">00083</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_OR_EQU              45</span>
+<a name="l00084"></a><a class="code" href="scanner_8h.html#a677290b77aaa66524bcc8d6c5a5c91d6">00084</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_LSHIFT_EQU          46</span>
+<a name="l00085"></a><a class="code" href="scanner_8h.html#a4a11e9ef8156f7989b70e809f4bd0330">00085</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_RSHIFT_EQU          47</span>
+<a name="l00086"></a>00086 <span class="preprocessor"></span>
+<a name="l00087"></a>00087 <span class="comment">/* Left To Right Associativity */</span>
+<a name="l00088"></a><a class="code" href="scanner_8h.html#a8421318f64240202311f07c6570e54e6">00088</a> <span class="preprocessor">#define TK_COMMA               48</span>
+<a name="l00089"></a>00089 <span class="preprocessor"></span>
+<a name="l00090"></a>00090 <span class="comment">/* Precedence and Associative Irrelavent */</span>
+<a name="l00091"></a>00091 
+<a name="l00092"></a><a class="code" href="scanner_8h.html#afb54839961fbee4b33819b80a873561e">00092</a> <span class="preprocessor">#define TK_KEYWORD             49</span>
+<a name="l00093"></a><a class="code" href="scanner_8h.html#a02e25c9bf612314dcb9043eb203b35a3">00093</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_IDENTIFIER          50</span>
+<a name="l00094"></a>00094 <span class="preprocessor"></span><span class="preprocessor">#define TK_CONST               51</span>
+<a name="l00095"></a><a class="code" href="scanner_8h.html#a9810f9bc21f26ee9b8d7b374534ff54b">00095</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_STRING              52</span>
+<a name="l00096"></a>00096 <span class="preprocessor"></span>
+<a name="l00097"></a>00097 <span class="comment">/* ************************************* */</span>
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099 <span class="comment">/* Keywords/Reserved */</span>
+<a name="l00100"></a>00100 
+<a name="l00101"></a><a class="code" href="scanner_8h.html#ac1eef2b2496e77cf7cef70a8cbde53f7">00101</a> <span class="preprocessor">#define TK_AUTO                53</span>
+<a name="l00102"></a><a class="code" href="scanner_8h.html#a0686c797046b1a8aeb2088677d7129cb">00102</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_BREAK               54</span>
+<a name="l00103"></a><a class="code" href="scanner_8h.html#a4002f1dba0764071df03b854af3cc672">00103</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_CASE                55</span>
+<a name="l00104"></a><a class="code" href="scanner_8h.html#ab5fdaab89cfda65fc9adc58a27396578">00104</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_CHAR                56</span>
+<a name="l00105"></a><a class="code" href="scanner_8h.html#a5953e748a8feb3ce499555ee492796ed">00105</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_CONST               57</span>
+<a name="l00106"></a><a class="code" href="scanner_8h.html#a902fab016fa2fd7bc13b56604ce27c4f">00106</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_CONTINUE            58</span>
+<a name="l00107"></a><a class="code" href="scanner_8h.html#ad26740aa42f49eb2dcc7670e2368b492">00107</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_DEFAULT             59</span>
+<a name="l00108"></a><a class="code" href="scanner_8h.html#ac3beb13d1d5e98b30c2eef798f28d715">00108</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_DO                  60</span>
+<a name="l00109"></a><a class="code" href="scanner_8h.html#ad7a721897fb5b879dff2c0dd6257fff9">00109</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_DOUBLE              61</span>
+<a name="l00110"></a><a class="code" href="scanner_8h.html#aa03915a5e7ef6f56f5aa46b4e04ef96e">00110</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_ELSE                62</span>
+<a name="l00111"></a><a class="code" href="scanner_8h.html#aaa3d5394aa3ec246f6a601db6022f452">00111</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_ENUM                63</span>
+<a name="l00112"></a><a class="code" href="scanner_8h.html#aa196baeee0d9599cbf4994a2df432bba">00112</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_EXTERN              64</span>
+<a name="l00113"></a><a class="code" href="scanner_8h.html#a76166a57ba5861e71c0b332b2d94a75d">00113</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_FLOAT               65</span>
+<a name="l00114"></a><a class="code" href="scanner_8h.html#a7405119edbe69d44678e0a53e5ac6b32">00114</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_FOR                 66</span>
+<a name="l00115"></a><a class="code" href="scanner_8h.html#a50a61cc1a26fa6d09b2c378766c146eb">00115</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_GOTO                67</span>
+<a name="l00116"></a><a class="code" href="scanner_8h.html#aaa47b87c1a9d8bbf5dc6f13f684b2b10">00116</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_IF                  68</span>
+<a name="l00117"></a><a class="code" href="scanner_8h.html#a691e10d8d7c7c95260428b7d0afae343">00117</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_INT                 69</span>
+<a name="l00118"></a><a class="code" href="scanner_8h.html#a6a9cb410644243edd1afbf31739541da">00118</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_LONG                70</span>
+<a name="l00119"></a><a class="code" href="scanner_8h.html#a43ed276edd91747f89f75a4da3547d49">00119</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_REGISTER            71</span>
+<a name="l00120"></a><a class="code" href="scanner_8h.html#a2267ad78e37842b2c20fbf9f5af23fee">00120</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_RETURN              72</span>
+<a name="l00121"></a><a class="code" href="scanner_8h.html#a0e2c6b33b23727b407faa86736c9377f">00121</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_SHORT               73</span>
+<a name="l00122"></a><a class="code" href="scanner_8h.html#a7e63974eb74eb6a535a4ffa965cc0dd8">00122</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_SIGNED              74</span>
+<a name="l00123"></a><a class="code" href="scanner_8h.html#a581fe5ce426edc860456a75a2bb8f133">00123</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_SIZEOF              75</span>
+<a name="l00124"></a><a class="code" href="scanner_8h.html#a03e35c913d8cb446a4aa4f3538175857">00124</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_STATIC              76</span>
+<a name="l00125"></a><a class="code" href="scanner_8h.html#a55d47a7887b9b834e9e1e98c9ea9cd47">00125</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_STRUCT              77</span>
+<a name="l00126"></a><a class="code" href="scanner_8h.html#a8a11bd9b30a6e55e3bbdcc7c1aff445c">00126</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_SWITCH              78</span>
+<a name="l00127"></a><a class="code" href="scanner_8h.html#ac3a6e19818d2c5a356febf1dd6c14b12">00127</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_TYPEDEF             79</span>
+<a name="l00128"></a><a class="code" href="scanner_8h.html#ae36c5e3e1cb1ec5711f79b2d476f6f45">00128</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_UNION               80</span>
+<a name="l00129"></a><a class="code" href="scanner_8h.html#adfa13668f30a6cac6c828ed5e388569b">00129</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_UNSIGNED            81</span>
+<a name="l00130"></a><a class="code" href="scanner_8h.html#a62c2308ebfbef20c7adb5ffaa4960307">00130</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_VOID                82</span>
+<a name="l00131"></a><a class="code" href="scanner_8h.html#a9026b10770dcc7e520a5ab8e33928661">00131</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_VOLATILE            83</span>
+<a name="l00132"></a><a class="code" href="scanner_8h.html#a1077392751401196c91d4ece78d95bef">00132</a> <span class="preprocessor"></span><span class="preprocessor">#define TK_WHILE               84</span>
+<a name="l00133"></a>00133 <span class="preprocessor"></span>
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
 <!--- window showing the filter options -->
@@ -69,7 +191,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 9 2011 22:24:41 for c-compiler by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Jan 13 2011 19:37:54 for c-compiler by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

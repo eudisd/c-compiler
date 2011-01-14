@@ -1,3 +1,7 @@
+/** \file symbol.h
+	\brief 
+  */
+
 #ifndef _SYMBOL_H_
 #define _SYMBOL_H_
 

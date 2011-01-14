@@ -1,3 +1,7 @@
+/** \file main.h
+	\brief
+  */
+
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
@@ -9,5 +13,6 @@
 #include "symbol.h"
 #include "utils.h"
 #include "preprocessor.h"
+#include "scanner.h"
 
 #endif

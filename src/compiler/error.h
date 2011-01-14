@@ -2,7 +2,7 @@
 	\brief Header file containing all of the error handling primatives for the compiler.
            These primatives are for error output in terms of the runtime compiler, not the 
            development environment for this code.
-	*/
+  */
 	
 #ifndef _ERROR_H_
 #define _ERROR_H_
@@ -31,11 +31,11 @@ inline void warning(char* file, int line, int column, char *msg);
 
 /** Get the line number where the error occurred.
 */
-inline int get_line(char *file);
+inline int get_line(FILE *i);
 
 /** Get the column number where the error occurred.
 */
-inline int get_column(char *file);
+inline int get_column(FILE *i);
 
 
 	  

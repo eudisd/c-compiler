@@ -1,134 +1,173 @@
 /** \file scanner.h 
-    \brief Lists the associativity and precedence of all tokens
-	
-	in order of precedence, with the defines at the top with the highest
+    \brief Lists the associativity and precedence of all tokens.
+
+	This is done i order of precedence, with the defines at the top with the highest.
+
 	The defines here are grouped in order of associativity, and listed
-	and with descending precedence as we go down.
+	with descending precedence as we go down.
 	
 	The rest are token values for keywords and the like.
+
+	Everything else normally in a header file comes after.
   */
 
 #ifndef _SCANNER_H_
 #define _SCANNER_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "utils.h"
+
 /* Token Defininitions */
 
 /* Scope */
-#define TK_LEFTBRACKET  
-#define TK_RIGHTBRACKET 
+#define TK_LEFTBRACKET         0
+#define TK_RIGHTBRACKET        1
 
 /* Left To Right Associativity */
-#define TK_LEFTPAREN    
-#define TK_RIGHTPAREN   
-#define TK_LEFT_SQR_BRACKET   
-#define TK_RIGHT_SQR_BRACKET
-#define TK_DOT          
+#define TK_LEFTPAREN    	   2
+#define TK_RIGHTPAREN   	   3
+#define TK_LEFT_SQR_BRACKET    4
+#define TK_RIGHT_SQR_BRACKET   5
+#define TK_DOT                 6
    
 /* Right To Left Associativity */
-#define TK_UNARY_EXCLAMATION  
-#define TK_UNARY_TILDA        
-#define TK_UNARY_PLUSPLUS     
-#define TK_UNARY_MINUSMINUS   
-#define TK_UNARY_PLUS         
-#define TK_UNARY_MINUS        
-#define TK_UNARY_STAR   
-#define TK_UNARY_AMPERSAND    
-#define TK_UNARY_CASTING      
-#define TK_UNARY_SIZEOF    
+#define TK_UNARY_EXCLAMATION   7
+#define TK_UNARY_TILDA         8
+#define TK_UNARY_PLUSPLUS      9 
+#define TK_UNARY_MINUSMINUS    10
+#define TK_UNARY_PLUS          11
+#define TK_UNARY_MINUS         12
+#define TK_UNARY_STAR          13
+#define TK_UNARY_AMPERSAND     14
+#define TK_UNARY_CASTING       15
+#define TK_UNARY_SIZEOF        16
 
 /* Left To Right Associativity */
-#define TK_MULT_STAR 
-#define TK_DIV          
-#define TK_MOD  
+#define TK_MULT_STAR           17
+#define TK_DIV                 18
+#define TK_MOD                 19
 
 /* Left To Right Associativity */
-#define TK_PLUS
-#define TK_MINUS
+#define TK_PLUS     		   20
+#define TK_MINUS   			   21
 
 /* Left To Right Associativity */
-#define TK_LEFT_SHIFT
-#define TK_RIGHT_SHIFT
+#define TK_LEFT_SHIFT  		   22
+#define TK_RIGHT_SHIFT   	   23
 
 /* Left To Right Associativity */
-#define TK_LESS_LOGIC
-#define TK_RIGHT_LOGIC
-#define TK_RIGHT_EQU_LOGIC
-#define TK_LEFT_EQU_LOGIC
+#define TK_LESS_LOGIC  		   24
+#define TK_RIGHT_LOGIC 		   25
+#define TK_RIGHT_EQU_LOGIC 	   26
+#define TK_LEFT_EQU_LOGIC 	   27
 
 /* Left To Right Associativity */
-#define TK_EQU_EQU_LOGIC
-#define TK_NOT_EQU_LOGIC
+#define TK_EQU_EQU_LOGIC	   28
+#define TK_NOT_EQU_LOGIC	   29
+
+/* Left To Right Associativity */  
+#define TK_BIT_AMPERSAND       30
+#define TK_BIT_XOR  		   31
+#define TK_BIT_OR  			   32
 
 /* Left To Right Associativity */
-#define TK_BIT_AMPERSAND
-#define TK_BIT_XOR
-#define TK_BIT_OR
+#define TK_LOGIC_AND		   33
+#define TK_LOGIC_OR		       34
 
-/* Left To Right Associativity */
-#define TK_LOGIC_AND
-#define TK_LOGIC_OR
-
-/* Left To Right Associativity */
-#define TK_QUESTION
-#define TK_COLON
+/* Left To Right Associativity */ 
+#define TK_QUESTION  		   35
+#define TK_COLON 			   36
 
 /* Right To Left Associativity */
-#define TK_EQU
-#define TK_PLUS_EQU
-#define TK_MINUS_EQU
-#define TK_STAR_EQU
-#define TK_DIV_EQU
-#define TK_MOD_EQU
-#define TK_AND_EQU
-#define TK_XOR_EQU
-#define TK_OR_EQU
-#define TK_LSHIFT_EQU
-#define TK_RSHIFT_EQU
+#define TK_EQU				   37
+#define TK_PLUS_EQU  		   38
+#define TK_MINUS_EQU   		   39
+#define TK_STAR_EQU  		   40
+#define TK_DIV_EQU  		   41
+#define TK_MOD_EQU			   42
+#define TK_AND_EQU    	 	   43
+#define TK_XOR_EQU			   44
+#define TK_OR_EQU  			   45
+#define TK_LSHIFT_EQU  		   46
+#define TK_RSHIFT_EQU  		   47
 
 /* Left To Right Associativity */
-#define TK_COMMA
+#define TK_COMMA			   48
 
 /* Precedence and Associative Irrelavent */
 
-#define TK_KEYWORD
-#define TK_IDENTIFIER
-#define TK_CONST  
-#define TK_STRING
+#define TK_KEYWORD			   49
+#define TK_IDENTIFIER		   50
+#define TK_CONSTANT    	       51
+#define TK_STRING			   52
 
 /* ************************************* */
 
-#define TK_AUTO
-#define TK_BREAK
-#define TK_CASE
-#define TK_CHAR
-#define TK_CONST
-#define TK_CONTINUE
-#define TK_DEFAULT
-#define TK_DO
-#define TK_DOUBLE
-#define TK_ELSE
-#define TK_ENUM
-#define TK_EXTERN
-#define TK_FLOAT
-#define TK_FOR
-#define TK_GOTO
-#define TK_IF
-#define TK_INT
-#define TK_LONG
-#define TK_REGISTER
-#define TK_RETURN
-#define TK_SHORT
-#define TK_SIGNED
-#define TK_SIZEOF
-#define TK_STATIC
-#define TK_STRUCT
-#define TK_SWITCH
-#define TK_TYPEDEF
-#define TK_UNION
-#define TK_UNSIGNED
-#define TK_VOID
-#define TK_VOLATILE
-#define TK_WHILE
+/* Keywords/Reserved */
+
+#define TK_AUTO			       53
+#define TK_BREAK			   54
+#define TK_CASE			       55
+#define TK_CHAR				   56
+#define TK_CONST		       57
+#define TK_CONTINUE			   58
+#define TK_DEFAULT  		   59
+#define TK_DO  				   60
+#define TK_DOUBLE		       61
+#define TK_ELSE			       62
+#define TK_ENUM				   63
+#define TK_EXTERN			   64
+#define TK_FLOAT			   65
+#define TK_FOR				   66
+#define TK_GOTO 			   67
+#define TK_IF  				   68
+#define TK_INT				   69
+#define TK_LONG 			   70
+#define TK_REGISTER			   71
+#define TK_RETURN			   72
+#define TK_SHORT			   73
+#define TK_SIGNED			   74
+#define TK_SIZEOF			   75
+#define TK_STATIC			   76
+#define TK_STRUCT			   77
+#define TK_SWITCH			   78
+#define TK_TYPEDEF			   79
+#define TK_UNION			   80
+#define TK_UNSIGNED			   81
+#define TK_VOID				   82
+#define TK_VOLATILE			   83
+#define TK_WHILE			   84
+
+
+/** High level scanner encapsulator.
+  */
+void run_scanner(char *filename);
+
+/** Writes a lexeme out to file, given a name-value pair.
+  */
+void put_lexeme(FILE *o, char *tk_name, char *tk_value);
+
+/* This is part of the parser! (FIX IT LATER)*/
+
+
+/** Gets a lexeme.  _MUST_ be freed after use.
+  */
+//char *get_lexeme(FILE *i)
+
+/** Given a lexeme, returns the ID part.  _MUST_ be freed after call.
+  */
+//char *get_valid_id(char *lexeme);
+
+/** Given a lexeme, returns the NAME part.  _MUST_ be freed after call.
+  */
+//char *get_token_name(char *lexeme);
+
+
+
+
 
 
 #endif

@@ -1,3 +1,7 @@
+/** \file preprocessor.c
+	\brief 
+  */
+
 #include "preprocessor.h"
 
 
@@ -36,14 +40,14 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
      *  file and output an intermediary object file.  
      ********************************************************************/
 
-	//include_headers(prog, ifilename, "data");
+	include_headers(prog, ifilename, INTERIM_FILENAME);
 
 	/* This same interim file is then used for all subsequent operations, including
        feeding it to the compiler (scanner, parser, etc etc).
 	*/
 
 	/* After header files are included, we remove all C-Style comments from the tmp file*/
-	//remove_comments(prog, "data");
+	remove_comments(prog, INTERIM_FILENAME);
 
 
 	/* At this point, we have to handle #defines.  There are two types of cases here.

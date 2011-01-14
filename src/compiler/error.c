@@ -1,3 +1,7 @@
+/** \file error.c
+	\brief 
+  */
+
 #include "error.h"
 
 void error(char* file, int line, int column, char *msg){
@@ -8,11 +12,11 @@ void warning(char* file, int line, int column, char *msg){
 	printf("%s:%d:%d: warning: %s", file, line, column, msg);
 }
 
-int get_line(char *file){
+int get_line(FILE *i){
 	return 0;
 }
 
-int get_column(char *file){
+int get_column(FILE *i){
 	return 0;
 }
 

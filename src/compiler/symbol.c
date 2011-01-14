@@ -1,6 +1,6 @@
 /** \file symbol.c
 	\brief Defines all of the symbol table primitives.
-*/
+  */
 
 #include "symbol.h"
 
