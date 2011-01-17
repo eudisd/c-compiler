@@ -163,8 +163,19 @@ void put_ulexeme(FILE *o, char *tk_name);
   *	This is useful because we can use the size to handle the function
   *	case, in which an identifier can have '(' directly concatenated (no space)
   * with the identifier.  (i.e.  main() vs main () )
+  *
+  * This function also _RESETS_ the file pointer to where it was at
+  * the beginning of the call.
   */
 int is_valid_id(char *word);
+
+/**
+  */
+char *extract_token(char *word);
+
+/** 
+  */
+char *return_keyword(char *word);
 
 /* This is part of the parser! (FIX IT LATER)*/
 

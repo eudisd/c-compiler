@@ -14,14 +14,15 @@ enum {
 	  TYPE_ERR,
 	  TOKEN_ERR,
 	  SYNTAX_ERR,
-	};
-	
-enum {
 	  TYPE_WARN,
 	  TOKEN_WARN,
 	  SYNTAX_WARN
 	};
 	
+
+size_t lines;
+size_t columns;
+
 /** Prints an error message in standard UNIX(GNU/GCC) format
 */
 inline void error(char* file, int line, int column, char *msg);
