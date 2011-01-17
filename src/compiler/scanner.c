@@ -54,7 +54,39 @@ void run_scanner(char *filename)
 	
 			case 'i':
 				/* int */
+                /* if */
+                printf("%s\n", word);
                 
+                if( !strcmp(word, "int") ) {
+                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
+                    sprintf(tk_buffer1, "%d", TK_INT);
+                    
+                    /* Write out lexeme to output file! */
+                    put_lexeme(o, tk_buffer0, tk_buffer1);
+                }
+                else if ( !strcmp(word, "if") ){
+                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
+                    sprintf(tk_buffer1, "%d", TK_IF);
+                    
+                    /* Write out lexeme to output file! */
+                    put_lexeme(o, tk_buffer0, tk_buffer1);
+                    
+                }
+                else {
+                    char *token = extract_token(word); 
+                    size_t step = 0;
+                    
+                    printf("Token: %s\n", token);
+                 
+                    //sprintf(tk_buffer0, "%d", TK_KEYWORD);
+                    //sprintf(tk_buffer1, "%d", TK_INT);
+                    //
+                    ///* Write out lexeme to output file! */
+                    //put_lexeme(o, tk_buffer0, tk_buffer1);
+                
+                    free(token);
+                    
+                }
 				
 				
 				
@@ -357,7 +389,6 @@ char *return_keyword(char *word)
 	
 	size_t size = strlen(word);
 	int i;
-	printf("\n");
 	for(i = 0; i < size; i++){
 		if( !isdigit(word[i]) && !isalpha(word[i]) && word[i] != '_'){
 			break;	

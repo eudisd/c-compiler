@@ -173,7 +173,7 @@ int is_valid_id(char *word);
   */
 char *extract_token(char *word);
 
-/** 
+/** _MUST_ be freed.
   */
 char *return_keyword(char *word);
 
