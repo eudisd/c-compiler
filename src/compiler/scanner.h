@@ -21,9 +21,19 @@
 
 #include "utils.h"
 
+/*------------------------- Globals -------------------------*/
+
+
+
+size_t total_lines;
+size_t total_newlines;
+
+static char tk_buffer0[5]; /**> Used to write the interger values of lexemes below as strings (easier). */
+static char tk_buffer1[5];   
+
+
 /* Token Defininitions */
-char tk_buffer0[5];            /**> Used to write the interger values below as strings (easier). */
-char tk_buffer1[5];           
+        
 
 
 /* Scope */
@@ -144,6 +154,19 @@ char tk_buffer1[5];
 #define TK_VOID				   82
 #define TK_VOLATILE			   83
 #define TK_WHILE			   84
+
+
+/*------------------------- Globals -------------------------*/
+
+
+size_t total_char;           /**>  Initialize total character count counter */
+size_t total_char_per_line;
+size_t total_newlines;       /**>  Initialize newlines, to ready counter    */
+
+
+
+/*------------------- Function Prototoypes -------------------*/
+
 
 
 /** High level scanner encapsulator.

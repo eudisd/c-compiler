@@ -8,6 +8,10 @@ void run_scanner(char *filename)
 {
 	char c;
 	char *word;
+    
+    total_char          = 0; 
+	total_newlines      = 0;
+	total_char_per_line = 0;
 
 	FILE *i = fopen(filename, "r");
 	FILE *o = fopen(INTERIM_FILENAME, "w");
@@ -252,11 +256,14 @@ void run_scanner(char *filename)
 		free(word);
 	}
 	
+    printf("Header Inclusion Done.  Total New Lines: %d\n", total_newlines);
+	printf("                        Total Characters Read: %d\n", total_char);
+	printf("                        Total Characters On This Line Read: %d\n", total_char_per_line);
+	
+    
 	fclose(i);
 	fclose(o);
 }
-
-
 
 void put_lexeme(FILE *o, char *tk_name, char *tk_value)
 {

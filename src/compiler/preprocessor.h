@@ -22,27 +22,40 @@
 #define DEFAULT_INC_DIR "/usr/include/"
 #define DEFAULT_LIB_DIR "/usr/lib/"
 
+
+/*------------------------- Globals -------------------------*/
+
 char *sys_inc_dir;
 char *sys_lib_dir;
 
+
+
+
+
+
+/*------------------- Function Prototypes -------------------*/
+
+
 /** Runs the preprocessor on the specified file.
- */
+  */
 void run_preporcessor(const char *prog, const char *ifilename, const char *ofilename);
 
-/** Removes all comments from the import source file, and outputs an intermediary file for 
-    further processing.  At the moment, only handles 1 nested level of inclusion.
- */
-
+/** 
+  */
 void include_headers(const char *prog, const char *ifilename, const char *ofilename);
 
+/** Removes all comments from the import source file, and outputs an intermediary file for 
+  * further processing.  At the moment, only handles 1 nested level of inclusion.
+  */
 void remove_comments(const char *prog, const char *filename);
 
 /** This gets the next include name from the #include preprocessor directive.
-    It is malloced internally.  It _MUST_ be freed after each use.
+  * It is malloced internally.  It _MUST_ be freed after each use.
   */
 char *get_inc_fname(char *n);
 
-
+/** 
+  */
 char *handle_defines(char *prog, char *filename);
 
 

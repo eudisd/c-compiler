@@ -7,7 +7,7 @@
 
 void run_preprocessor(const char *prog, const char *ifilename, const char *ofilename)
 {
-
+	
 	/* Order of file processing ("data" is the name of the intermediary file"): 
      **********************************************************************
      * ifilename(open the stream) -->  include_headers("data") --> data --> 
@@ -47,7 +47,7 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
 	*/
 
 	/* After header files are included, we remove all C-Style comments from the tmp file*/
-	remove_comments(prog, INTERIM_FILENAME);
+	//remove_comments(prog, INTERIM_FILENAME);
 
 
 	/* At this point, we have to handle #defines.  There are two types of cases here.
@@ -88,7 +88,7 @@ char *handle_defines(char* prog, char *filename)
 
 	/* This bit handles the defines */
 	while( (c = getc(i)) != EOF ){
-	
+		
 		if( c == '#' && (tolower(fcpeek(i)) == 'd') ) {
 			def_keyword = getword(i);
 			def_name = getword(i);
@@ -157,7 +157,9 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 	
 	/* Here we write out the included file to the intermediary preprocessor file */
 	while( (c = getc(i)) != EOF ){
+		
 		if(c == '#' && (fcpeek(i) == 'i')){
+			
 			inc_keyword = getword(i);
 			full_filename = getword(i);
 
@@ -212,11 +214,10 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 		putc(c, o); 
 	}
 	
+	
 	fclose(i);
 	fclose(o);
 }
-
-
 
 void remove_comments(const char *prog, const char *filename)
 {

@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 			print_stab(stab);
 			*/
-
+			//run_preprocessor(argv[0], "tmp.txt", "data");
 			run_scanner("tmp.txt");
 			
 			break;
@@ -59,7 +59,8 @@ int main(int argc, char *argv[])
 
 				/* Do stuff here */
 				run_preprocessor(argv[0], argv[1], ofile);
-				run_scanner(INTERIM_FILENAME);
+				
+				//run_scanner(INTERIM_FILENAME);
 				
 				free(ofile);
 			}
