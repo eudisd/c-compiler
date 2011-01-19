@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 			print_stab(stab);
 			*/
 			//run_preprocessor(argv[0], "tmp.txt", "data");
-			run_scanner("tmp.txt");
+			run_scanner(argv[0], "tmp.txt");
 			
 			break;
 		case 2:

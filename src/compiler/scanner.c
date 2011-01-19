@@ -4,7 +4,7 @@
 
 #include "scanner.h"
 
-void run_scanner(char *filename)
+void run_scanner(char *prog, char *filename)
 {
 	char c;
 	char *word;
@@ -12,6 +12,10 @@ void run_scanner(char *filename)
     total_char          = 0; 
 	total_newlines      = 0;
 	total_char_per_line = 0;
+	
+	// Remove Comments Here
+	
+	remove_comments(prog, filename);
 
 	FILE *i = fopen(filename, "r");
 	FILE *o = fopen(INTERIM_FILENAME, "w");
@@ -263,6 +267,51 @@ void run_scanner(char *filename)
     
 	fclose(i);
 	fclose(o);
+}
+
+void remove_comments(const char *prog, const char *filename)
+{
+
+	FILE *i = fopen(filename, "r");
+	FILE *o = fopen("data.tmp", "w");
+	
+	if(!i)
+		file_error((char*)prog, "open", (char*)filename, "for removing comments", "No such file or directory.");
+	if(!o)
+		file_error((char*)prog, "write", (char*)filename, "preproc intermediate file", "Unknown reason(possibly permissions");
+	
+	/* This code handles the multiline comments removal */
+	char c, c_tmp;
+	while ( (c = getc(i)) != EOF ){
+		
+		if( c == '\n' ){
+			total_newlines++;
+			total_char_per_line = 0;
+		}
+		
+		total_char++;
+		total_char_per_line++;
+		
+		if(c == '/' && (fcpeek(i) == '*')){
+			c = getc(i);  /* Holds '*' */
+			c = getc(i);  /* Knock that starter '*' off the file discriptor. */
+			while( c != EOF ){
+				if(c == '*' && fcpeek(i) == '/')
+					break;
+				c = getc(i);
+			}
+			
+			c = getc(i); /* Pop off the last '*' */
+			c = getc(i); /* Pop off the last '/' */
+		}
+		putc(c, o);
+	}
+
+	fclose(i);
+	fclose(o);
+
+	remove(filename);
+	rename("data.tmp", filename);
 }
 
 void put_lexeme(FILE *o, char *tk_name, char *tk_value)

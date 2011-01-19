@@ -219,42 +219,6 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 	fclose(o);
 }
 
-void remove_comments(const char *prog, const char *filename)
-{
-
-	FILE *i = fopen(filename, "r");
-	FILE *o = fopen("data.tmp", "w");
-	
-	if(!i)
-		file_error((char*)prog, "open", (char*)filename, "for removing comments", "No such file or directory.");
-	if(!o)
-		file_error((char*)prog, "write", (char*)filename, "preproc intermediate file", "Unknown reason(possibly permissions");
-	
-	/* This code handles the multiline comments removal */
-	char c, c_tmp;
-	while ( (c = getc(i)) != EOF ){
-		if(c == '/' && (fcpeek(i) == '*')){
-			c = getc(i);  /* Holds '*' */
-			c = getc(i);  /* Knock that starter '*' off the file discriptor. */
-			while( c != EOF ){
-				if(c == '*' && fcpeek(i) == '/')
-					break;
-				c = getc(i);
-			}
-			
-			c = getc(i); /* Pop off the last '*' */
-			c = getc(i); /* Pop off the last '/' */
-		}
-		putc(c, o);
-	}
-
-	fclose(i);
-	fclose(o);
-
-	remove(filename);
-	rename("data.tmp", filename);
-}
-
 char *get_inc_fname(char *n)
 {
 	int i;

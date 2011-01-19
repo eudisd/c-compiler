@@ -171,7 +171,12 @@ size_t total_newlines;       /**>  Initialize newlines, to ready counter    */
 
 /** High level scanner encapsulator.
   */
-void run_scanner(char *filename);
+void run_scanner(char *prog, char *filename);
+
+/** Removes all comments from the import source file, and outputs an intermediary file for 
+  * further processing.  At the moment, only handles 1 nested level of inclusion.
+  */
+void remove_comments(const char *prog, const char *filename);
 
 /** Writes a lexeme out to file, given a name-value pair.
   */
@@ -201,7 +206,6 @@ char *extract_token(char *word);
 char *return_keyword(char *word);
 
 /* This is part of the parser! (FIX IT LATER)*/
-
 
 /** Gets a lexeme.  _MUST_ be freed after use.
   */
