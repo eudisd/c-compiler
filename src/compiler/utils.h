@@ -18,6 +18,14 @@
 
 #define TRUE 1
 #define FALSE 0
+
+typedef struct file_struct_Tag {
+	char calling_prog[64];
+	char filename[64];
+	int cur_line;
+	int cur_column;
+	char cur_word[64];
+} file_struct;
    
 /** Prints usage information and a listing of commands.
   */

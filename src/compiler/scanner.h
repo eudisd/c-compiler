@@ -23,8 +23,6 @@
 
 /*------------------------- Globals -------------------------*/
 
-
-
 size_t total_lines;
 size_t total_newlines;
 

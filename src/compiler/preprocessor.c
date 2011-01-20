@@ -109,7 +109,7 @@ char *handle_defines(char* prog, char *filename)
 		
 			def_value = getword(i);
 		
-			stab_insert( get_record(def_name, def_value, 't', 0, "Global"), defines_stab );
+			stab_insert(filename, get_record(def_name, def_value, 't', 0, "Global"), defines_stab );
 
 			
 

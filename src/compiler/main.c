@@ -4,28 +4,27 @@
 
 #include "main.h"
 
-
 int main(int argc, char *argv[])
 {
 	char *ofile;
 	char *infile;
 	size_t o_name_len;
-	//record *get_record(char *name, char*val, char type, int slot, char *scope)
+	
 	switch(argc){
 		case 1:
 			printf("%s: no input files\n", argv[0]);
-			/*
+			
 			symbol_table *stab = create_stab(100);
 			record *rec = get_record("ONE", "1", 't', 0, "Global");
 
-			stab_insert( get_record("ONE", "1", 't', 0, "Global"), stab);
-			stab_insert( get_record("TWO", "2", 't', 1, "Global"), stab);
-			stab_insert( get_record("THREE", "3", 't', 1, "Global"), stab);
+			stab_insert(argv[1], get_record("char", "1", 't', 0, "Global"), stab);
+			stab_insert(argv[1], get_record("TWO", "2", 't', 1, "Global"), stab);
+			stab_insert(argv[1], get_record("THREE", "3", 't', 1, "Global"), stab);
 
 			print_stab(stab);
-			*/
+			
 			//run_preprocessor(argv[0], "tmp.txt", "data");
-			run_scanner(argv[0], "tmp.txt");
+			//run_scanner(argv[0], "tmp.txt");
 			
 			break;
 		case 2:

@@ -10,6 +10,9 @@
 #include <malloc.h>
 #include <string.h>
 
+#include "utils.h"       /* For TRUE and FALSE constants */
+#include "error.h"       /* For reporting ID errors, among other things */
+
 #define MAX_SLOTS 10000  /**> Total number of identifiers possible in memory */
 #define EMPTY_SLOT -1    /**> This symbolic constant signifies empty slots in the hash map. */
 
@@ -42,7 +45,7 @@ symbol_table *create_stab(size_t max);
 
 /**
  */
-void stab_insert(record *rec, symbol_table *stab);
+void stab_insert(char* filename, record *rec, symbol_table *stab);
 
 /**
  */
@@ -56,7 +59,9 @@ void purge_record(record *rec);
  */
 size_t hash(char *key, size_t limit);
 
-
+/**
+ */
+int is_keyword(char *lexeme);
 
 
 #endif
