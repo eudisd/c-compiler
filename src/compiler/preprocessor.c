@@ -88,7 +88,9 @@ char *handle_defines(char* prog, char *filename)
 
 	/* This bit handles the defines */
 	while( (c = getc(i)) != EOF ){
-		
+		if( c == '\n' ){
+			total_newlines++;
+		}
 		if( c == '#' && (tolower(fcpeek(i)) == 'd') ) {
 			def_keyword = getword(i);
 			def_name = getword(i);
@@ -157,7 +159,9 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 	
 	/* Here we write out the included file to the intermediary preprocessor file */
 	while( (c = getc(i)) != EOF ){
-		
+		if( c == '\n' ){
+			total_newlines++;
+		}
 		if(c == '#' && (fcpeek(i) == 'i')){
 			
 			inc_keyword = getword(i);

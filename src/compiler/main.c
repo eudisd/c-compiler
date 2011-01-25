@@ -4,6 +4,8 @@
 
 #include "main.h"
 
+size_t total_newlines = 1;
+
 int main(int argc, char *argv[])
 {
 	char *ofile;

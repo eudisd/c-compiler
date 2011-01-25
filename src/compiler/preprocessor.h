@@ -28,6 +28,8 @@
 char *sys_inc_dir;
 char *sys_lib_dir;
 
+extern size_t total_newlines;
+
 
 
 

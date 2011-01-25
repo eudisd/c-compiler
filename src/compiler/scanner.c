@@ -9,7 +9,7 @@ void run_scanner(char *prog, char *filename)
 	char c;
 	char *word;
 	
-    total_newlines = 0;
+    
 	
 	// Remove Comments Here
 	
