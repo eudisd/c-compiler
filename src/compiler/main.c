@@ -9,19 +9,26 @@ int main(int argc, char *argv[])
 	char *ofile;
 	char *infile;
 	size_t o_name_len;
+	extern file_struct file;
+	file_struct file;
+	
+	/* Initialize some file information */
+	strcpy(file.calling_prog, argv[0]);
+	file.cur_line = 0;
+	file.cur_column = 0;
 	
 	switch(argc){
 		case 1:
-			printf("%s: no input files\n", argv[0]);
+			printf("%s: no input files\n", file.calling_prog);
 			
-			symbol_table *stab = create_stab(100);
-			record *rec = get_record("ONE", "1", 't', 0, "Global");
+			//symbol_table *stab = create_stab(100);
+			//record *rec = get_record("ONE", "1", 't', 0, "Global");
 
-			stab_insert(argv[1], get_record("char", "1", 't', 0, "Global"), stab);
-			stab_insert(argv[1], get_record("TWO", "2", 't', 1, "Global"), stab);
-			stab_insert(argv[1], get_record("THREE", "3", 't', 1, "Global"), stab);
+			//stab_insert(argv[1], get_record("char", "1", 't', 0, "Global"), stab);
+			//stab_insert(argv[1], get_record("TWO", "2", 't', 1, "Global"), stab);
+			//stab_insert(argv[1], get_record("THREE", "3", 't', 1, "Global"), stab);
 
-			print_stab(stab);
+			//print_stab(stab);
 			
 			//run_preprocessor(argv[0], "tmp.txt", "data");
 			//run_scanner(argv[0], "tmp.txt");
@@ -36,7 +43,8 @@ int main(int argc, char *argv[])
 			}
 			else {
 				/* No output name specified, we default to unix elf name a.out */
-				run_preprocessor(argv[1], "a.out"); 
+				//run_preprocessor(argv[1], "a.out"); 
+				run_scanner(file.calling_prog, "tmp.txt");
 			}
 			break;
 		case 3:

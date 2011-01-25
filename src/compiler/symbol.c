@@ -65,6 +65,7 @@ void stab_insert(char* filename, record *rec, symbol_table *stab)
 	  
 	if( is_keyword(rec->name) ){
 		fprintf(stderr, "%s: This keyword is reserved!  Cannot be inserted into symbol table.", rec->name);
+		
 	}
 	
 	size_t index = hash(rec->name, stab->size);

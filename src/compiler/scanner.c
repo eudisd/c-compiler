@@ -8,14 +8,12 @@ void run_scanner(char *prog, char *filename)
 {
 	char c;
 	char *word;
-    
-    total_char          = 0; 
-	total_newlines      = 0;
-	total_char_per_line = 0;
+	
+    total_newlines = 0;
 	
 	// Remove Comments Here
 	
-	remove_comments(prog, filename);
+	//remove_comments(prog, filename);
 
 	FILE *i = fopen(filename, "r");
 	FILE *o = fopen(INTERIM_FILENAME, "w");
@@ -261,7 +259,7 @@ void run_scanner(char *prog, char *filename)
 	}
 	
     printf("Header Inclusion Done.  Total New Lines: %d\n", total_newlines);
-	printf("                        Total Characters Read: %d\n", total_char);
+	printf("                        Total Characters Read: %d\n", ftell(i));
 	printf("                        Total Characters On This Line Read: %d\n", total_char_per_line);
 	
     
@@ -286,11 +284,15 @@ void remove_comments(const char *prog, const char *filename)
 		
 		if( c == '\n' ){
 			total_newlines++;
-			total_char_per_line = 0;
 		}
 		
-		total_char++;
-		total_char_per_line++;
+		/* We do not need these two counters below! This is because
+		   we can use file pointers get the values!  ftell tells
+		   us the current character, and a simple backtrack to the
+		   last '\n' would give us the latter value. */
+		   
+		//total_char++;
+		//total_char_per_line++;
 		
 		if(c == '/' && (fcpeek(i) == '*')){
 			c = getc(i);  /* Holds '*' */
@@ -299,6 +301,9 @@ void remove_comments(const char *prog, const char *filename)
 				if(c == '*' && fcpeek(i) == '/')
 					break;
 				c = getc(i);
+				if( c == '\n' ){
+					total_newlines++;
+				}
 			}
 			
 			c = getc(i); /* Pop off the last '*' */

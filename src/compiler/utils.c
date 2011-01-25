@@ -68,6 +68,7 @@ char fcpeek(FILE *f)
 
 char *getword(FILE *i)
 {
+	
 	int j = 0;
 	char c;
 	char *word;
@@ -80,12 +81,20 @@ char *getword(FILE *i)
 	
 	pos = ftell(i);
 	c = getc(i);
+	if( c == '\n' ){
+			total_newlines++;
+		}
 	//printf("CHECKING: \n\n");
 	/* We first calculate the size of the word */
 	while ( (c != EOF) && !isspace(c) ){
+		/* Read and count new lines and characters */
+		
 		//printf("%c|", c);
 		size++;
 		c = getc(i);
+		if( c == '\n' ){
+			total_newlines++;
+		}
 		
 	}
 	//printf("\n\nEND\n\n");

@@ -8,7 +8,7 @@
   *
   * The rest are token values for keywords and the like.
   *
-  *Everything else normally in a header file comes after.
+  * Everything else normally in a header file comes after.
   */
 
 #ifndef _SCANNER_H_
@@ -23,8 +23,8 @@
 
 /*------------------------- Globals -------------------------*/
 
-size_t total_lines;
-size_t total_newlines;
+
+extern size_t total_newlines;
 
 static char tk_buffer0[5]; /**> Used to write the interger values of lexemes below as strings (easier). */
 static char tk_buffer1[5];   

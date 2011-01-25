@@ -26,6 +26,13 @@ typedef struct file_struct_Tag {
 	int cur_column;
 	char cur_word[64];
 } file_struct;
+
+
+/* Globals */
+
+extern file_struct file_info;
+extern size_t total_newlines;
+
    
 /** Prints usage information and a listing of commands.
   */
