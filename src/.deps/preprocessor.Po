@@ -1,3 +1,0 @@
-preprocessor.o: preprocessor.c preprocessor.h
-
-preprocessor.h:

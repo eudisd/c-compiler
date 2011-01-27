@@ -1,3 +1,0 @@
-symbol.o: symbol.c symbol.h
-
-symbol.h:
