@@ -19,9 +19,9 @@ void usage( void )
 void version( void )
 {
 	printf("c (C Compiler) %s %d (release) %d - Build: %d\n"
-		   "Copyright (c) 2010 Eudis Duran\n"
+		   "Copyright (c) 2011 Eudis Duran\n"
 		   "See LICENSE file for details.\n"
-		   ,VERSION, BUILD_DATE, RELEASE, BUILD_NUMBER);
+		   ,VERSION, get_build_date(), RELEASE, BUILD_NUMBER);
 			
 }
 
@@ -132,4 +132,17 @@ char *strip_whitesp(char *str)
 	return 0;
 }
 
+
+int get_build_date()
+{
+	char buffer[12];
+	time_t rtime;
+	struct tm *timeinfo;
+	
+	time( &rtime );
+	timeinfo = localtime( &rtime );
+
+	strftime(buffer, 12, "%Y%m%d", timeinfo);
+	return atoi(buffer);
+}
 
