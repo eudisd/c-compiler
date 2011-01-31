@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
 	char *ofile;
 	char *infile;
 	size_t o_name_len;
-	extern file_struct file;
 	file_struct file;
+
 	
 	/* Initialize some file information */
 	strcpy(file.calling_prog, argv[0]);
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 			else {
 				/* No output name specified, we default to unix elf name a.out */
 				//run_preprocessor(argv[1], "a.out"); 
-				run_scanner(file.calling_prog, "tmp.txt");
+				//run_scanner(file.calling_prog, "tmp.txt");
 			}
 			break;
 		case 3:

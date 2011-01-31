@@ -191,11 +191,13 @@ void include_headers(const char *prog, const char *ifilename, const char *ofilen
 				strcat(file_path, inc_fname);
 				strcat(file_path, "\0");
 			}
+
 			/*
 			printf("Full Path: %s\n", file_path);
 			*/
 
 			includes = fopen(file_path, "r");
+
 			if (!includes){
 				file_error((char*)prog, "open", (char*)file_path, "While doing header inclusions", "No such file or directory");
 			}

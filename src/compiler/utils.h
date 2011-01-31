@@ -30,7 +30,7 @@ typedef struct file_struct_Tag {
 
 /* Globals */
 
-extern file_struct file_info;
+extern file_struct file;
 extern size_t total_newlines;
 
    
