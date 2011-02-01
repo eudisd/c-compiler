@@ -1,4 +1,5 @@
 /* Here we go
+	/* */
    my man
    */
 int; main()
@@ -8,4 +9,6 @@ int; main()
 }
 #define ONE 1
 #define TWO 2
+/*
+*/
 #define THREE 3

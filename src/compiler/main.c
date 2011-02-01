@@ -16,26 +16,15 @@ int main(int argc, char *argv[])
 	
 	/* Initialize some file information */
 	strcpy(file.calling_prog, argv[0]);
+	strcpy(file.default_o, DEFAULT_OUTPUT);
 	file.cur_line = 0;
 	file.cur_column = 0;
 	
 	switch(argc){
 		case 1:
 			printf("%s: no input files\n", file.calling_prog);
-			
-			//symbol_table *stab = create_stab(100);
-			//record *rec = get_record("ONE", "1", 't', 0, "Global");
-
-			//stab_insert(argv[1], get_record("char", "1", 't', 0, "Global"), stab);
-			//stab_insert(argv[1], get_record("TWO", "2", 't', 1, "Global"), stab);
-			//stab_insert(argv[1], get_record("THREE", "3", 't', 1, "Global"), stab);
-
-			//print_stab(stab);
-			
-			//run_preprocessor(argv[0], "tmp.txt", "data");
-			//run_scanner(argv[0], "tmp.txt");
-			
 			break;
+
 		case 2:
 			if(strcmp(argv[1], "--help") == 0){
 				usage();
@@ -44,8 +33,13 @@ int main(int argc, char *argv[])
 				version();
 			}
 			else {
+				/* Initialize File Contents */
+				strcpy(file.filename, argv[1]);
+
 				/* No output name specified, we default to unix elf name a.out */
-				//run_preprocessor(argv[1], "a.out"); 
+				run_preprocessor(&file); 
+
+				//printf("Total Newlines: %d\n\n", total_newlines); 
 				//run_scanner(file.calling_prog, "tmp.txt");
 			}
 			break;

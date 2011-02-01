@@ -29,6 +29,7 @@ char *sys_inc_dir;
 char *sys_lib_dir;
 
 extern size_t total_newlines;
+extern file_struct file;
 
 
 
@@ -40,7 +41,7 @@ extern size_t total_newlines;
 
 /** Runs the preprocessor on the specified file.
   */
-void run_preporcessor(const char *prog, const char *ifilename, const char *ofilename);
+void run_preporcessor(file_struct *file);
 
 /** 
   */
@@ -55,6 +56,11 @@ char *get_inc_fname(char *n);
 /** 
   */
 char *handle_defines(char *prog, char *filename);
+
+/** Removes all comments from the import source file, and outputs an intermediary file for 
+  * further processing.  At the moment, only handles 1 nested level of inclusion.
+  */
+void remove_comments(file_struct *file);
 
 
 #endif

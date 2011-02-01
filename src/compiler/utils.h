@@ -15,6 +15,7 @@
 #define BUILD_DATE 20101231 /**< Holds the current build date in Year-Month-Day format. */
 
 #define INTERIM_FILENAME "data"
+#define DEFAULT_OUTPUT "a.out"
 
 #define TRUE 1
 #define FALSE 0
@@ -22,6 +23,7 @@
 typedef struct file_struct_Tag {
 	char calling_prog[64];
 	char filename[64];
+	char default_o[64];
 	int cur_line;
 	int cur_column;
 	char cur_word[64];

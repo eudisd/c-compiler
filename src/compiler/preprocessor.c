@@ -4,9 +4,11 @@
 
 #include "preprocessor.h"
 
+file_struct file;
 
-void run_preprocessor(const char *prog, const char *ifilename, const char *ofilename)
+void run_preprocessor(file_struct *file)
 {
+
 	
 	/* Order of file processing ("data" is the name of the intermediary file"): 
      **********************************************************************
@@ -40,15 +42,15 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
      *  file and output an intermediary object file.  
      ********************************************************************/
 
-	include_headers(prog, ifilename, INTERIM_FILENAME);
+	//include_headers(prog, ifilename, INTERIM_FILENAME);
 
 	/* This same interim file is then used for all subsequent operations, including
        feeding it to the compiler (scanner, parser, etc etc).
 	*/
 
+	
 	/* After header files are included, we remove all C-Style comments from the tmp file*/
-	//remove_comments(prog, INTERIM_FILENAME);
-
+	remove_comments(file);
 
 	/* At this point, we have to handle #defines.  There are two types of cases here.
        One is a symbolic constant, the other is a macro.  I will handle the constant case
@@ -57,9 +59,6 @@ void run_preprocessor(const char *prog, const char *ifilename, const char *ofile
 
 	//handle_defines((char*)prog, "tmp.txt");
 		
-	
-
-	
 	/* Memory Clean Up */
 
 	if( !dir_flag ){
@@ -88,9 +87,6 @@ char *handle_defines(char* prog, char *filename)
 
 	/* This bit handles the defines */
 	while( (c = getc(i)) != EOF ){
-		if( c == '\n' ){
-			total_newlines++;
-		}
 		if( c == '#' && (tolower(fcpeek(i)) == 'd') ) {
 			def_keyword = getword(i);
 			def_name = getword(i);
@@ -113,8 +109,6 @@ char *handle_defines(char* prog, char *filename)
 		
 			stab_insert(filename, get_record(def_name, def_value, 't', 0, "Global"), defines_stab );
 
-			
-
 			free(def_keyword);
 			free(def_name);
 			free(def_value);
@@ -124,7 +118,7 @@ char *handle_defines(char* prog, char *filename)
 		
 	}	
 
-	print_stab(defines_stab);
+	//print_stab(defines_stab);
 	/* This bit handles the defines */
 
 
@@ -240,6 +234,74 @@ char *get_inc_fname(char *n)
 	new_word[size-2] = '\0';
 	free(n);
 	return new_word;
+}
+
+
+void remove_comments(file_struct *file)
+{
+
+	FILE *i = fopen(file->filename, "r");
+	FILE *o = fopen("data.tmp", "w");
+	
+	if(!i)
+		file_error((char*)file->calling_prog, 
+                   "open",
+                   (char*)file->filename, 
+                   "for removing comments", "No such file or directory.");
+	if(!o)
+		file_error((char*)file->calling_prog, 
+                   "write", 
+                   (char*)file->filename, 
+                   "preproc intermediate file", 
+                   "Unknown reason(possibly permissions");
+	
+	/* This code handles the multiline comments removal */
+	char c, c_tmp;
+
+	while ( (c = getc(i)) != EOF ){
+		
+		if( c == '\n' ){
+			total_newlines++;
+		}
+		
+		/* We do not need these two counters below! This is because
+		   we can use file pointers get the values!  ftell tells
+		   us the current character, and a simple backtrack to the
+		   last '\n' would give us the latter value. */
+		   
+		//total_char++;
+		//total_char_per_line++;
+
+		printf("%c%c\n", c, fcpeek(i));
+		if(c == '/' && (fcpeek(i) == '*')){
+			
+			c = getc(i);  /* Holds '*' */
+			c = getc(i);  /* Knock that starter '*' off the file discriptor. */
+			while( c != EOF ){
+				
+				if( c == '\n' ){
+					total_newlines++;
+				}
+				if( c == '/' && (fcpeek(i) == '*')){
+					remove("data.tmp");
+					error(file->filename, total_newlines, 0, "Cannot nest comments!\n");
+				}
+				if( c == '*' && fcpeek(i) == '/' )
+					break;
+				c = getc(i);
+			}
+			
+			c = getc(i); /* Pop off the last '*' */
+			c = getc(i); /* Pop off the last '/' */
+		}
+		putc(c, o);
+	}
+
+	fclose(i);
+	fclose(o);
+
+	remove(file->filename);
+	rename("data.tmp", file->filename);
 }
 
 

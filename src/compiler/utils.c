@@ -89,7 +89,6 @@ char *getword(FILE *i)
 	while ( (c != EOF) && !isspace(c) ){
 		/* Read and count new lines and characters */
 		
-		//printf("%c|", c);
 		size++;
 		c = getc(i);
 		if( c == '\n' ){
