@@ -82,6 +82,10 @@ void file_error(char *prog, char *do_this, char *ifilename, char *specifics, cha
   */
 int get_build_date();
 
+/**
+  */
+int get_column(FILE *i);
+
 /* Debug Functions */
 
 /** 
