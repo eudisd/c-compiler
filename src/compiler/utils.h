@@ -76,12 +76,16 @@ char *wordpeek(FILE *f);
   */
 void file_error(char *prog, char *do_this, char *ifilename, char *specifics, char *msg);
 
-/* Debug Functions */
-
-char *strip_whitesp(char *str);
-
 /** 
   */
 int get_build_date();
+
+/* Debug Functions */
+
+/** 
+  */
+char *strip_whitesp(char *str);
+
+
 
 #endif
