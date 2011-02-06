@@ -1,6 +1,10 @@
-#include "test.h"
-
-int main()
+/* Here
+  We
+  go
+  my
+  friend
+*/
+int; main()
 {
 	return ZERO;
 }

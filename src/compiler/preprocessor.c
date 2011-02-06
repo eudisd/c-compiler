@@ -7,9 +7,7 @@
 file_struct file;
 
 void run_preprocessor(file_struct *file)
-{
-
-	
+{	
 	/* Order of file processing ("data" is the name of the intermediary file"): 
      **********************************************************************
      * ifilename(open the stream) -->  include_headers("data") --> data --> 
@@ -263,22 +261,12 @@ void remove_comments(file_struct *file)
 		if( c == '\n' ){
 			total_newlines++;
 		}
-		
-		/* We do not need these two counters below! This is because
-		   we can use file pointers get the values!  ftell tells
-		   us the current character, and a simple backtrack to the
-		   last '\n' would give us the latter value. */
-		   
-		//total_char++;
-		//total_char_per_line++;
 
-		printf("%c%c\n", c, fcpeek(i));
 		if(c == '/' && (fcpeek(i) == '*')){
 			
 			c = getc(i);  /* Holds '*' */
 			c = getc(i);  /* Knock that starter '*' off the file discriptor. */
 			while( c != EOF ){
-				
 				if( c == '\n' ){
 					total_newlines++;
 				}
@@ -288,12 +276,16 @@ void remove_comments(file_struct *file)
 				}
 				if( c == '*' && fcpeek(i) == '/' )
 					break;
+				
 				c = getc(i);
 			}
 			
 			c = getc(i); /* Pop off the last '*' */
 			c = getc(i); /* Pop off the last '/' */
-		}
+			if (c == '\n'){
+				c = getc(i);
+			}
+		} 
 		putc(c, o);
 	}
 

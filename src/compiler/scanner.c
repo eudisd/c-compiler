@@ -9,12 +9,6 @@ void run_scanner(char *prog, char *filename)
 	char c;
 	char *word;
 	
-    
-	
-	// Remove Comments Here
-	
-	//remove_comments(prog, filename);
-
 	FILE *i = fopen(filename, "r");
 	FILE *o = fopen(INTERIM_FILENAME, "w");
 
