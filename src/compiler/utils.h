@@ -1,6 +1,7 @@
 /** \file utils.h 
     \brief Interface that holds common functions and housekeeping operations.
   */
+
 #ifndef _UTILS_H_
 #define _UTILS_H_
 

@@ -8,12 +8,11 @@ size_t total_newlines = 1;
 
 int main(int argc, char *argv[])
 {
-	char *ofile;
-	char *infile;
-	size_t o_name_len;
-	file_struct file;
+	char *ofile;                 /**> Filename of the output file                                   */
+	char *infile;                /**> Filename of the input file                                    */
+	size_t o_name_len;           /**> Filesize of the name specifed by the -o flag                  */
+	file_struct file;            /**> A convinient file structure to be passed around in operations */
 
-	
 	/* Initialize some file information */
 	strcpy(file.calling_prog, argv[0]);
 	strcpy(file.default_o, DEFAULT_OUTPUT);
