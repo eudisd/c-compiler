@@ -4,7 +4,15 @@
 #include "../../scanner.h"
 #include <string.h>
 
+int write_tokens();
+
 int main()
+{
+	write_tokens();
+	return 0;
+}
+
+int write_tokens()
 {
 	size_t n, m;
 	
@@ -19,9 +27,9 @@ int main()
 	printf("%s\n", token);
 	printf("tk_size: %d\n", tk_size);
 	printf("word_size: %d\n", word_size);
-	printf("diff: %d\n", diff);
+	printf("diff: %d\n\n", diff);
 
-	while(diff > 0){
+	while(tk_size > 0){
 		tmp = (char*)xmalloc(sizeof(char)*diff + 1);
 
 		
@@ -31,17 +39,16 @@ int main()
 		tmp[diff] = '\n';
 		
 		printf("Token: %s\n", token);
-		printf("\n\nTmp: %s\n", tmp);
+		printf("Tmp: %s\n\n", tmp);
 
-		//free(token);
+		free(token);
 		token = extract_token(tmp);
 		tk_size = strlen(token);
 
 		upto += tk_size;
 		diff = word_size - upto;
 		free(tmp);
-	
+		
 	}
 
-	return 0;
 }

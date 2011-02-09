@@ -329,91 +329,91 @@ char *extract_token(char *word)
 {
 	switch(word[0]){
 		case '{':
-			return "{";
+			return copy_alloced("{");
 		case '}':
-			return "}";
+			return copy_alloced("}");
 		case '(':
-			return "(";
+			return copy_alloced("(");
 		case ')':
-			return ")";
+			return copy_alloced(")");
 		case ']':
-			return "]";
+			return copy_alloced("]");
 		case '[':
-			return "[";
+			return copy_alloced("[");
 		case '.':
-			return ".";
+			return copy_alloced(".");
 		case '!':
-			return "!";
+			return copy_alloced("!");
 		case '~':
-			return "~";
+			return copy_alloced("~");
 				/* ~ */
 				/* ~= */
 		case '+':
-			return "+";
+			return copy_alloced("+");
 			/* + */
 			/* ++ */
 			/* += */
 		case '-':
-			return "-";
+			return copy_alloced("-");
 			/* - */
 			/* -- */
 			/* -= */
 		case '*':
-			return "*";
+			return copy_alloced("*");
 			/* * */
 			/* *= */
 		case '&':
-			return "&";
+			return copy_alloced("&");
 			/* & */
 			/* && */
 			/* &= */
 		case '/':
-			return "/";
+			return copy_alloced("/");
 			/* / */
 			/* /= */	
 		case '%':
-			return "%";
+			return copy_alloced("%");
 			/* % */
 			/* %= */
 		case '<':
-			return "<";
+			return copy_alloced("<");
 			/* < */
 			/* << */
 			/* <= */
 			/* <<= */
 		case '>':
-			return ">";
+			return copy_alloced(">");
 			/* > */
 			/* >> */
 			/* >= */
 			/* >>= */			
 		case '=':
-			return "=";
+			return copy_alloced("=");
 			/* = */
 			/* == */
 		case '|':
-			return "|";
+			return copy_alloced("|");
 			/* | */
 			/* || */
 			/* |= */
 		case '^':
-			return "^";
+			return copy_alloced("^");
 			/* ^ */
 			/* ^= */
 		case '?':
-			return "?";
+			return copy_alloced("?");
 		case ':':
-			return ":";
+			return copy_alloced(":");
 		case ';':
-			return ";";
+			return copy_alloced(";");
 		/* Constants */
 
 		case '\'':
-			return "'";
+			return copy_alloced("'");
 		/* String Literals */
 		/* Questioning if this even belongs here?*/
 		case '"':
-			return "\"";
+			return copy_alloced("\"");
 			break;
 		
 		default:

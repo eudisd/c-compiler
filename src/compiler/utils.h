@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include <malloc.h>
 
@@ -86,6 +87,11 @@ int get_build_date();
 /**
   */
 int get_column(FILE *i);
+
+
+/**
+  */
+char *copy_alloced(char *s);
 
 /* Debug Functions */
 

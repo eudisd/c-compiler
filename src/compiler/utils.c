@@ -144,6 +144,14 @@ int get_build_date()
 	return atoi(buffer);
 }
 
+char *copy_alloced(char *s)
+{
+	char *t = (char*)xmalloc(sizeof(char)*strlen(s));
+	strcpy(t, s);
+	return t;
+}
+
+
 int get_column(FILE *i){
 	int cur_pos = ftell(i);
 	int offset = 0;
