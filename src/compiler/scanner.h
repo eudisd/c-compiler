@@ -169,7 +169,7 @@ size_t total_newlines;       /**>  Initialize newlines, to ready counter    */
 
 /** High level scanner encapsulator.
   */
-void run_scanner(char *prog, char *filename);
+void run_scanner(file_struct *file);
 
 /** Writes a lexeme out to file, given a name-value pair.
   */

@@ -4,13 +4,13 @@
 
 #include "scanner.h"
 
-void run_scanner(char *prog, char *filename)
+void run_scanner(file_struct *file)
 {
 	char c;
 	char *word;
 	
-	FILE *i = fopen(filename, "r");
-	FILE *o = fopen(INTERIM_FILENAME, "w");
+	FILE *i = fopen(INTERIM_FILENAME, "r");
+	FILE *o = fopen("data.tmp", "w");
 
 	/* getword() returns a string, so a NULL signifies that
      * nothing useful was retrieved from the input stream 
@@ -55,7 +55,7 @@ void run_scanner(char *prog, char *filename)
 			case 'i':
 				/* int */
                 /* if */
-                printf("%s\n", word);
+                //printf("%s\n", word);
                 
                 if( !strcmp(word, "int") ) {
                     sprintf(tk_buffer0, "%d", TK_KEYWORD);
@@ -73,10 +73,51 @@ void run_scanner(char *prog, char *filename)
                     
                 }
                 else {
-                    char *token = extract_token(word); 
-                    size_t step = 0;
+					int m, n;
+                    char *token = extract_token(word);
+					char *tmp = NULL;
+					size_t tk_size = strlen(token);
+                    size_t word_size = strlen(word);
+					size_t diff = word_size - tk_size;
+					printf("Start-\n\n");
+					
+					while( 1 ){
+						if(tmp != NULL){
+							if(strlen(tmp) > 0)
+								break;
+							free(tmp);
+						}
+						tmp = (char*)xmalloc(sizeof(char)*diff);
+						
+						//printf("Word Size: %d\nTk Size: %d\nDiff: %d\n", word_size, tk_size, diff);
+						
+					
+						//for(m = tk_size, n = 0; m < word_size; n++, m++){
+						//	tmp[n] = word[m];
+						//}
+						
+						/* Do things here */
+						
+						printf("\n\nExtracted Token: %s\n", tmp);
+						
+						/* Free token before reassignment */
+						free(token);
+						token = extract_token(tmp);
+						
+						tk_size = strlen(token);
+						
+						diff = word_size - tk_size;
+						
+						/* Free tmp here */
+						
+						
+					}	
+						
+						
+						
                     
-                    printf("Token: %s\n", token);
+                    
+                   // printf("\n\nToken: %s\n", token);
                  
                     //sprintf(tk_buffer0, "%d", TK_KEYWORD);
                     //sprintf(tk_buffer1, "%d", TK_INT);
@@ -84,7 +125,7 @@ void run_scanner(char *prog, char *filename)
                     ///* Write out lexeme to output file! */
                     //put_lexeme(o, tk_buffer0, tk_buffer1);
                 
-                    free(token);
+                    //free(token);
                     
                 }
 				
@@ -251,14 +292,11 @@ void run_scanner(char *prog, char *filename)
 		}
 		free(word);
 	}
-	
-    printf("Header Inclusion Done.  Total New Lines: %d\n", total_newlines);
-	printf("                        Total Characters Read: %d\n", ftell(i));
-	printf("                        Total Characters On This Line Read: %d\n", total_char_per_line);
-	
     
 	fclose(i);
 	fclose(o);
+	
+	
 }
 
 void put_lexeme(FILE *o, char *tk_name, char *tk_value)
@@ -389,6 +427,9 @@ char *extract_token(char *word)
 
 char *return_keyword(char *word)
 {
+	if (word == NULL){
+		return NULL;
+	}
 	
 	size_t size = strlen(word);
 	int i;

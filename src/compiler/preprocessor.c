@@ -239,7 +239,7 @@ void remove_comments(file_struct *file)
 {
 
 	FILE *i = fopen(file->filename, "r");
-	FILE *o = fopen("data.tmp", "w");
+	FILE *o = fopen(INTERIM_FILENAME, "w");
 	
 	if(!i)
 		file_error((char*)file->calling_prog, 
@@ -271,7 +271,7 @@ void remove_comments(file_struct *file)
 					total_newlines++;
 				}
 				if( c == '/' && (fcpeek(i) == '*')){
-					remove("data.tmp");
+					remove(INTERIM_FILENAME);
 					error(file->filename, total_newlines, 0, "Cannot nest comments!\n");
 				}
 				if( c == '*' && fcpeek(i) == '/' )
@@ -292,8 +292,8 @@ void remove_comments(file_struct *file)
 	fclose(i);
 	fclose(o);
 
-	remove(file->filename);
-	rename("data.tmp", file->filename);
+	//remove(file->filename);
+	//rename("data.tmp", file->filename);
 }
 
 

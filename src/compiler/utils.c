@@ -84,7 +84,7 @@ char *getword(FILE *i)
 	if( c == '\n' ){
 			total_newlines++;
 		}
-	//printf("CHECKING: \n\n");
+	
 	/* We first calculate the size of the word */
 	while ( (c != EOF) && !isspace(c) ){
 		/* Read and count new lines and characters */
@@ -96,7 +96,6 @@ char *getword(FILE *i)
 		}
 		
 	}
-	//printf("\n\nEND\n\n");
 	fseek(i, -(ftell(i) - pos), SEEK_CUR);
 
 	word = (char*)xmalloc(sizeof(char)*size + 1);

@@ -4,7 +4,7 @@
   my
   friend
 */
-int; main()
+int;here main()
 {
 	return ZERO;
 }

@@ -38,8 +38,7 @@ int main(int argc, char *argv[])
 				/* No output name specified, we default to unix elf name a.out */
 				run_preprocessor(&file); 
 
-				printf("Total Newlines: %d\n\n", total_newlines); 
-				//run_scanner(file.calling_prog, "tmp.txt");
+				run_scanner(&file);
 			}
 			break;
 		case 3:
