@@ -54,6 +54,7 @@ int main()
 
 		
 		
+		printf("Token: %s\n", token);
 		printf("\n\nTmp: %s\n", tmp);
 		/*
 		free(token);
