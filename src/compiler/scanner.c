@@ -30,7 +30,7 @@ void run_scanner(file_struct *file)
                     
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 			case 'b':
@@ -44,7 +44,7 @@ void run_scanner(file_struct *file)
                     
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 			case 'c':
@@ -84,7 +84,7 @@ void run_scanner(file_struct *file)
                     
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 			
@@ -116,7 +116,7 @@ void run_scanner(file_struct *file)
                     
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -148,7 +148,7 @@ void run_scanner(file_struct *file)
                     
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 			case 'f':
@@ -170,7 +170,7 @@ void run_scanner(file_struct *file)
                     
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -184,7 +184,7 @@ void run_scanner(file_struct *file)
                     put_lexeme(o, tk_buffer0, tk_buffer1);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 	
@@ -208,7 +208,7 @@ void run_scanner(file_struct *file)
                     
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				
 				
@@ -226,7 +226,7 @@ void run_scanner(file_struct *file)
                     put_lexeme(o, tk_buffer0, tk_buffer1);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				
 				break;
@@ -251,7 +251,7 @@ void run_scanner(file_struct *file)
                     
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				
 				break;
@@ -311,7 +311,7 @@ void run_scanner(file_struct *file)
                 } 
                
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				
 				break;
@@ -326,7 +326,7 @@ void run_scanner(file_struct *file)
                     put_lexeme(o, tk_buffer0, tk_buffer1);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -349,7 +349,7 @@ void run_scanner(file_struct *file)
                     
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -372,7 +372,7 @@ void run_scanner(file_struct *file)
                     
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -386,7 +386,7 @@ void run_scanner(file_struct *file)
                     put_lexeme(o, tk_buffer0, tk_buffer1);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -398,7 +398,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -408,7 +408,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -420,7 +420,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -430,7 +430,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -440,7 +440,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -450,7 +450,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -460,7 +460,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
             
@@ -470,7 +470,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -480,7 +480,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -492,7 +492,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				
 				break;
@@ -506,7 +506,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -519,7 +519,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -533,7 +533,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -543,7 +543,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				/* & */
 				/* && */
@@ -558,7 +558,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 			
@@ -568,7 +568,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				/* % */
 				/* %= */
@@ -580,7 +580,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				/* < */
 				/* << */
@@ -594,7 +594,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				/* > */
 				/* >> */
@@ -608,7 +608,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				/* = */
 				/* == */
@@ -623,7 +623,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				
 				break;
@@ -636,7 +636,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				
 				break;
@@ -647,7 +647,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
 
@@ -657,7 +657,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
 				break;
             
@@ -667,7 +667,7 @@ void run_scanner(file_struct *file)
                     put_ulexeme(o, tk_buffer0);
                 }
                 else {
-                    parse_tokens(word);
+                    parse_tokens(o,word);
                 }
                 break;
 
@@ -683,7 +683,7 @@ void run_scanner(file_struct *file)
 			default:
 			/* Try To See if it's a identifier, if not: 
 			 ERROR! Given token is not part of the lang def. */
-
+                parse_tokens(o, word);
 				break;
 				
 		}
@@ -861,7 +861,7 @@ int is_valid_id(char *word)
 	return size;
 }
 
-int parse_tokens(char *word)
+int parse_tokens(FILE *o, char *word)
 {
 	size_t n, m;
 	char *token = extract_token(word);
@@ -900,6 +900,170 @@ int parse_tokens(char *word)
 
 	return 0;
 
+}
+
+int get_sval(char *s)
+{
+    if( !strcmp(s, "{") )
+        return TK_LEFTBRACKET;
+    else if( !strcmp(s, "}") )
+        return TK_RIGHTBRACKET;
+    else if( !strcmp(s, "(") )
+        return TK_LEFTPAREN;
+    else if( !strcmp(s, ")") )
+        return TK_RIGHTPAREN;
+    else if( !strcmp(s, "[") )
+        return TK_LEFT_SQR_BRACKET;
+    else if( !strcmp(s, "]") )
+        return TK_RIGHT_SQR_BRACKET;
+    else if( !strcmp(s, ".") )
+        return TK_DOT;
+    else if( !strcmp(s, "!") )
+        return TK_UNARY_EXCLAMATION;
+    else if( !strcmp(s, "~") )
+        return TK_UNARY_TILDA;
+    else if( !strcmp(s, "++") )
+        return TK_UNARY_PLUSPLUS;
+    else if( !strcmp(s, "--") )
+        return TK_UNARY_MINUSMINUS;
+    else if( !strcmp(s, "+") )
+        return TK_PLUS;
+    else if( !strcmp(s, "-") )
+        return TK_MINUS;
+    else if( !strcmp(s, "*") )
+        return TK_UNARY_STAR;
+    else if( !strcmp(s, "&") )
+        return TK_UNARY_AMPERSAND;
+    else if( !strcmp(s, "/") )
+        return TK_DIV;
+    else if( !strcmp(s, "%") )
+        return TK_MOD;
+    else if( !strcmp(s, "<<") )
+        return TK_LEFT_SHIFT;
+    else if( !strcmp(s, ">>") )
+        return TK_RIGHT_SHIFT;
+    else if( !strcmp(s, "<") )
+        return TK_LESS_LOGIC;
+    else if( !strcmp(s, ">") )
+        return TK_GREATER_LOGIC;
+    else if( !strcmp(s, ">=") )
+        return TK_GREATER_EQU_LOGIC;
+    else if( !strcmp(s, "<=") )
+        return TK_LESS_EQU_LOGIC;
+    else if( !strcmp(s, "==") )
+        return TK_EQU_EQU_LOGIC;
+    else if( !strcmp(s, "!=") )
+        return TK_NOT_EQU_LOGIC;
+    else if( !strcmp(s, "^") )
+        return TK_BIT_XOR;
+    else if( !strcmp(s, "|") )
+        return TK_BIT_OR;
+    else if( !strcmp(s, "&&") )
+        return TK_LOGIC_AND;
+    else if( !strcmp(s, "||") )
+        return TK_LOGIC_OR;
+    else if( !strcmp(s, "?") )
+        return TK_QUESTION;
+    else if( !strcmp(s, ":") )
+        return TK_COLON;
+    else if( !strcmp(s, ";") )
+        return TK_SEMICOLON;
+    else if( !strcmp(s, "=") )
+        return TK_EQU;
+    else if( !strcmp(s, "+=") )
+        return TK_PLUS_EQU;
+    else if( !strcmp(s, "-=") )
+        return TK_MINUS_EQU;
+    else if( !strcmp(s, "*=") )
+        return TK_STAR_EQU;
+    else if( !strcmp(s, "/=") )
+        return TK_DIV_EQU;
+    else if( !strcmp(s, "%=") )
+        return TK_MOD_EQU;
+    else if( !strcmp(s, "&=") )
+        return TK_AND_EQU;
+    else if( !strcmp(s, "^=") )
+        return TK_XOR_EQU;
+    else if( !strcmp(s, "|=") )
+        return TK_OR_EQU;
+    else if( !strcmp(s, "<=") )
+        return TK_LSHIFT_EQU;
+    else if( !strcmp(s, ">=") )
+        return TK_RSHIFT_EQU;
+    else if( !strcmp(s, ",") )
+        return TK_COMMA;
+    else if( !strcmp(s, "") )
+        return TK_LEFTPAREN;
+    else if( !strcmp(s, ")") )
+        return TK_RIGHTPAREN;
+    else if( !strcmp(s, "auto") )
+        return TK_AUTO;
+    else if( !strcmp(s, "break") )
+        return TK_BREAK;
+    else if( !strcmp(s, "case") )
+        return TK_CASE;
+    else if( !strcmp(s, "char") )
+        return TK_CHAR;
+    else if( !strcmp(s, "const") )
+        return TK_CONST;
+    else if( !strcmp(s, "continue") )
+        return TK_CONTINUE;
+    else if( !strcmp(s, "default") )
+        return TK_DEFAULT;
+    else if( !strcmp(s, "do") )
+        return TK_DO;
+    else if( !strcmp(s, "double") )
+        return TK_DOUBLE;
+    else if( !strcmp(s, "else") )
+        return TK_ELSE;
+    else if( !strcmp(s, "enum") )
+        return TK_ENUM;
+    else if( !strcmp(s, "extern") )
+        return TK_EXTERN;
+    else if( !strcmp(s, "float") )
+        return TK_FLOAT;
+    else if( !strcmp(s, "for") )
+        return TK_FOR;
+    else if( !strcmp(s, "goto") )
+        return TK_GOTO;
+    else if( !strcmp(s, "if") )
+        return TK_IF;
+    else if( !strcmp(s, "int") )
+        return TK_INT;
+    else if( !strcmp(s, "long") )
+        return TK_LONG;
+    else if( !strcmp(s, "register") )
+        return TK_REGISTER;
+    else if( !strcmp(s, "return") )
+        return TK_RETURN;
+    else if( !strcmp(s, "short") )
+        return TK_SHORT;
+    else if( !strcmp(s, "signed") )
+        return TK_SIGNED;
+    else if( !strcmp(s, "sizeof") )
+        return TK_SIZEOF;
+    else if( !strcmp(s, "static") )
+        return TK_STATIC;
+    else if( !strcmp(s, "struct") )
+        return TK_STRUCT;
+    else if( !strcmp(s, "switch") )
+        return TK_SWITCH;
+    else if( !strcmp(s, "typedef") )
+        return TK_TYPEDEF;
+    else if( !strcmp(s, "union" ) )
+        return TK_UNION;
+    else if( !strcmp(s, "unsigned") )
+        return TK_UNSIGNED;
+    else if( !strcmp(s, "void") )
+        return TK_VOID;
+    else if( !strcmp(s, "volatile") )
+        return TK_VOLATILE;
+    else if( !strcmp(s, "while") )
+        return TK_WHILE;
+    
+
+#define TK_SEMICOLON           85
+    return 0;
 }
 
 /* This is part of the parser! */

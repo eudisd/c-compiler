@@ -195,7 +195,7 @@ int is_valid_id(char *word);
 
 /**
   */
-int parse_tokens(char *word);
+int parse_tokens(FILE *o, char *word);
 
 /**
   */
@@ -206,6 +206,10 @@ char *extract_token(char *word);
     Must fix this bug.
   */
 char *return_keyword(char *word);
+
+/**
+  */
+int get_sval(char *s);
 
 /* This is part of the parser! (FIX IT LATER)*/
 
