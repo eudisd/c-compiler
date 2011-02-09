@@ -175,7 +175,7 @@ void run_scanner(file_struct *file);
   */
 void put_lexeme(FILE *o, char *tk_name, char *tk_value);
 
-/** Writes a uanry lexeme out to file, given a name.
+/** Writes a unary lexeme out to file, given a name.
   */
 void put_ulexeme(FILE *o, char *tk_name);
 

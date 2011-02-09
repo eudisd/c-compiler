@@ -9,7 +9,7 @@ void print_stab(symbol_table *stab)
 	int i;
 	printf("\n\nCurrent STAB Status:\n"
            "Total Used: %4d\t Size: %4d\t Load Factor: %4.2f\n"
-		   "\n", stab->in_use, stab->size, stab->load_factor);
+		   "\n", (int)stab->in_use, (int)stab->size, stab->load_factor);
 	printf("-------\t----\t-----\t----\n"
 		   "Address\tName\tValue\tSlot\n");
 	for(i = 0; i < stab->size; i++){
