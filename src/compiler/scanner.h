@@ -194,7 +194,9 @@ int is_valid_id(char *word);
   */
 char *extract_token(char *word);
 
-/** _MUST_ be freed.
+/** _MUST_ be freed. BUT THERE IS A PROBLEM.  We cannont free this 
+	function freely as it returns constant strings in multiple cases! 
+    Must fix this bug.
   */
 char *return_keyword(char *word);
 
