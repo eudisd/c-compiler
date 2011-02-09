@@ -72,9 +72,9 @@ static char tk_buffer1[5];
 
 /* Left To Right Associativity */
 #define TK_LESS_LOGIC  		   24
-#define TK_RIGHT_LOGIC 		   25
-#define TK_RIGHT_EQU_LOGIC 	   26
-#define TK_LEFT_EQU_LOGIC 	   27
+#define TK_GREATER_LOGIC 	   25
+#define TK_GREATER_EQU_LOGIC   26
+#define TK_LESS_EQU_LOGIC 	   27
 
 /* Left To Right Associativity */
 #define TK_EQU_EQU_LOGIC	   28
@@ -152,6 +152,9 @@ static char tk_buffer1[5];
 #define TK_VOID				   82
 #define TK_VOLATILE			   83
 #define TK_WHILE			   84
+
+
+#define TK_SEMICOLON           85
 
 
 /*------------------------- Globals -------------------------*/
