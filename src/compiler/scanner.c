@@ -73,60 +73,7 @@ void run_scanner(file_struct *file)
                     
                 }
                 else {
-					int m, n;
-                    char *token = extract_token(word);
-					char *tmp = NULL;
-					size_t tk_size = strlen(token);
-                    size_t word_size = strlen(word);
-					size_t diff = word_size - tk_size;
-					printf("Start-\n\n");
-					
-					while( 1 ){
-						if(tmp != NULL){
-							if(strlen(tmp) > 0)
-								break;
-							free(tmp);
-						}
-						tmp = (char*)xmalloc(sizeof(char)*diff);
-						
-						//printf("Word Size: %d\nTk Size: %d\nDiff: %d\n", word_size, tk_size, diff);
-						
-					
-						//for(m = tk_size, n = 0; m < word_size; n++, m++){
-						//	tmp[n] = word[m];
-						//}
-						
-						/* Do things here */
-						
-						printf("\n\nExtracted Token: %s\n", tmp);
-						
-						/* Free token before reassignment */
-						free(token);
-						token = extract_token(tmp);
-						
-						tk_size = strlen(token);
-						
-						diff = word_size - tk_size;
-						
-						/* Free tmp here */
-						
-						
-					}	
-						
-						
-						
-                    
-                    
-                   // printf("\n\nToken: %s\n", token);
-                 
-                    //sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    //sprintf(tk_buffer1, "%d", TK_INT);
-                    //
-                    ///* Write out lexeme to output file! */
-                    //put_lexeme(o, tk_buffer0, tk_buffer1);
-                
-                    //free(token);
-                    
+                    parse_tokens(word);
                 }
 				
 				
@@ -464,6 +411,46 @@ int is_valid_id(char *word)
 	return size;
 }
 
+int parse_tokens(char *word)
+{
+	size_t n, m;
+	char *token = extract_token(word);
+	char *tmp;
+	size_t tk_size = strlen(token);
+	size_t word_size = strlen(word);
+	size_t diff = word_size - tk_size;
+	size_t upto = tk_size;
+
+	//printf("%s\n", token);
+	//printf("tk_size: %d\n", tk_size);
+	//printf("word_size: %d\n", word_size);
+	//printf("diff: %d\n\n", diff);
+	printf("\n");
+	while(tk_size > 0){
+		tmp = (char*)xmalloc(sizeof(char)*diff + 1);
+
+		
+		for(n = 0, m = upto; n < diff; n++, m++){
+			tmp[n] = word[m];
+		}	
+		tmp[diff] = '\n';
+		
+		printf("Token: %s\n", token);
+		printf("Tmp: %s\n\n", tmp);
+
+		free(token);
+		token = extract_token(tmp);
+		tk_size = strlen(token);
+
+		upto += tk_size;
+		diff = word_size - upto;
+		free(tmp);
+		
+	}
+
+	return 0;
+
+}
 
 /* This is part of the parser! */
 /*

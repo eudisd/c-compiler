@@ -192,6 +192,10 @@ int is_valid_id(char *word);
 
 /**
   */
+int parse_tokens(char *word);
+
+/**
+  */
 char *extract_token(char *word);
 
 /** _MUST_ be freed. BUT THERE IS A PROBLEM.  We cannont free this 
