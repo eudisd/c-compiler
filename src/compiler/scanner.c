@@ -871,6 +871,8 @@ int parse_tokens(FILE *o, char *word)
 	size_t diff = word_size - tk_size;
 	size_t upto = tk_size;
 
+    token_package tk;
+
 	//printf("%s\n", token);
 	//printf("tk_size: %d\n", tk_size);
 	//printf("word_size: %d\n", word_size);
@@ -885,9 +887,18 @@ int parse_tokens(FILE *o, char *word)
 		}	
 		tmp[diff] = '\n';
 		
-		printf("Token: %s\n", token);
-		printf("Tmp: %s\n\n", tmp);
-
+		tk = get_sval(token);
+        if (tk.type == -1){
+            sprintf(tk_buffer0, "%d", tk.val);
+            put_ulexeme(o, tk_buffer0);
+        }
+        else if (tk.type == TK_KEYWORD) {
+            sprintf(tk_buffer0, "%d", TK_KEYWORD);
+            sprintf(tk_buffer1, "%d", tk.val);
+                    
+            put_lexeme(o, tk_buffer0, tk_buffer1);
+        }
+                    
 		free(token);
 		token = extract_token(tmp);
 		tk_size = strlen(token);
@@ -895,175 +906,329 @@ int parse_tokens(FILE *o, char *word)
 		upto += tk_size;
 		diff = word_size - upto;
 		free(tmp);
-		
 	}
-
 	return 0;
 
 }
 
-int get_sval(char *s)
+token_package get_sval(char *s)
 {
-    if( !strcmp(s, "{") )
-        return TK_LEFTBRACKET;
-    else if( !strcmp(s, "}") )
-        return TK_RIGHTBRACKET;
-    else if( !strcmp(s, "(") )
-        return TK_LEFTPAREN;
-    else if( !strcmp(s, ")") )
-        return TK_RIGHTPAREN;
-    else if( !strcmp(s, "[") )
-        return TK_LEFT_SQR_BRACKET;
-    else if( !strcmp(s, "]") )
-        return TK_RIGHT_SQR_BRACKET;
-    else if( !strcmp(s, ".") )
-        return TK_DOT;
-    else if( !strcmp(s, "!") )
-        return TK_UNARY_EXCLAMATION;
-    else if( !strcmp(s, "~") )
-        return TK_UNARY_TILDA;
-    else if( !strcmp(s, "++") )
-        return TK_UNARY_PLUSPLUS;
-    else if( !strcmp(s, "--") )
-        return TK_UNARY_MINUSMINUS;
-    else if( !strcmp(s, "+") )
-        return TK_PLUS;
-    else if( !strcmp(s, "-") )
-        return TK_MINUS;
-    else if( !strcmp(s, "*") )
-        return TK_UNARY_STAR;
-    else if( !strcmp(s, "&") )
-        return TK_UNARY_AMPERSAND;
-    else if( !strcmp(s, "/") )
-        return TK_DIV;
-    else if( !strcmp(s, "%") )
-        return TK_MOD;
-    else if( !strcmp(s, "<<") )
-        return TK_LEFT_SHIFT;
-    else if( !strcmp(s, ">>") )
-        return TK_RIGHT_SHIFT;
-    else if( !strcmp(s, "<") )
-        return TK_LESS_LOGIC;
-    else if( !strcmp(s, ">") )
-        return TK_GREATER_LOGIC;
-    else if( !strcmp(s, ">=") )
-        return TK_GREATER_EQU_LOGIC;
-    else if( !strcmp(s, "<=") )
-        return TK_LESS_EQU_LOGIC;
-    else if( !strcmp(s, "==") )
-        return TK_EQU_EQU_LOGIC;
-    else if( !strcmp(s, "!=") )
-        return TK_NOT_EQU_LOGIC;
-    else if( !strcmp(s, "^") )
-        return TK_BIT_XOR;
-    else if( !strcmp(s, "|") )
-        return TK_BIT_OR;
-    else if( !strcmp(s, "&&") )
-        return TK_LOGIC_AND;
-    else if( !strcmp(s, "||") )
-        return TK_LOGIC_OR;
-    else if( !strcmp(s, "?") )
-        return TK_QUESTION;
-    else if( !strcmp(s, ":") )
-        return TK_COLON;
-    else if( !strcmp(s, ";") )
-        return TK_SEMICOLON;
-    else if( !strcmp(s, "=") )
-        return TK_EQU;
-    else if( !strcmp(s, "+=") )
-        return TK_PLUS_EQU;
-    else if( !strcmp(s, "-=") )
-        return TK_MINUS_EQU;
-    else if( !strcmp(s, "*=") )
-        return TK_STAR_EQU;
-    else if( !strcmp(s, "/=") )
-        return TK_DIV_EQU;
-    else if( !strcmp(s, "%=") )
-        return TK_MOD_EQU;
-    else if( !strcmp(s, "&=") )
-        return TK_AND_EQU;
-    else if( !strcmp(s, "^=") )
-        return TK_XOR_EQU;
-    else if( !strcmp(s, "|=") )
-        return TK_OR_EQU;
-    else if( !strcmp(s, "<=") )
-        return TK_LSHIFT_EQU;
-    else if( !strcmp(s, ">=") )
-        return TK_RSHIFT_EQU;
-    else if( !strcmp(s, ",") )
-        return TK_COMMA;
-    else if( !strcmp(s, "") )
-        return TK_LEFTPAREN;
-    else if( !strcmp(s, ")") )
-        return TK_RIGHTPAREN;
-    else if( !strcmp(s, "auto") )
-        return TK_AUTO;
-    else if( !strcmp(s, "break") )
-        return TK_BREAK;
-    else if( !strcmp(s, "case") )
-        return TK_CASE;
-    else if( !strcmp(s, "char") )
-        return TK_CHAR;
-    else if( !strcmp(s, "const") )
-        return TK_CONST;
-    else if( !strcmp(s, "continue") )
-        return TK_CONTINUE;
-    else if( !strcmp(s, "default") )
-        return TK_DEFAULT;
-    else if( !strcmp(s, "do") )
-        return TK_DO;
-    else if( !strcmp(s, "double") )
-        return TK_DOUBLE;
-    else if( !strcmp(s, "else") )
-        return TK_ELSE;
-    else if( !strcmp(s, "enum") )
-        return TK_ENUM;
-    else if( !strcmp(s, "extern") )
-        return TK_EXTERN;
-    else if( !strcmp(s, "float") )
-        return TK_FLOAT;
-    else if( !strcmp(s, "for") )
-        return TK_FOR;
-    else if( !strcmp(s, "goto") )
-        return TK_GOTO;
-    else if( !strcmp(s, "if") )
-        return TK_IF;
-    else if( !strcmp(s, "int") )
-        return TK_INT;
-    else if( !strcmp(s, "long") )
-        return TK_LONG;
-    else if( !strcmp(s, "register") )
-        return TK_REGISTER;
-    else if( !strcmp(s, "return") )
-        return TK_RETURN;
-    else if( !strcmp(s, "short") )
-        return TK_SHORT;
-    else if( !strcmp(s, "signed") )
-        return TK_SIGNED;
-    else if( !strcmp(s, "sizeof") )
-        return TK_SIZEOF;
-    else if( !strcmp(s, "static") )
-        return TK_STATIC;
-    else if( !strcmp(s, "struct") )
-        return TK_STRUCT;
-    else if( !strcmp(s, "switch") )
-        return TK_SWITCH;
-    else if( !strcmp(s, "typedef") )
-        return TK_TYPEDEF;
-    else if( !strcmp(s, "union" ) )
-        return TK_UNION;
-    else if( !strcmp(s, "unsigned") )
-        return TK_UNSIGNED;
-    else if( !strcmp(s, "void") )
-        return TK_VOID;
-    else if( !strcmp(s, "volatile") )
-        return TK_VOLATILE;
-    else if( !strcmp(s, "while") )
-        return TK_WHILE;
+    token_package tk;
     
-
-#define TK_SEMICOLON           85
-    return 0;
+    if( !strcmp(s, "{") ){
+        tk.type = -1;
+        tk.val = TK_LEFTBRACKET;
+    }
+    else if( !strcmp(s, "}") ){
+        tk.type = -1;
+        tk.val = TK_RIGHTBRACKET;
+    }
+    else if( !strcmp(s, "(") ){
+        tk.type = -1;
+        tk.val = TK_LEFTPAREN;
+    }
+    else if( !strcmp(s, ")") ){
+        tk.type = -1;
+        tk.val = TK_RIGHTPAREN;
+    }
+    else if( !strcmp(s, "[") ){
+        tk.type = -1;
+        tk.val = TK_LEFT_SQR_BRACKET;
+    }
+    else if( !strcmp(s, "]") ){
+        tk.type = -1;
+        tk.val = TK_RIGHT_SQR_BRACKET;
+    }
+    else if( !strcmp(s, ".") ){
+        tk.type = -1;
+        tk.val = TK_DOT;
+    }
+    else if( !strcmp(s, "!") ){
+        tk.type = -1;
+        tk.val = TK_UNARY_EXCLAMATION;
+    }
+    else if( !strcmp(s, "~") ){
+        tk.type = -1;
+        tk.val = TK_UNARY_TILDA;
+    }
+    else if( !strcmp(s, "++") ){
+        tk.type = -1;
+        tk.val = TK_UNARY_PLUSPLUS;
+    }
+    else if( !strcmp(s, "--") ){
+        tk.type = -1;
+        tk.val = TK_UNARY_MINUSMINUS;
+    }
+    else if( !strcmp(s, "+") ){
+        tk.type = -1;
+        tk.val = TK_PLUS; 
+    }
+    else if( !strcmp(s, "-") ){
+        tk.type = -1;
+        tk.val = TK_MINUS;
+    }
+    else if( !strcmp(s, "*") ){
+        tk.type = -1;
+        tk.val = TK_UNARY_STAR;
+    }
+    else if( !strcmp(s, "&") ){
+        tk.type = -1;
+        tk.val = TK_UNARY_AMPERSAND;
+    }
+    else if( !strcmp(s, "/") ){
+        tk.type = -1;
+        tk.val = TK_DIV;
+    }
+    else if( !strcmp(s, "%") ){
+        tk.type = -1;
+        tk.val = TK_MOD;
+    }
+    else if( !strcmp(s, "<<") ){
+        tk.type = -1;
+        tk.val = TK_LEFT_SHIFT;
+    }
+    else if( !strcmp(s, ">>") ){
+        tk.type = -1;
+        tk.val = TK_RIGHT_SHIFT;
+    }
+    else if( !strcmp(s, "<") ){
+        tk.type = -1;
+        tk.val = TK_LESS_LOGIC;
+    }
+    else if( !strcmp(s, ">") ){
+        tk.type = -1;
+        tk.val = TK_GREATER_LOGIC;
+    }
+    else if( !strcmp(s, ">=") ){
+        tk.type = -1;
+        tk.val = TK_GREATER_EQU_LOGIC;
+    }
+    else if( !strcmp(s, "<=") ){
+        tk.type = -1;
+        tk.val = TK_LESS_EQU_LOGIC;
+    }
+    else if( !strcmp(s, "==") ){
+        tk.type = -1;
+        tk.val = TK_EQU_EQU_LOGIC;
+    }
+    else if( !strcmp(s, "!=") ){
+        tk.type = -1;
+        tk.val = TK_NOT_EQU_LOGIC;
+    }
+    else if( !strcmp(s, "^") ){
+        tk.type = -1;
+        tk.val = TK_BIT_XOR;
+    }
+    else if( !strcmp(s, "|") ){
+        tk.type = -1;
+        tk.val = TK_BIT_OR;
+    }
+    else if( !strcmp(s, "&&") ){
+        tk.type = -1;
+        tk.val = TK_LOGIC_AND;
+    }
+    else if( !strcmp(s, "||") ){
+        tk.type = -1;
+        tk.val = TK_LOGIC_OR;
+    }
+    else if( !strcmp(s, "?") ){
+        tk.type = -1;
+        tk.val = TK_QUESTION;
+    }
+    else if( !strcmp(s, ":") ){
+        tk.type = -1;
+        tk.val = TK_COLON;
+    }
+    else if( !strcmp(s, ";") ){
+        tk.type = -1;
+        tk.val = TK_SEMICOLON;
+    }
+    else if( !strcmp(s, "=") ){
+        tk.type = -1;
+        tk.val = TK_EQU;
+    }
+    else if( !strcmp(s, "+=") ){
+        tk.type = -1;
+        tk.val = TK_PLUS_EQU;
+    }
+    else if( !strcmp(s, "-=") ){
+        tk.type = -1;
+        tk.val = TK_MINUS_EQU;
+    }
+    else if( !strcmp(s, "*=") ){
+        tk.type = -1;
+        tk.val = TK_STAR_EQU;
+    }
+    else if( !strcmp(s, "/=") ){
+        tk.type = -1;
+        tk.val = TK_DIV_EQU;
+    }
+    else if( !strcmp(s, "%=") ){
+        tk.type = -1;
+        tk.val = TK_MOD_EQU;
+    }
+    else if( !strcmp(s, "&=") ){
+        tk.type = -1;
+        tk.val = TK_AND_EQU;
+    }
+    else if( !strcmp(s, "^=") ){
+        tk.type = -1;
+        tk.val = TK_XOR_EQU;
+    }
+    else if( !strcmp(s, "|=") ){
+        tk.type = -1;
+        tk.val = TK_OR_EQU;
+    }
+    else if( !strcmp(s, "<=") ){
+        tk.type = -1;
+        tk.val = TK_LSHIFT_EQU;
+    }
+    else if( !strcmp(s, ">=") ){
+        tk.type = -1;
+        tk.val = TK_RSHIFT_EQU;
+    }
+    else if( !strcmp(s, ",") ){
+        tk.type = -1;
+        tk.val = TK_COMMA;
+    }
+    else if( !strcmp(s, "") ){
+        tk.type = -1;
+        tk.val = TK_LEFTPAREN;
+    }
+    else if( !strcmp(s, ")") ){
+        tk.type = -1;
+        tk.val = TK_RIGHTPAREN;
+    }
+    else if( !strcmp(s, "auto") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_AUTO;
+    }
+    else if( !strcmp(s, "break") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_BREAK;
+    }
+    else if( !strcmp(s, "case") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_CASE;
+    }
+    else if( !strcmp(s, "char") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_CHAR;
+    }
+    else if( !strcmp(s, "const") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_CONST;
+    }
+    else if( !strcmp(s, "continue") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_CONTINUE;
+    }
+    else if( !strcmp(s, "default") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_DEFAULT;
+    }
+    else if( !strcmp(s, "do") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_DO;
+    }
+    else if( !strcmp(s, "double") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_DOUBLE;
+    }
+    else if( !strcmp(s, "else") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_ELSE;
+    }
+    else if( !strcmp(s, "enum") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_ENUM;
+    }
+    else if( !strcmp(s, "extern") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_EXTERN;
+    }
+    else if( !strcmp(s, "float") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_FLOAT;
+    }
+    else if( !strcmp(s, "for") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_FOR;
+    }
+    else if( !strcmp(s, "goto") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_GOTO;
+    }
+    else if( !strcmp(s, "if") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_IF;
+    }
+    else if( !strcmp(s, "int") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_INT;
+    }
+    else if( !strcmp(s, "long") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_LONG;
+    }
+    else if( !strcmp(s, "register") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_REGISTER;
+    }
+    else if( !strcmp(s, "return") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_RETURN;
+    }
+    else if( !strcmp(s, "short") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_SHORT;
+    }
+    else if( !strcmp(s, "signed") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_SIGNED;
+    }
+    else if( !strcmp(s, "sizeof") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_SIZEOF;
+    }
+    else if( !strcmp(s, "static") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_STATIC;
+    }
+    else if( !strcmp(s, "struct") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_STRUCT;
+    }
+    else if( !strcmp(s, "switch") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_SWITCH;
+    }
+    else if( !strcmp(s, "typedef") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_TYPEDEF;
+    }
+    else if( !strcmp(s, "union" ) ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_UNION;
+    }
+    else if( !strcmp(s, "unsigned") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_UNSIGNED;
+    }
+    else if( !strcmp(s, "void") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_VOID;
+    }
+    else if( !strcmp(s, "volatile") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_VOLATILE;
+    }
+    else if( !strcmp(s, "while") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_WHILE;
+    }
+    
+    return tk;
 }
 
 /* This is part of the parser! */

@@ -21,6 +21,11 @@
 
 #include "utils.h"
 
+/*-------------------------Typedefs -------------------------*/
+typedef struct token_package_Tag {
+    int val;
+    int type;
+} token_package;
 /*------------------------- Globals -------------------------*/
 
 
@@ -209,7 +214,7 @@ char *return_keyword(char *word);
 
 /**
   */
-int get_sval(char *s);
+token_package get_sval(char *s);
 
 /* This is part of the parser! (FIX IT LATER)*/
 
