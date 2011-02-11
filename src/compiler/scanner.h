@@ -21,6 +21,11 @@
 
 #include "utils.h"
 
+/*-------------------------Typedefs -------------------------*/
+typedef struct token_package_Tag {
+    int val;
+    int type;
+} token_package;
 /*------------------------- Globals -------------------------*/
 
 
@@ -72,9 +77,9 @@ static char tk_buffer1[5];
 
 /* Left To Right Associativity */
 #define TK_LESS_LOGIC  		   24
-#define TK_RIGHT_LOGIC 		   25
-#define TK_RIGHT_EQU_LOGIC 	   26
-#define TK_LEFT_EQU_LOGIC 	   27
+#define TK_GREATER_LOGIC 	   25
+#define TK_GREATER_EQU_LOGIC   26
+#define TK_LESS_EQU_LOGIC 	   27
 
 /* Left To Right Associativity */
 #define TK_EQU_EQU_LOGIC	   28
@@ -154,6 +159,9 @@ static char tk_buffer1[5];
 #define TK_WHILE			   84
 
 
+#define TK_SEMICOLON           85
+
+
 /*------------------------- Globals -------------------------*/
 
 
@@ -175,7 +183,7 @@ void run_scanner(file_struct *file);
   */
 void put_lexeme(FILE *o, char *tk_name, char *tk_value);
 
-/** Writes a uanry lexeme out to file, given a name.
+/** Writes a unary lexeme out to file, given a name.
   */
 void put_ulexeme(FILE *o, char *tk_name);
 
@@ -192,7 +200,7 @@ int is_valid_id(char *word);
 
 /**
   */
-int parse_tokens(char *word);
+int parse_tokens(FILE *o, char *word);
 
 /**
   */
@@ -203,6 +211,10 @@ char *extract_token(char *word);
     Must fix this bug.
   */
 char *return_keyword(char *word);
+
+/**
+  */
+token_package get_sval(char *s);
 
 /* This is part of the parser! (FIX IT LATER)*/
 
