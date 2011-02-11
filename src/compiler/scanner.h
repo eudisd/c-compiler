@@ -209,9 +209,7 @@ int parse_tokens(FILE *o, char *word);
   */
 char *extract_token(char *word);
 
-/** _MUST_ be freed. BUT THERE IS A PROBLEM.  We cannont free this 
-	function freely as it returns constant strings in multiple cases! 
-    Must fix this bug.
+/** _MUST_ be freed. 
   */
 char *return_keyword(char *word);
 
@@ -219,22 +217,7 @@ char *return_keyword(char *word);
   */
 token_package get_sval(char *s);
 
-/* This is part of the parser! (FIX IT LATER)*/
-
-/** Gets a lexeme.  _MUST_ be freed after use.
-  */
-//char *get_lexeme(FILE *i)
-
-/** Given a lexeme, returns the ID part.  _MUST_ be freed after call.
-  */
-//char *get_valid_id(char *lexeme);
-
-/** Given a lexeme, returns the NAME part.  _MUST_ be freed after call.
-  */
-//char *get_token_name(char *lexeme);
-
-
-/* Job prototypes */
+/* Jobs prototypes */
 
 inline static void a(FILE *o, char *word);
 inline static void b(FILE *o, char *word);

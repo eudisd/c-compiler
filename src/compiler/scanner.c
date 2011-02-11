@@ -625,27 +625,11 @@ token_package get_sval(char *s)
     return tk;
 }
 
-/* This is part of the parser! */
-/*
-char *get_lexeme(FILE *i)
-{
-	return NULL;
-}
-
-char *get_valid_id(char *lexeme)
-{
-	return NULL;
-}
-
-char *get_token_name(char *lexeme)
-{
-	return NULL;
-}
-*/
 
 
 
-/************************* DISPATCH JOBS *****************************/
+
+/************************* DISPATCH *****************************/
 
 void a(FILE *o, char *word)
 {
