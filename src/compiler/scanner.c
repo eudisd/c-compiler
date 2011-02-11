@@ -62,7 +62,7 @@ void run_scanner(file_struct *file)
 
     
 	char c;
-	char *word = "union";
+	char *word;
     
     
 	
@@ -283,6 +283,14 @@ int parse_tokens(FILE *o, char *word)
             sprintf(tk_buffer1, "%d", tk.val);
                     
             put_lexeme(o, tk_buffer0, tk_buffer1);
+        }
+        // 
+        else if (tk.type == TK_STRINGLIT) {
+
+        }
+        
+        else if (tk.type == TK_INTLIT) {
+
         }
                     
 		free(token);
@@ -864,7 +872,6 @@ void u(FILE *o, char *word)
 {
     /* union */
     /* unsigned */
-    printf("UNSIGNED HERE?\n");
     if( !strcmp(word, "union") ) {
         sprintf(tk_buffer0, "%d", TK_KEYWORD);
         sprintf(tk_buffer1, "%d", TK_UNION);

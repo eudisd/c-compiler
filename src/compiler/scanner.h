@@ -21,26 +21,9 @@
 
 #include "utils.h"
 
-
-
-
-/*-------------------------Typedefs -------------------------*/
-typedef struct token_package_Tag {
-    int val;
-    int type;
-} token_package;
-/*------------------------- Globals -------------------------*/
-
-
-extern size_t total_newlines;
-
-static char tk_buffer0[5]; /**> Used to write the interger values of lexemes below as strings (easier). */
-static char tk_buffer1[5];   
-
-
-/* Token Defininitions */
-        
-
+#define INTLIT_TABLE_MAX    1000
+#define FLOATLIT_TABLE_MAX  1000
+#define STRINGLIT_TABLE_MAX 1000   
 
 /* Scope */
 #define TK_LEFTBRACKET         0
@@ -163,7 +146,30 @@ static char tk_buffer1[5];
 
 
 #define TK_SEMICOLON           85
+#define TK_INTLIT              86   /**> need array for this */
+#define TK_STRINGLIT           87   /**> need a symbol table for this */
 
+
+
+/*-------------------------Typedefs -------------------------*/
+typedef struct token_package_Tag {
+    int val;
+    int type;
+} token_package;
+/*------------------------- Globals -------------------------*/
+
+
+extern size_t total_newlines;
+
+static char tk_buffer0[5]; /**> Used to write the interger values of lexemes below as strings (easier). */
+static char tk_buffer1[5];   
+
+static size_t intlit_t_counter;
+static size_t floatlit_t_counter;
+static int intlit_table[INTLIT_TABLE_MAX];
+static double floatlit_table[FLOATLIT_TABLE_MAX];
+
+/* Token Defininitions */     
 
 /*------------------------- Globals -------------------------*/
 
@@ -172,11 +178,7 @@ size_t total_char;           /**>  Initialize total character count counter */
 size_t total_char_per_line;
 size_t total_newlines;       /**>  Initialize newlines, to ready counter    */
 
-
-
 /*------------------- Function Prototoypes -------------------*/
-
-
 
 /** High level scanner encapsulator.
   */
