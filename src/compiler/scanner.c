@@ -435,6 +435,7 @@ int parse_tokens(char *word)
 		}	
 		tmp[diff] = '\n';
 		
+		/* I need to write these out to file, according to what they are, keyword, etc etc */
 		printf("Token: %s\n", token);
 		printf("Tmp: %s\n\n", tmp);
 
