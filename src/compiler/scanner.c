@@ -11,688 +11,71 @@ void run_scanner(file_struct *file)
     */
     void (*dispatcher[255])(FILE *o, char *word);
 
+    /* Set everything on the dispatcher to the default job */
+
+    int u = 0;
+
+    for(u = 0; u < 255; u++)
+        dispatcher[u] = &default_;
+
+    dispatcher['a'] = &a;
+    dispatcher['b'] = &b;
+    dispatcher['c'] = &c;
+    dispatcher['d'] = &d;
+    dispatcher['e'] = &e;				
+    dispatcher['f'] = &f;
+    dispatcher['g'] = &g;
+    dispatcher['i'] = &i;
+    dispatcher['l'] = &l;
+    dispatcher['r'] = &r;
+    dispatcher['s'] = &s;
+    dispatcher['t'] = &t;
+    dispatcher['u'] = &u;
+    dispatcher['v'] = &v;
+    dispatcher['w'] = &w;
+    dispatcher['{'] = &leftbracket;
+    dispatcher['}'] = &rightbracket;
+    dispatcher['('] = &leftparen;
+    dispatcher[')'] = &rightparen;
+    dispatcher['['] = &left_sqr_bracket;
+    dispatcher[']'] = &right_sqr_bracket;
+    dispatcher['.'] = &dot;
+    dispatcher[','] = &comma;
+    dispatcher['!'] = &exclamation;
+    dispatcher['~'] = &tilda;
+    dispatcher['+'] = &plus;
+    dispatcher['-'] = &minus;
+    dispatcher['*'] = &unary_star;
+    dispatcher['&'] = &ampersand;		
+    dispatcher['/'] = &div_;
+    dispatcher['%'] = &mod;
+    dispatcher['<'] = &less;		
+    dispatcher['>'] = &greater;
+    dispatcher['='] = &equal;
+    dispatcher['|'] = &or;
+    dispatcher['^'] = &xor;
+    dispatcher['?'] = &question;
+    dispatcher[':'] = &colon;
+    dispatcher[';'] = &semicolon;
+    dispatcher['$'] = &constant;
+    dispatcher['$'] = &stringlit;
+
+    
 	char c;
 	char *word;
+    
     
 	
 	FILE *i = fopen(INTERIM_FILENAME, "r");
 	FILE *o = fopen("data.tmp", "w");
+   
 
 	/* getword() returns a string, so a NULL signifies that
      * nothing useful was retrieved from the input stream 
 	 */
 	while( (word = getword(i)) != NULL ){
-		switch(word[0]){
-		
-			/* First, the possible keyword tokens */
-			case 'a':
-                /* auto */
-                if ( !strcmp(word, "auto") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_AUTO);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-			case 'b':
-                /* break */
-                if ( !strcmp(word, "break") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_BREAK);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-			case 'c':
-				/* case */
-				/* char */
-				/* const */
-				/* continue */
-                if( !strcmp(word, "case") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_CASE);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else if ( !strcmp(word, "char") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_CHAR);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }   
-                else if ( !strcmp(word, "const") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_CONST);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else if ( !strcmp(word, "continue") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_CONTINUE);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-			
-			case 'd':
-				/* default */
-				/* do */
-				/* double */
-                if( !strcmp(word, "default") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_DEFAULT);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else if ( !strcmp(word, "do") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_DO);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }   
-                else if ( !strcmp(word, "double") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_DOUBLE);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case 'e':
-				/* else */
-				/* enum */
-				/* extern */
-                if( !strcmp(word, "else") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_ELSE);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else if ( !strcmp(word, "enum") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_ENUM);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }   
-                else if ( !strcmp(word, "extern") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_EXTERN);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-			case 'f':
-				/* float */
-				/* for */
-                if( !strcmp(word, "float") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_FLOAT);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else if ( !strcmp(word, "for") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_FOR);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case 'g':
-				/* goto */
-                 if( !strcmp(word, "goto") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_GOTO);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-	
-			case 'i':
-				/* int */
-                /* if */
-                
-                if( !strcmp(word, "int") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_INT);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else if ( !strcmp(word, "if") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_IF);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				
-				
-				
-				break;
-
-			case 'l':
-				/* long */
-                  
-                if( !strcmp(word, "long") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_LONG);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				
-				break;
-			
-			case 'r':
-				/* register */
-				/* return */
-                  
-                if( !strcmp(word, "register") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_REGISTER);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else if ( !strcmp(word, "return") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_RETURN);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				
-				break;
-		
-			case 's':
-				/* short */
-				/* signed */
-				/* sizeof */
-				/* static */
-				/* struct */
-				/* switch */
-                  
-                if( !strcmp(word, "short") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_SHORT);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else if ( !strcmp(word, "signed") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_SIGNED);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else if ( !strcmp(word, "sizeof") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_SIZEOF);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                } 
-
-                else if ( !strcmp(word, "static") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_STATIC);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else if ( !strcmp(word, "struct") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_STRUCT);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                } 
-                 else if ( !strcmp(word, "switch") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_SWITCH);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                } 
-               
-                else {
-                    parse_tokens(o,word);
-                }
-				
-				break;
-
-			case 't':
-				/* typedef */
-                if( !strcmp(word, "typedef") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_TYPEDEF);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case 'u':
-				/* union */
-				/* unsigned */
-                if( !strcmp(word, "union") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_UNION);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else if ( !strcmp(word, "unsigned") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_UNSIGNED);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case 'v':
-				/* void */
-				/* volatile */
-                if( !strcmp(word, "void") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_VOID);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else if ( !strcmp(word, "volatile") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_VOLATILE);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case 'w':
-				/* while */
-                if( !strcmp(word, "while") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_WHILE);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			/* Now, we deal with other tokens (operators, constants, id's, etc) */
-
-			case '{':
-                if( !strcmp(word, "{") ) {
-                    sprintf(tk_buffer0, "%d", TK_LEFTBRACKET);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '}':
-                if( !strcmp(word, "}") ) {
-                    sprintf(tk_buffer0, "%d", TK_RIGHTBRACKET);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '(':
-				/* ( */
-				/* (casting) */
-                if( !strcmp(word, "(") ) {
-                    sprintf(tk_buffer0, "%d", TK_LEFTPAREN);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case ')':
-                if( !strcmp(word, ")") ) {
-                    sprintf(tk_buffer0, "%d", TK_RIGHTPAREN);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case ']':
-                if( !strcmp(word, "]") ) {
-                    sprintf(tk_buffer0, "%d", TK_RIGHT_SQR_BRACKET);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '[':
-                if( !strcmp(word, "[") ) {
-                    sprintf(tk_buffer0, "%d", TK_LEFT_SQR_BRACKET);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '.':
-                if( !strcmp(word, ".") ) {
-                    sprintf(tk_buffer0, "%d", TK_DOT);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-            
-            case ',':
-                if( !strcmp(word, ",") ) {
-                    sprintf(tk_buffer0, "%d", TK_COMMA);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '!':
-                if( !strcmp(word, "!") ) {
-                    sprintf(tk_buffer0, "%d", TK_UNARY_EXCLAMATION);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '~':
-                /* ~ */
-				/* ~= */
-                if( !strcmp(word, "~") ) {
-                    sprintf(tk_buffer0, "%d", TK_UNARY_TILDA);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				
-				break;
-			
-			case '+':
-				/* + */
-				/* ++ */
-				/* += */
-                if( !strcmp(word, "+") ) {
-                    sprintf(tk_buffer0, "%d", TK_PLUS);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '-':
-				/* - */
-				/* -- */
-				/* -= */
-                if( !strcmp(word, "-") ) {
-                    sprintf(tk_buffer0, "%d", TK_MINUS);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '*':
-				/* * */
-                 /* Is it a mult?  Is it a dereference?  is it a pointer?  Is it a santactic sugar?
-                    these are all questions which must be answered here */
-				/* *= */
-                if( !strcmp(word, "*") ) {
-                    sprintf(tk_buffer0, "%d", TK_MULT_STAR);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '&':
-                if( !strcmp(word, "&") ) {
-                    sprintf(tk_buffer0, "%d", TK_BIT_AMPERSAND);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				/* & */
-				/* && */
-				/* &= */
-				break;
-
-			case '/':
-				/* / */
-				/* /= */
-                if( !strcmp(word, "/") ) {
-                    sprintf(tk_buffer0, "%d", TK_DIV);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-			
-			case '%':
-                if( !strcmp(word, "%") ) {
-                    sprintf(tk_buffer0, "%d", TK_MOD);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				/* % */
-				/* %= */
-				break;
-
-			case '<':
-                if( !strcmp(word, "<") ) {
-                    sprintf(tk_buffer0, "%d", TK_LESS_LOGIC);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				/* < */
-				/* << */
-				/* <= */
-				/* <<= */
-				break;
-
-			case '>':
-                if( !strcmp(word, ">") ) {
-                    sprintf(tk_buffer0, "%d", TK_GREATER_LOGIC);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				/* > */
-				/* >> */
-				/* >= */
-				/* >>= */			
-				break;
-
-			case '=':
-                if( !strcmp(word, "=") ) {
-                    sprintf(tk_buffer0, "%d", TK_EQU);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				/* = */
-				/* == */
-				break;
-
-			case '|':
-                /* | */
-				/* || */
-				/* |= */
-                if( !strcmp(word, "|") ) {
-                    sprintf(tk_buffer0, "%d", TK_BIT_OR);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				
-				break;
-
-			case '^':
-                /* ^ */
-				/* ^= */
-                if( !strcmp(word, "^") ) {
-                    sprintf(tk_buffer0, "%d", TK_BIT_XOR);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				
-				break;
-
-			case '?':
-                if( !strcmp(word, "?") ) {
-                    sprintf(tk_buffer0, "%d", TK_QUESTION);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case ':':
-                if( !strcmp(word, ":") ) {
-                    sprintf(tk_buffer0, "%d", TK_COLON);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-            
-            case ';':
-                if( !strcmp(word, ";") ) {
-                    sprintf(tk_buffer0, "%d", TK_SEMICOLON);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-                break;
-
-			/* Constants */
-
-			case '\'':
-				break;
-		
-			/* String Literals */
-			case '"':
-				break;
-
-			default:
-			/* Try To See if it's a identifier, if not: 
-			 ERROR! Given token is not part of the lang def. */
-                parse_tokens(o, word);
-				break;
-				
-		}
+        
+		dispatcher[(int)word[0]](o, word);
 		free(word);
 	}
     
@@ -887,6 +270,7 @@ int parse_tokens(FILE *o, char *word)
 	while(tk_size > 0){
 		tmp = (char*)xmalloc(sizeof(char)*diff + 1);
 
+        
 		
 		for(n = 0, m = upto; n < diff; n++, m++){
 			tmp[n] = word[m];
@@ -895,6 +279,9 @@ int parse_tokens(FILE *o, char *word)
 		
 
 		tk = get_sval(token);
+        printf("Word: %s\n", word);
+        printf("Token: %s\n", token);
+        printf("Token Value: %d\n", tk.val);
         if (tk.type == -1){
             sprintf(tk_buffer0, "%d", tk.val);
             put_ulexeme(o, tk_buffer0);
@@ -1400,6 +787,7 @@ void i(FILE *o, char *word)
 {
     /* int */
     /* if */
+    printf("Here: %s\n", word);
     if( !strcmp(word, "int") ) {
         sprintf(tk_buffer0, "%d", TK_KEYWORD);
         sprintf(tk_buffer1, "%d", TK_INT);
@@ -1410,7 +798,8 @@ void i(FILE *o, char *word)
         sprintf(tk_buffer1, "%d", TK_IF);
         put_lexeme(o, tk_buffer0, tk_buffer1);
     }
-    else {
+    else {  
+        
         parse_tokens(o,word);
     }
 }
@@ -1485,378 +874,366 @@ void s(FILE *o, char *word)
     else {
         parse_tokens(o,word);
     }
+}
 
-void c(FILE *o, char *word)
+void t(FILE *o, char *word)
 {
-				/* typedef */
-                if( !strcmp(word, "typedef") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_TYPEDEF);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case 'u':
-				/* union */
-				/* unsigned */
-                if( !strcmp(word, "union") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_UNION);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else if ( !strcmp(word, "unsigned") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_UNSIGNED);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case 'v':
-				/* void */
-				/* volatile */
-                if( !strcmp(word, "void") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_VOID);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else if ( !strcmp(word, "volatile") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_VOLATILE);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case 'w':
-				/* while */
-                if( !strcmp(word, "while") ) {
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_WHILE);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			/* Now, we deal with other tokens (operators, constants, id's, etc) */
-
-			case '{':
-                if( !strcmp(word, "{") ) {
-                    sprintf(tk_buffer0, "%d", TK_LEFTBRACKET);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '}':
-                if( !strcmp(word, "}") ) {
-                    sprintf(tk_buffer0, "%d", TK_RIGHTBRACKET);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '(':
-				/* ( */
-				/* (casting) */
-                if( !strcmp(word, "(") ) {
-                    sprintf(tk_buffer0, "%d", TK_LEFTPAREN);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case ')':
-                if( !strcmp(word, ")") ) {
-                    sprintf(tk_buffer0, "%d", TK_RIGHTPAREN);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case ']':
-                if( !strcmp(word, "]") ) {
-                    sprintf(tk_buffer0, "%d", TK_RIGHT_SQR_BRACKET);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '[':
-                if( !strcmp(word, "[") ) {
-                    sprintf(tk_buffer0, "%d", TK_LEFT_SQR_BRACKET);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '.':
-                if( !strcmp(word, ".") ) {
-                    sprintf(tk_buffer0, "%d", TK_DOT);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-            
-            case ',':
-                if( !strcmp(word, ",") ) {
-                    sprintf(tk_buffer0, "%d", TK_COMMA);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '!':
-                if( !strcmp(word, "!") ) {
-                    sprintf(tk_buffer0, "%d", TK_UNARY_EXCLAMATION);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '~':
-                /* ~ */
-				/* ~= */
-                if( !strcmp(word, "~") ) {
-                    sprintf(tk_buffer0, "%d", TK_UNARY_TILDA);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
+    /* typedef */
+    if( !strcmp(word, "typedef") ) {
+        sprintf(tk_buffer0, "%d", TK_KEYWORD);
+        sprintf(tk_buffer1, "%d", TK_TYPEDEF);
+        put_lexeme(o, tk_buffer0, tk_buffer1);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void u(FILE *o, char *word)
+{
+    /* union */
+    /* unsigned */
+    if( !strcmp(word, "union") ) {
+        sprintf(tk_buffer0, "%d", TK_KEYWORD);
+        sprintf(tk_buffer1, "%d", TK_UNION);
+        put_lexeme(o, tk_buffer0, tk_buffer1);
+    }
+    else if ( !strcmp(word, "unsigned") ){
+        sprintf(tk_buffer0, "%d", TK_KEYWORD);
+        sprintf(tk_buffer1, "%d", TK_UNSIGNED);
+        put_lexeme(o, tk_buffer0, tk_buffer1);
+        }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void v(FILE *o, char *word)
+{
+    /* void */
+    /* volatile */
+    if( !strcmp(word, "void") ) {
+        sprintf(tk_buffer0, "%d", TK_KEYWORD);
+        sprintf(tk_buffer1, "%d", TK_VOID);
+        put_lexeme(o, tk_buffer0, tk_buffer1);
+    }
+    else if ( !strcmp(word, "volatile") ){
+        sprintf(tk_buffer0, "%d", TK_KEYWORD);
+        sprintf(tk_buffer1, "%d", TK_VOLATILE);
+        put_lexeme(o, tk_buffer0, tk_buffer1);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void w(FILE *o, char *word)
+{
+    /* while */
+    if( !strcmp(word, "while") ) {
+        sprintf(tk_buffer0, "%d", TK_KEYWORD);
+        sprintf(tk_buffer1, "%d", TK_WHILE);
+        put_lexeme(o, tk_buffer0, tk_buffer1);
+    }
+    else {
+        parse_tokens(o,word);
+    }
 				
-				break;
-			
-			case '+':
-				/* + */
-				/* ++ */
-				/* += */
-                if( !strcmp(word, "+") ) {
-                    sprintf(tk_buffer0, "%d", TK_PLUS);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '-':
-				/* - */
-				/* -- */
-				/* -= */
-                if( !strcmp(word, "-") ) {
-                    sprintf(tk_buffer0, "%d", TK_MINUS);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '*':
-				/* * */
-                 /* Is it a mult?  Is it a dereference?  is it a pointer?  Is it a santactic sugar?
-                    these are all questions which must be answered here */
-				/* *= */
-                if( !strcmp(word, "*") ) {
-                    sprintf(tk_buffer0, "%d", TK_MULT_STAR);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case '&':
-                if( !strcmp(word, "&") ) {
-                    sprintf(tk_buffer0, "%d", TK_BIT_AMPERSAND);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				/* & */
-				/* && */
-				/* &= */
-				break;
-
-			case '/':
-				/* / */
-				/* /= */
-                if( !strcmp(word, "/") ) {
-                    sprintf(tk_buffer0, "%d", TK_DIV);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-			
-			case '%':
-                if( !strcmp(word, "%") ) {
-                    sprintf(tk_buffer0, "%d", TK_MOD);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				/* % */
-				/* %= */
-				break;
-
-			case '<':
-                if( !strcmp(word, "<") ) {
-                    sprintf(tk_buffer0, "%d", TK_LESS_LOGIC);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				/* < */
-				/* << */
-				/* <= */
-				/* <<= */
-				break;
-
-			case '>':
-                if( !strcmp(word, ">") ) {
-                    sprintf(tk_buffer0, "%d", TK_GREATER_LOGIC);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				/* > */
-				/* >> */
-				/* >= */
-				/* >>= */			
-				break;
-
-			case '=':
-                if( !strcmp(word, "=") ) {
-                    sprintf(tk_buffer0, "%d", TK_EQU);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				/* = */
-				/* == */
-				break;
-
-			case '|':
-                /* | */
-				/* || */
-				/* |= */
-                if( !strcmp(word, "|") ) {
-                    sprintf(tk_buffer0, "%d", TK_BIT_OR);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				
-				break;
-
-			case '^':
-                /* ^ */
-				/* ^= */
-                if( !strcmp(word, "^") ) {
-                    sprintf(tk_buffer0, "%d", TK_BIT_XOR);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				
-				break;
-
-			case '?':
-                if( !strcmp(word, "?") ) {
-                    sprintf(tk_buffer0, "%d", TK_QUESTION);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-
-			case ':':
-                if( !strcmp(word, ":") ) {
-                    sprintf(tk_buffer0, "%d", TK_COLON);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-				break;
-            
-            case ';':
-                if( !strcmp(word, ";") ) {
-                    sprintf(tk_buffer0, "%d", TK_SEMICOLON);
-                    put_ulexeme(o, tk_buffer0);
-                }
-                else {
-                    parse_tokens(o,word);
-                }
-                break;
+}
+void leftbracket(FILE *o, char *word)
+{
+    if( !strcmp(word, "{") ) {
+        sprintf(tk_buffer0, "%d", TK_LEFTBRACKET);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void rightbracket(FILE *o, char *word)
+{
+    if( !strcmp(word, "}") ) {
+        sprintf(tk_buffer0, "%d", TK_RIGHTBRACKET);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+		
+void leftparen(FILE *o, char *word)
+{
+    /* ( */
+    /* (casting) */
+    if( !strcmp(word, "(") ) {
+        sprintf(tk_buffer0, "%d", TK_LEFTPAREN);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void rightparen(FILE *o, char *word)
+{
+    if( !strcmp(word, ")") ) {
+        sprintf(tk_buffer0, "%d", TK_RIGHTPAREN);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void left_sqr_bracket(FILE *o, char *word)
+{
+    if( !strcmp(word, "]") ) {
+        sprintf(tk_buffer0, "%d", TK_RIGHT_SQR_BRACKET);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void right_sqr_bracket(FILE *o, char *word)
+{
+    if( !strcmp(word, "[") ) {
+        sprintf(tk_buffer0, "%d", TK_LEFT_SQR_BRACKET);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void dot(FILE *o, char *word)
+{
+    if( !strcmp(word, ".") ) {
+        sprintf(tk_buffer0, "%d", TK_DOT);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void comma(FILE *o, char *word)
+{
+    if( !strcmp(word, ",") ) {
+        sprintf(tk_buffer0, "%d", TK_COMMA);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void exclamation(FILE *o, char *word)
+{
+    if( !strcmp(word, "!") ) {
+        sprintf(tk_buffer0, "%d", TK_UNARY_EXCLAMATION);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void tilda(FILE *o, char *word)
+{
+    /* ~ */
+    /* ~= */
+    if( !strcmp(word, "~") ) {
+        sprintf(tk_buffer0, "%d", TK_UNARY_TILDA);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void plus(FILE *o, char *word)
+{
+    /* + */
+    /* ++ */
+    /* += */
+    if( !strcmp(word, "+") ) {
+        sprintf(tk_buffer0, "%d", TK_PLUS);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void minus(FILE *o, char *word)
+{
+    /* - */
+    /* -- */
+    /* -= */
+    if( !strcmp(word, "-") ) {
+        sprintf(tk_buffer0, "%d", TK_MINUS);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void unary_star(FILE *o, char *word)
+{
+    /* * */
+    /* Is it a mult?  Is it a dereference?  is it a pointer?  Is it a santactic sugar?
+       these are all questions which must be answered here */
+    /* *= */
+    if( !strcmp(word, "*") ) {
+        sprintf(tk_buffer0, "%d", TK_MULT_STAR);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void ampersand(FILE *o, char *word)
+{
+    /* & */
+    /* && */
+    /* &= */
+    if( !strcmp(word, "&") ) {
+        sprintf(tk_buffer0, "%d", TK_BIT_AMPERSAND);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}			
+void div_(FILE *o, char *word)
+{
+    /* / */
+    /* /= */
+    if( !strcmp(word, "/") ) {
+        sprintf(tk_buffer0, "%d", TK_DIV);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void mod(FILE *o, char *word)
+{
+    /* % */
+	/* %= */
+    if( !strcmp(word, "%") ) {
+        sprintf(tk_buffer0, "%d", TK_MOD);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void less(FILE *o, char *word)
+{
+    /* < */
+    /* << */
+    /* <= */
+    /* <<= */
+    if( !strcmp(word, "<") ) {
+        sprintf(tk_buffer0, "%d", TK_LESS_LOGIC);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}			
+void greater(FILE *o, char *word)
+{
+    /* > */
+    /* >> */
+    /* >= */
+    /* >>= */	
+    if( !strcmp(word, ">") ) {
+        sprintf(tk_buffer0, "%d", TK_GREATER_LOGIC);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void equal(FILE *o, char *word)
+{
+    /* = */
+    /* == */
+    if( !strcmp(word, "=") ) {
+        sprintf(tk_buffer0, "%d", TK_EQU);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void or(FILE *o, char *word)
+{
+    /* | */
+    /* || */
+    /* |= */
+    if( !strcmp(word, "|") ) {
+        sprintf(tk_buffer0, "%d", TK_BIT_OR);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void xor(FILE *o, char *word)
+{
+    /* ^ */
+    /* ^= */
+    if( !strcmp(word, "^") ) {
+        sprintf(tk_buffer0, "%d", TK_BIT_XOR);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void question(FILE *o, char *word)
+{
+    if( !strcmp(word, "?") ) {
+        sprintf(tk_buffer0, "%d", TK_QUESTION);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void colon(FILE *o, char *word)
+{
+    if( !strcmp(word, ":") ) {
+        sprintf(tk_buffer0, "%d", TK_COLON);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
+void semicolon(FILE *o, char *word)
+{
+    if( !strcmp(word, ";") ) {
+        sprintf(tk_buffer0, "%d", TK_SEMICOLON);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
 
 			/* Constants */
-
-			case '\'':
-				break;
+void constant(FILE *o, char *word)
+{
+}
 		
 			/* String Literals */
-			case '"':
-				break;
+void stringlit(FILE *o, char *word)
+{
+}
 
-			default:
-			/* Try To See if it's a identifier, if not: 
-			 ERROR! Given token is not part of the lang def. */
-                parse_tokens(o, word);
-				break;
+void default_(FILE *o, char *word)
+{
+    /* Try To See if it's a identifier, if not: 
+    ERROR! Given token is not part of the lang def. */
+    parse_tokens(o, word);
+}
+			
 				
-		}
+				
+		
 
 

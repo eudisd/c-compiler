@@ -21,6 +21,9 @@
 
 #include "utils.h"
 
+
+
+
 /*-------------------------Typedefs -------------------------*/
 typedef struct token_package_Tag {
     int val;
@@ -229,6 +232,52 @@ token_package get_sval(char *s);
 /** Given a lexeme, returns the NAME part.  _MUST_ be freed after call.
   */
 //char *get_token_name(char *lexeme);
+
+
+/* Job prototypes */
+
+inline static void a(FILE *o, char *word);
+inline static void b(FILE *o, char *word);
+inline static void c(FILE *o, char *word);
+inline static void d(FILE *o, char *word);
+inline static void e(FILE *o, char *word);				
+inline static void f(FILE *o, char *word);
+inline static void g(FILE *o, char *word);
+inline static void i(FILE *o, char *word);
+inline static void l(FILE *o, char *word);
+inline static void r(FILE *o, char *word);
+inline static void s(FILE *o, char *word);
+inline static void t(FILE *o, char *word);
+inline static void u(FILE *o, char *word);
+inline static void v(FILE *o, char *word);
+inline static void w(FILE *o, char *word);
+inline static void leftbracket(FILE *o, char *word);
+inline static void rightbracket(FILE *o, char *word);
+inline static void leftparen(FILE *o, char *word);
+inline static void rightparen(FILE *o, char *word);
+inline static void left_sqr_bracket(FILE *o, char *word);
+inline static void right_sqr_bracket(FILE *o, char *word);
+inline static void dot(FILE *o, char *word);
+inline static void comma(FILE *o, char *word);
+inline static void exclamation(FILE *o, char *word);
+inline static void tilda(FILE *o, char *word);
+inline static void plus(FILE *o, char *word);
+inline static void minus(FILE *o, char *word);
+inline static void unary_star(FILE *o, char *word);
+inline static void ampersand(FILE *o, char *word);		
+inline static void div_(FILE *o, char *word);
+inline static void mod(FILE *o, char *word);
+inline static void less(FILE *o, char *word);		
+inline static void greater(FILE *o, char *word);
+inline static void equal(FILE *o, char *word);
+inline static void or(FILE *o, char *word);
+inline static void xor(FILE *o, char *word);
+inline static void question(FILE *o, char *word);
+inline static void colon(FILE *o, char *word);
+inline static void semicolon(FILE *o, char *word);
+inline static void constant(FILE *o, char *word);
+inline static void stringlit(FILE *o, char *word);
+inline static void default_(FILE *o, char *word);
 
 
 
