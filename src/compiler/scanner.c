@@ -1339,6 +1339,7 @@ void d(FILE *o, char *word)
     else {
         parse_tokens(o,word);
     }
+}
 void e(FILE *o, char *word)
 {
     /* else */
@@ -1362,6 +1363,7 @@ void e(FILE *o, char *word)
     else {
         parse_tokens(o,word);
     }
+}
 				
 void f(FILE *o, char *word)
 {
@@ -1380,6 +1382,7 @@ void f(FILE *o, char *word)
     else {
         parse_tokens(o,word);
     }
+}
 
 void g(FILE *o, char *word)
 {
@@ -1392,6 +1395,7 @@ void g(FILE *o, char *word)
     else {
         parse_tokens(o,word);
     }
+}
 void i(FILE *o, char *word)
 {
     /* int */
@@ -1409,6 +1413,7 @@ void i(FILE *o, char *word)
     else {
         parse_tokens(o,word);
     }
+}
 void l(FILE *o, char *word)
 {
     /* long */
@@ -1420,6 +1425,7 @@ void l(FILE *o, char *word)
     else {
         parse_tokens(o,word);
     }
+}
 void r(FILE *o, char *word)
 {
     /* register */
@@ -1437,6 +1443,7 @@ void r(FILE *o, char *word)
     else {
         parse_tokens(o,word);
     }
+}
 void s(FILE *o, char *word)
 {
     /* short */
@@ -1455,44 +1462,32 @@ void s(FILE *o, char *word)
         sprintf(tk_buffer1, "%d", TK_SIGNED);
         put_lexeme(o, tk_buffer0, tk_buffer1);
     }
-                else if ( !strcmp(word, "sizeof") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_SIZEOF);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                } 
+    else if ( !strcmp(word, "sizeof") ){
+        sprintf(tk_buffer0, "%d", TK_KEYWORD);
+        sprintf(tk_buffer1, "%d", TK_SIZEOF);
+        put_lexeme(o, tk_buffer0, tk_buffer1);
+    } 
+    else if ( !strcmp(word, "static") ){
+        sprintf(tk_buffer0, "%d", TK_KEYWORD);
+        sprintf(tk_buffer1, "%d", TK_STATIC);
+        put_lexeme(o, tk_buffer0, tk_buffer1);
+        }
+    else if ( !strcmp(word, "struct") ){
+        sprintf(tk_buffer0, "%d", TK_KEYWORD);
+        sprintf(tk_buffer1, "%d", TK_STRUCT);
+        put_lexeme(o, tk_buffer0, tk_buffer1);
+    } 
+    else if ( !strcmp(word, "switch") ){
+        sprintf(tk_buffer0, "%d", TK_KEYWORD);
+        sprintf(tk_buffer1, "%d", TK_SWITCH);
+        put_lexeme(o, tk_buffer0, tk_buffer1);
+    } 
+    else {
+        parse_tokens(o,word);
+    }
 
-                else if ( !strcmp(word, "static") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_STATIC);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                    
-                }
-                else if ( !strcmp(word, "struct") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_STRUCT);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                } 
-                 else if ( !strcmp(word, "switch") ){
-                    sprintf(tk_buffer0, "%d", TK_KEYWORD);
-                    sprintf(tk_buffer1, "%d", TK_SWITCH);
-                    
-                    /* Write out lexeme to output file! */
-                    put_lexeme(o, tk_buffer0, tk_buffer1);
-                } 
-               
-                else {
-                    parse_tokens(o,word);
-                }
-				
-				break;
-
-			case 't':
+void c(FILE *o, char *word)
+{
 				/* typedef */
                 if( !strcmp(word, "typedef") ) {
                     sprintf(tk_buffer0, "%d", TK_KEYWORD);
