@@ -9,7 +9,6 @@ void usage( void )
 	printf("Usage: c [options] file...\n" 
 	       "Options:\n"
 		   "  --help\t\t\t Print help screen description\n"
-		   "  --target-help\t\t\t Print target specific help information\n"
 		   "  --version\t\t\t Print version number\n"
 		   "  -o <file>\t\t\t Specify a file name"
 		   "\n"
@@ -165,6 +164,21 @@ int get_column(FILE *i){
 	fseek(i, cur_pos, SEEK_CUR);
 	return offset;
 }
+
+int intlit_comp(const void *a, const void *b)
+{
+    if( *(int*)a > *(int*)b ) return 1;
+    if( *(int*)a == *(int*)b ) return 0;
+    if( *(int*)a < *(int*)b ) return -1;
+}
+
+int floatlit_comp(const void *a, const void *b)
+{
+    if( *(double*)a > *(double*)b ) return 1;
+    if( *(double*)a == *(double*)b ) return 0;
+    if( *(double*)a < *(double*)b ) return -1;
+}
+
 
 
 

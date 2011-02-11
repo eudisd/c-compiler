@@ -284,7 +284,7 @@ int parse_tokens(FILE *o, char *word)
                     
             put_lexeme(o, tk_buffer0, tk_buffer1);
         }
-        // 
+        
         else if (tk.type == TK_STRINGLIT) {
 
         }
@@ -620,6 +620,15 @@ token_package get_sval(char *s)
     else if( !strcmp(s, "while") ){
         tk.type = TK_KEYWORD;
         tk.val = TK_WHILE;
+    }
+
+    else {
+    
+        // Return integer tk,
+        // or Float tk
+        // or String tk
+        //
+
     }
     
     return tk;

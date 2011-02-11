@@ -1,7 +1,7 @@
 /** \file scanner.h 
   * \brief Lists the associativity and precedence of all tokens.
   *
-  * This is done i order of precedence, with the defines at the top with the highest.
+  * This is done in order of precedence, with the defines at the top with the highest.
   *
   * The defines here are grouped in order of associativity, and listed
   *	with descending precedence as we go down.

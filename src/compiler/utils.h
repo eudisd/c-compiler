@@ -93,6 +93,14 @@ int get_column(FILE *i);
   */
 char *copy_alloced(char *s);
 
+/**
+  */
+int intlit_comp(const void *a, const void *b);
+
+/**
+  */
+int floatlit_comp(const void *a, const void *b);
+
 /* Debug Functions */
 
 /** 
