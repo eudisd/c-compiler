@@ -13,10 +13,10 @@ void run_scanner(file_struct *file)
 
     /* Set everything on the dispatcher to the default job */
 
-    int u = 0;
+    int _u = 0;
 
-    for(u = 0; u < 255; u++)
-        dispatcher[u] = &default_;
+    for(_u = 0; _u < 255; _u++)
+        dispatcher[_u] = &default_;
 
     dispatcher['a'] = &a;
     dispatcher['b'] = &b;
@@ -62,7 +62,7 @@ void run_scanner(file_struct *file)
 
     
 	char c;
-	char *word;
+	char *word = "union";
     
     
 	
@@ -73,9 +73,9 @@ void run_scanner(file_struct *file)
 	/* getword() returns a string, so a NULL signifies that
      * nothing useful was retrieved from the input stream 
 	 */
+    
 	while( (word = getword(i)) != NULL ){
-        
-		dispatcher[(int)word[0]](o, word);
+		dispatcher[word[0]](o, word);
 		free(word);
 	}
     
@@ -262,11 +262,6 @@ int parse_tokens(FILE *o, char *word)
 
     token_package tk;
 
-	//printf("%s\n", token);
-	//printf("tk_size: %d\n", tk_size);
-	//printf("word_size: %d\n", word_size);
-	//printf("diff: %d\n\n", diff);
-	printf("\n");
 	while(tk_size > 0){
 		tmp = (char*)xmalloc(sizeof(char)*diff + 1);
 
@@ -277,11 +272,8 @@ int parse_tokens(FILE *o, char *word)
 		}	
 		tmp[diff] = '\n';
 		
-
 		tk = get_sval(token);
-        printf("Word: %s\n", word);
-        printf("Token: %s\n", token);
-        printf("Token Value: %d\n", tk.val);
+
         if (tk.type == -1){
             sprintf(tk_buffer0, "%d", tk.val);
             put_ulexeme(o, tk_buffer0);
@@ -625,10 +617,6 @@ token_package get_sval(char *s)
     return tk;
 }
 
-
-
-
-
 /************************* DISPATCH *****************************/
 
 void a(FILE *o, char *word)
@@ -771,7 +759,7 @@ void i(FILE *o, char *word)
 {
     /* int */
     /* if */
-    printf("Here: %s\n", word);
+    
     if( !strcmp(word, "int") ) {
         sprintf(tk_buffer0, "%d", TK_KEYWORD);
         sprintf(tk_buffer1, "%d", TK_INT);
@@ -876,12 +864,14 @@ void u(FILE *o, char *word)
 {
     /* union */
     /* unsigned */
+    printf("UNSIGNED HERE?\n");
     if( !strcmp(word, "union") ) {
         sprintf(tk_buffer0, "%d", TK_KEYWORD);
         sprintf(tk_buffer1, "%d", TK_UNION);
         put_lexeme(o, tk_buffer0, tk_buffer1);
     }
     else if ( !strcmp(word, "unsigned") ){
+        
         sprintf(tk_buffer0, "%d", TK_KEYWORD);
         sprintf(tk_buffer1, "%d", TK_UNSIGNED);
         put_lexeme(o, tk_buffer0, tk_buffer1);
