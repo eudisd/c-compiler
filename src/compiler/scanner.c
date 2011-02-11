@@ -246,7 +246,6 @@ int is_valid_id(char *word)
 		}
 		
 	}
-
 	return size;
 }
 
@@ -265,8 +264,6 @@ int parse_tokens(FILE *o, char *word)
 	while(tk_size > 0){
 		tmp = (char*)xmalloc(sizeof(char)*diff + 1);
 
-        
-		
 		for(n = 0, m = upto; n < diff; n++, m++){
 			tmp[n] = word[m];
 		}	
@@ -623,11 +620,17 @@ token_package get_sval(char *s)
     }
 
     else {
-    
-        // Return integer tk,
-        // or Float tk
-        // or String tk
-        //
+        int index = 0;
+        size_t size = strlen(s);
+        if( s[0] == '\"'){
+            
+        }
+        else {
+            // Return integer tk,
+            // or Float tk
+        
+        }
+        
 
     }
     

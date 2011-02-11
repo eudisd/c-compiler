@@ -64,7 +64,7 @@ char fcpeek(FILE *f)
 	ungetc(c, f);
 	return c;
 }
-
+/*
 char *getword(FILE *i)
 {
 	
@@ -84,9 +84,8 @@ char *getword(FILE *i)
 			total_newlines++;
 		}
 	
-	/* We first calculate the size of the word */
+	
 	while ( (c != EOF) && !isspace(c) ){
-		/* Read and count new lines and characters */
 		
 		size++;
 		c = getc(i);
@@ -100,7 +99,7 @@ char *getword(FILE *i)
 	word = (char*)xmalloc(sizeof(char)*size + 1);
 	c = getc(i);
 
-	/* Then we copy the word the to malloc'ed space */
+	
 	while ( ((c != EOF) && !isspace(c)) && (j < size) ){	
 		word[j] = c;
 		j++;
@@ -110,7 +109,7 @@ char *getword(FILE *i)
 
 	
 	return word;
-}
+}*/
 
 char *wordpeek(FILE *f)
 {

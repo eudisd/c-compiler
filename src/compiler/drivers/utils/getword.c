@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <ctype.h>
-#include "../../utils.h"
 
 char *getword(FILE *i);
-
+size_t total_newlines;
 int main()
 {
 	char *name;
@@ -20,36 +19,47 @@ int main()
 
 char *getword(FILE *i)
 {
+	
 	int j = 0;
 	char c;
 	char *word;
 	int pos;
 	size_t size = 0;
-	pos = ftell(i);
-	c = getc(i); 
-	
-	//printf("Start file-p position: %d\n", pos);
 
+	if(fcpeek(i) == EOF){
+		return NULL;
+	}
+	
+	pos = ftell(i);
+	c = getc(i);
+	if( c == '\n' ){
+			//total_newlines++;
+		}
+	
 	/* We first calculate the size of the word */
 	while ( (c != EOF) && !isspace(c) ){
+		/* Read and count new lines and characters */
+		
 		size++;
 		c = getc(i);
+		if( c == '\n' ){
+			//total_newlines++;
+		}
+		
 	}
-
-	//printf("Current size of word: %d\n", size);
-	//printf("Current file-p position: %d\n", (int)ftell(i));
-
 	fseek(i, -(ftell(i) - pos), SEEK_CUR);
-	
-	//printf("Restored to: %d position\n", (int)ftell(i));
 
-	word = (char*)xmalloc(sizeof(char)*size);
+	word = (char*)xmalloc(sizeof(char)*size + 1);
 	c = getc(i);
-	while ( (c != EOF) && !isspace(c) && (j < size) ){
+
+	/* Then we copy the word the to malloc'ed space */
+	while ( ((c != EOF) && !isspace(c)) && (j < size) ){	
 		word[j] = c;
 		j++;
 		c = getc(i);
 	}
+	word[size] = '\0';
 
+	
 	return word;
 }
