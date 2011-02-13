@@ -75,7 +75,6 @@ void run_scanner(file_struct *file)
 	 */
     
 	while( (word = getword(i)) != NULL ){
-        
 		dispatcher[word[0]](o, word);
 		free(word);
 	}
@@ -200,7 +199,7 @@ char *extract_token(char *word)
 		/* String Literals */
 		/* Questioning if this even belongs here?*/
 		case '"':
-			return copy_alloced("\"");
+			return return_string("\"");
 			break;
 		
 		default:
@@ -210,6 +209,30 @@ char *extract_token(char *word)
 		
 	}
     return NULL;
+}
+
+char *return_string(char *word)
+{
+    int i, j;
+    size_t size = strlen(word);
+    char *tmp;
+    for(i = 1; i < size; i++){
+        if( word[i] == '"' ){
+            i++;
+            break;
+        }
+    }
+
+    tmp = (char*)malloc(sizeof(char)*i + 1);
+
+    for(j = 0; j < i; j++){
+        tmp[j] = word[j];
+    }
+
+    tmp[i] = '\0';
+    
+    
+    return tmp;
 }
 
 char *return_keyword(char *word)
@@ -293,7 +316,7 @@ int parse_tokens(FILE *o, char *word)
 
         }
                     
-		free(token);
+		//free(token);
 		token = extract_token(tmp);
 		tk_size = strlen(token);
 
@@ -1223,9 +1246,10 @@ void stringlit(FILE *o, char *word)
 
 void default_(FILE *o, char *word)
 {
+    
     /* Try To See if it's a identifier, if not: 
     ERROR! Given token is not part of the lang def. */
-    //parse_tokens(o, word);
+    parse_tokens(o, word);
 }
 			
 				

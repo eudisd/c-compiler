@@ -1,5 +1,9 @@
-"here we o"
-okay
-printf("here we go");
+"here we go"
+"again"
+"and again"
+"here"
 
-okay
+int main()
+{
+    return;
+}

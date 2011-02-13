@@ -211,6 +211,11 @@ int parse_tokens(FILE *o, char *word);
   */
 char *extract_token(char *word);
 
+/** _MUST_ be freed.
+  */
+
+char *return_string(char *word);
+
 /** _MUST_ be freed. 
   */
 char *return_keyword(char *word);
