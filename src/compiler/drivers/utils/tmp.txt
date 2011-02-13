@@ -1,5 +1,6 @@
-"here we
-go"
+double x = 100.01;
+
+double y = "Here":
 
 printf("Here we go sunny");
 int x="here";

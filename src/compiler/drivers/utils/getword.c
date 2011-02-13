@@ -15,6 +15,16 @@ int main()
     printf("%s\n", getword(f));
 	printf("%s\n", getword(f));
     printf("%s\n", getword(f));
+    printf("%s\n", getword(f));
+	printf("%s\n", getword(f));
+    printf("%s\n", getword(f));
+	printf("%s\n", getword(f));
+    printf("%s\n", getword(f));
+    printf("%s\n", getword(f));
+	printf("%s\n", getword(f));
+    printf("%s\n", getword(f));
+	printf("%s\n", getword(f));
+    printf("%s\n", getword(f));
 
 	return 0;
 }
