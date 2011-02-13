@@ -1,1 +1,6 @@
-"here we go sunny"
+"here we
+go"
+
+printf("Here we go sunny");
+int x="here";
+char *x="here we";
