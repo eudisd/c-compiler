@@ -6,8 +6,8 @@
 
 void run_scanner(file_struct *file)
 {
-    /* Dispatcher, suggestion by prefessor vulis to eliminate comparison overhead 
-       incurred by switch statement!
+    /* Dispatcher. Suggested by professor Vulis to eliminate comparison overhead 
+       incurred by switch statement!  Very nice.
     */
     void (*dispatcher[255])(FILE *o, char *word);
 
@@ -60,12 +60,9 @@ void run_scanner(file_struct *file)
     //dispatcher['$'] = &constant;
     //dispatcher['$'] = &stringlit;
 
-    
 	char c;
 	char *word;
     
-    
-	
 	FILE *i = fopen(INTERIM_FILENAME, "r");
 	FILE *o = fopen("data.tmp", "w");
    
@@ -81,8 +78,6 @@ void run_scanner(file_struct *file)
     
 	fclose(i);
 	fclose(o);
-	
-	
 }
 
 void put_lexeme(FILE *o, char *tk_name, char *tk_value)
@@ -222,6 +217,7 @@ char *extract_token(char *word)
 			return copy_alloced(":");
 		case ';':
 			return copy_alloced(";");
+
 		/* Constants */
 
 		case '\'':
@@ -315,8 +311,6 @@ int parse_tokens(FILE *o, char *word)
 
     token_package tk;
 
-    
-
 	while(tk_size > 0){
 		tmp = (char*)xmalloc(sizeof(char)*diff + 1);
 
@@ -338,7 +332,9 @@ int parse_tokens(FILE *o, char *word)
                     
             put_lexeme(o, tk_buffer0, tk_buffer1);
         }
-        
+        else if (tk.type == TK_FLOATLIT){
+
+        }
         else if (tk.type == TK_STRINGLIT) {
             
         }
@@ -535,6 +531,17 @@ token_package get_sval(char *s)
         tk.type = -1;
         tk.val = TK_RSHIFT_EQU;
     }
+/*** NEW AND NOT COMPLETE  ****/
+    else if( !strcmp(s, "<<=") ){
+        tk.type = -1;
+        tk.val = TK_LSHIFT_EQU;
+    }
+    else if( !strcmp(s, ">>=") ){
+        tk.type = -1;
+        tk.val = TK_RSHIFT_EQU;
+    }
+    
+/*** NEW AND NOT COMPLETE END ***/
     else if( !strcmp(s, ",") ){
         tk.type = -1;
         tk.val = TK_COMMA;

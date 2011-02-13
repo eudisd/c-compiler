@@ -148,7 +148,7 @@
 #define TK_SEMICOLON           85
 #define TK_INTLIT              86   /**> need array for this */
 #define TK_STRINGLIT           87   /**> need a symbol table for this */
-
+#define TK_FLOATLIT            88   /**> need a symbol table for this too.  This is for both float and double */
 
 
 /*-------------------------Typedefs -------------------------*/
@@ -168,6 +168,7 @@ static size_t intlit_t_counter;
 static size_t floatlit_t_counter;
 static int intlit_table[INTLIT_TABLE_MAX];
 static double floatlit_table[FLOATLIT_TABLE_MAX];
+
 
 /* Token Defininitions */     
 
