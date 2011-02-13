@@ -131,61 +131,91 @@ char *extract_token(char *word)
 		case '!':
 			return copy_alloced("!");
 		case '~':
-			return copy_alloced("~");
-				/* ~ */
-				/* ~= */
+			if (word[1] == '=')
+                return copy_alloced("~=");
+            else
+                return copy_alloced("~");
 		case '+':
-			return copy_alloced("+");
-			/* + */
-			/* ++ */
-			/* += */
+			if (word[1] == '+')
+                return copy_alloced("++");
+            else if (word[1] == '=')
+                return copy_alloced("+=");
+            else
+                return copy_alloced("+");
 		case '-':
-			return copy_alloced("-");
-			/* - */
-			/* -- */
-			/* -= */
+			if (word[1] == '-')
+                return copy_alloced("--");
+			else if (word[1] == '=')
+                return copy_alloced("-=");
+			else
+                return copy_alloced("-");
 		case '*':
-			return copy_alloced("*");
-			/* * */
-			/* *= */
+			if(word[1] == '=')  
+                return copy_alloced("*=");
+			else 
+                return copy_alloced("*");
+                
 		case '&':
-			return copy_alloced("&");
-			/* & */
-			/* && */
-			/* &= */
+			if(word[1] == '&')
+                return copy_alloced("&&");
+            else if (word[1] == '=')
+                return copy_alloced("&=");
+            else 
+                return copy_alloced("&");
+
 		case '/':
-			return copy_alloced("/");
-			/* / */
-			/* /= */	
+            if(word[0] == '=')
+                return copy_alloced("/=");
+            else
+			    return copy_alloced("/");
+			
 		case '%':
-			return copy_alloced("%");
-			/* % */
-			/* %= */
+			if( word[1] == '=' )
+                return copy_alloced("%=");
+            else 
+                return copy_alloced("%");
+			
 		case '<':
-			return copy_alloced("<");
-			/* < */
-			/* << */
-			/* <= */
-			/* <<= */
+			if( word[1] == '<' ){
+                if (word[2] == '=')
+                    return copy_alloced("<<=");
+                else
+                    return copy_alloced("<<");
+            }
+            else if (word[1] == '=')
+                return copy_alloced("<=");
+            else 
+                return copy_alloced("<");
+     
 		case '>':
-			return copy_alloced(">");
-			/* > */
-			/* >> */
-			/* >= */
-			/* >>= */			
+			if( word[1] == '>' ){
+                if (word[2] == '=')
+                    return copy_alloced(">>=");
+                else
+                    return copy_alloced(">>");
+            }
+            else if (word[1] == '=')
+                return copy_alloced(">=");
+            else 
+                return copy_alloced(">");	
+        	
 		case '=':
-			return copy_alloced("=");
-			/* = */
-			/* == */
+			if( word[1] == '=' )
+                return copy_alloced("==");
+            else
+                return copy_alloced("=");
 		case '|':
-			return copy_alloced("|");
-			/* | */
-			/* || */
-			/* |= */
+			if (word[1] == '|')
+                return copy_alloced("||");
+            else if (word[1] == '=')
+                return copy_alloced("|=");
+            else 
+                return copy_alloced("|");
 		case '^':
-			return copy_alloced("^");
-			/* ^ */
-			/* ^= */
+			if (word[1] == '=')
+                return copy_alloced("^=");
+            else 
+                return copy_alloced("^");
 		case '?':
 			return copy_alloced("?");
 		case ':':
@@ -296,7 +326,7 @@ int parse_tokens(FILE *o, char *word)
 		tmp[diff] = '\n';
 		
 		tk = get_sval(token);
-        printf("Token: %s\n", token);
+        //printf("Token: %s\n", token);
 
         if (tk.type == -1){
             sprintf(tk_buffer0, "%d", tk.val);
