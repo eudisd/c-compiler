@@ -199,7 +199,7 @@ char *extract_token(char *word)
 		/* String Literals */
 		/* Questioning if this even belongs here?*/
 		case '"':
-			return return_string("\"");
+			return return_string(word);
 			break;
 		
 		default:
@@ -223,7 +223,7 @@ char *return_string(char *word)
         }
     }
 
-    tmp = (char*)malloc(sizeof(char)*i + 1);
+    tmp = (char*)xmalloc(sizeof(char)*i + 1);
 
     for(j = 0; j < i; j++){
         tmp[j] = word[j];
@@ -296,6 +296,7 @@ int parse_tokens(FILE *o, char *word)
 		tmp[diff] = '\n';
 		
 		tk = get_sval(token);
+        printf("Token: %s\n", token);
 
         if (tk.type == -1){
             sprintf(tk_buffer0, "%d", tk.val);
@@ -309,14 +310,14 @@ int parse_tokens(FILE *o, char *word)
         }
         
         else if (tk.type == TK_STRINGLIT) {
-
+            
         }
         
         else if (tk.type == TK_INTLIT) {
 
         }
                     
-		//free(token);
+		free(token);
 		token = extract_token(tmp);
 		tk_size = strlen(token);
 
@@ -646,10 +647,9 @@ token_package get_sval(char *s)
     }
 
     else {
-        int index = 0;
-        size_t size = strlen(s);
         if( s[0] == '\"'){
-            
+            tk.type = TK_STRINGLIT;
+            tk.val = 0;
         }
         else {
             // Return integer tk,
