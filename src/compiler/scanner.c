@@ -15,7 +15,7 @@ void run_scanner(file_struct *file)
 
     int _u = 0;
 
-    for(_u = 0; _u < 255; _u++)
+    for(_u = 0; _u < 256; _u++)
         dispatcher[_u] = &default_;
 
     dispatcher['a'] = &a;
@@ -57,8 +57,8 @@ void run_scanner(file_struct *file)
     dispatcher['?'] = &question;
     dispatcher[':'] = &colon;
     dispatcher[';'] = &semicolon;
-    dispatcher['$'] = &constant;
-    dispatcher['$'] = &stringlit;
+    //dispatcher['$'] = &constant;
+    //dispatcher['$'] = &stringlit;
 
     
 	char c;
@@ -75,6 +75,7 @@ void run_scanner(file_struct *file)
 	 */
     
 	while( (word = getword(i)) != NULL ){
+        
 		dispatcher[word[0]](o, word);
 		free(word);
 	}
@@ -260,6 +261,8 @@ int parse_tokens(FILE *o, char *word)
 	size_t upto = tk_size;
 
     token_package tk;
+
+    
 
 	while(tk_size > 0){
 		tmp = (char*)xmalloc(sizeof(char)*diff + 1);
@@ -1222,7 +1225,7 @@ void default_(FILE *o, char *word)
 {
     /* Try To See if it's a identifier, if not: 
     ERROR! Given token is not part of the lang def. */
-    parse_tokens(o, word);
+    //parse_tokens(o, word);
 }
 			
 				

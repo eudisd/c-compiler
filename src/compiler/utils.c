@@ -81,7 +81,7 @@ char *getword(FILE *i)
 	pos = ftell(i);
 	c = getc(i);
 	if( c == '\n' ){
-			//total_newlines++;
+			total_newlines++;
 		}
 	
 	/* We first calculate the size of the word */
@@ -95,8 +95,7 @@ char *getword(FILE *i)
             while( c != '\"' ){
 
                 if( c == '\n' ){
-                    printf("String error!\n");
-                    exit(EXIT_FAILURE);
+                    //error("file-not-known(feature-incomplete)", total_newlines, 0, "Badly formatted string! Exiting\n");
                 }
 
                 size++;
@@ -107,7 +106,7 @@ char *getword(FILE *i)
 		size++;
 		c = getc(i);
 		if( c == '\n' ){
-			//total_newlines++;
+			total_newlines++;
 		}
 		
 	}
