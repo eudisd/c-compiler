@@ -27,10 +27,10 @@ typedef struct record_TAG{
 
 typedef struct symbol_table_TAG {
 	/* Public Fields */
-	double load_factor;
-	size_t in_use;
-	size_t size;
-	record *table;
+	double load_factor;  /**> Load factor.  If it is > 0.5, it is bad. */
+	size_t in_use;       /**> How many slots are in use for this one symbol table */
+	size_t size;         /**> Total Size of the symbol talbe */
+	record *table;       /**> An array of all the records currently in use. */
 	
 	/* Public Methods */
 } symbol_table;

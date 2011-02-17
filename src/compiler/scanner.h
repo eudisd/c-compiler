@@ -20,6 +20,7 @@
 #include <ctype.h>
 
 #include "utils.h"
+#include "symbol.h"
 
 #define INTLIT_TABLE_MAX    1000
 #define FLOATLIT_TABLE_MAX  1000
@@ -169,11 +170,12 @@ static size_t floatlit_t_counter;
 static int intlit_table[INTLIT_TABLE_MAX];
 static double floatlit_table[FLOATLIT_TABLE_MAX];
 
+extern symbol_table *string_table; /**> This holds all the string literals*/
+
 
 /* Token Defininitions */     
 
 /*------------------------- Globals -------------------------*/
-
 
 size_t total_char;           /**>  Initialize total character count counter */
 size_t total_char_per_line;

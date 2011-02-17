@@ -4,16 +4,20 @@
 
 #include "scanner.h"
 
+symbol_table *string_table;
+
 void run_scanner(file_struct *file)
 {
+	char *word;
+    int _u = 0;
+    
+    string_table = create_stab(MAX_SLOTS);
     /* Dispatcher. Suggested by professor Vulis to eliminate comparison overhead 
        incurred by switch statement!  Very nice.
     */
     void (*dispatcher[255])(FILE *o, char *word);
 
     /* Set everything on the dispatcher to the default job */
-
-    int _u = 0;
 
     for(_u = 0; _u < 256; _u++)
         dispatcher[_u] = &default_;
@@ -59,14 +63,10 @@ void run_scanner(file_struct *file)
     dispatcher[';'] = &semicolon;
     //dispatcher['$'] = &constant;
     //dispatcher['$'] = &stringlit;
-
-	char c;
-	char *word;
     
 	FILE *i = fopen(INTERIM_FILENAME, "r");
 	FILE *o = fopen("data.tmp", "w");
    
-
 	/* getword() returns a string, so a NULL signifies that
      * nothing useful was retrieved from the input stream 
 	 */
@@ -76,6 +76,8 @@ void run_scanner(file_struct *file)
 		free(word);
 	}
     
+    print_stab(string_table);
+
 	fclose(i);
 	fclose(o);
 }
@@ -336,7 +338,17 @@ int parse_tokens(FILE *o, char *word)
 
         }
         else if (tk.type == TK_STRINGLIT) {
-            
+            int index;
+            record *rec = (record*)get_record(token, "no-value", 'S', 0, "\0");
+            stab_insert("c-string-literal", rec, string_table);
+            index = hash(rec->name, string_table->size);
+            /* If there are any collisions, the we just ignore those.  I 
+             * output the slot number of the hash, and the TK_STRINLIT token
+             */
+            sprintf(tk_buffer0, "%d", TK_STRINGLIT);
+            sprintf(tk_buffer1, "%d", index);
+                    
+            put_lexeme(o, tk_buffer0, tk_buffer1);
         }
         
         else if (tk.type == TK_INTLIT) {

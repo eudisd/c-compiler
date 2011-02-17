@@ -63,18 +63,21 @@ void stab_insert(char* filename, record *rec, symbol_table *stab)
 	/* Before inserting anything into the table, we check that the 
 	   given identifier is NOT a reserved keyword */
 	  
-	if( is_keyword(rec->name) ){
-		fprintf(stderr, "%s: This keyword is reserved!  Cannot be inserted into symbol table.", rec->name);	
-	}
+	//if( is_keyword(rec->name) ){
+	//	fprintf(stderr, "%s: This keyword is reserved!  Cannot be inserted into symbol table.", rec->name);	
+	//}
 	
 	size_t index = hash(rec->name, stab->size);
 	rec->slot = index;
-	
-	stab->table[index] = *rec;
-
-	stab->in_use++;
-		
-	stab->load_factor = ((float)stab->in_use) / stab->size;
+    
+    if( stab->table[index].slot != EMPTY_SLOT ){
+        printf("Symbol table collision!! Do something!\n");
+    }  
+    else {
+	    stab->table[index] = *rec;
+	    stab->in_use++;
+	    stab->load_factor = ((float)stab->in_use) / stab->size;
+    }
 }
 
 record *get_record(char *name, char*val, char type, int slot, char *scope)
