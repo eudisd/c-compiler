@@ -303,6 +303,7 @@ int is_valid_id(char *word)
 
 int parse_tokens(FILE *o, char *word)
 {
+    int index;  /**> Used for the hash return value */
 	size_t n, m;
 	char *token = extract_token(word);
 	char *tmp;
@@ -338,7 +339,7 @@ int parse_tokens(FILE *o, char *word)
 
         }
         else if (tk.type == TK_STRINGLIT) {
-            int index;
+            
             record *rec = (record*)get_record(token, "no-value", 'S', 0, "\0");
             stab_insert("c-string-literal", rec, string_table);
             index = hash(rec->name, string_table->size);
