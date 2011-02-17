@@ -1,7 +1,1 @@
-double x = 100.01;
-
-double y = "Here":
-
-printf("Here we go sunny");
-int x="here";
-char *x="here we";
+10.1000

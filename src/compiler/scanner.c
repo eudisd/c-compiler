@@ -233,15 +233,15 @@ char *extract_token(char *word)
 			break;
 		
 		default:
-            printf("Word: %s\n", word);
-            return return_keyword(word);
-            /*
+            
+            //printf("at: %d\n", );
+
             if( isdigit(word) ){
-                return return_integral(word);
+                return return_keyword(word);
             }
 			else {
                 return return_keyword(word);
-            }*/
+            }
             
 			break;
 		
@@ -351,7 +351,7 @@ int parse_tokens(FILE *o, char *word)
 		tmp[diff] = '\n';
 		
 		tk = get_sval(token);
-        //printf("Token: %s\n", token);
+        printf("Token: %s\n", token);
 
         if (tk.type == -1){
             sprintf(tk_buffer0, "%d", tk.val);

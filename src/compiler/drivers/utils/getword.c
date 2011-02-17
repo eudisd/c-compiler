@@ -11,7 +11,7 @@ int main()
 	FILE *f = fopen("tmp.txt", "r");
 	
 	printf("%s\n", getword(f));
-	printf("%s\n", getword(f));
+	/*printf("%s\n", getword(f));
     printf("%s\n", getword(f));
 	printf("%s\n", getword(f));
     printf("%s\n", getword(f));
@@ -25,7 +25,8 @@ int main()
     printf("%s\n", getword(f));
 	printf("%s\n", getword(f));
     printf("%s\n", getword(f));
-
+    */
+    fclose(f);
 	return 0;
 }
 
