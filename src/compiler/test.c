@@ -1,5 +1,6 @@
-"String Here";
-"String Here";
-"Here goes another table";
-"And Another table";
-"Amauris";
+int main(int argc, char **argv){
+    
+    "Here we go"
+    "Again and again"
+    return 0;
+}

@@ -61,6 +61,7 @@ void run_scanner(file_struct *file)
     dispatcher['?'] = &question;
     dispatcher[':'] = &colon;
     dispatcher[';'] = &semicolon;
+
     //dispatcher['$'] = &constant;
     //dispatcher['$'] = &stringlit;
     
