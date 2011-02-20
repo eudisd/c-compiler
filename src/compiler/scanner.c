@@ -354,7 +354,6 @@ int parse_tokens(FILE *o, char *word)
 		tmp[diff] = '\n';
 		
 		tk = get_sval(token);
-        printf("Token: %s\n", token);
 
         if (tk.type == -1){
             sprintf(tk_buffer0, "%d", tk.val);
@@ -365,9 +364,6 @@ int parse_tokens(FILE *o, char *word)
             sprintf(tk_buffer1, "%d", tk.val);
                     
             put_lexeme(o, tk_buffer0, tk_buffer1);
-        }
-        else if (tk.type == TK_FLOATLIT){
-
         }
         else if (tk.type == TK_STRINGLIT) {
             
@@ -384,7 +380,14 @@ int parse_tokens(FILE *o, char *word)
         }
         
         else if (tk.type == TK_INTLIT) {
-
+			sprintf(tk_buffer0, "%d", TK_INTLIT);
+            sprintf(tk_buffer1, "%d", tk.val);
+            put_lexeme(o, tk_buffer0, tk_buffer1);
+        }
+		else if (tk.type == TK_FLOATLIT) {
+			sprintf(tk_buffer0, "%d", TK_FLOATLIT);
+            sprintf(tk_buffer1, "%f", tk.f_val);
+            put_lexeme(o, tk_buffer0, tk_buffer1);
         }
                     
 		free(token);
@@ -733,19 +736,27 @@ token_package get_sval(char *s)
             tk.val = 0;
         }
         else {
-            printf("%s\n", s);
+            
             int i;
             int dot = FALSE;
             size_t size = strlen(s);
-            /*
+            
             for (i = 0; i < size; i++){
                 if(s[i] == '.')
                     dot = TRUE;
                 else if ( !isdigit(s[i]) ){
+					// Error
                     return tk;
                 }
-            }*/
-        
+            }
+			if(dot == TRUE){
+				tk.type = TK_FLOATLIT;
+				tk.f_val = atof(s);
+			}
+			else {
+				tk.type = TK_INTLIT;
+				tk.val  = atoi(s);
+			}
         }
         
 

@@ -155,6 +155,7 @@
 /*-------------------------Typedefs -------------------------*/
 typedef struct token_package_Tag {
     int val;
+	double f_val;
     int type;
 } token_package;
 /*------------------------- Globals -------------------------*/
