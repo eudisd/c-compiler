@@ -77,7 +77,7 @@ void run_scanner(file_struct *file)
 		free(word);
 	}
     
-    print_stab(string_table);
+    //print_stab(string_table);
 
 	fclose(i);
 	fclose(o);
@@ -233,13 +233,11 @@ char *extract_token(char *word)
 			break;
 		
 		default:
-            
-            //printf("at: %d\n", );
-
-            if( isdigit(word) ){
-                return return_keyword(word);
+            if( isdigit(word[0]) ){
+                return return_integral(word);
             }
 			else {
+                
                 return return_keyword(word);
             }
             
@@ -251,20 +249,25 @@ char *extract_token(char *word)
 }
 
 char *return_integral(char *word)
-{   /*
-    int i;
+{   
+    int i, j;
     size_t size = strlen(word);
-    char *integral = (char*)xmalloc(sizeof(char)*size);
+    
+
     for(i = 0; i < size; i++){
-        if( !isdigit(word[i]) || word[i] != '.' ){
-            printf("We have an invalid number here\n");
-            exit(1);
+        if( !isdigit(word[i]) && word[i] != '.' ){
+            break;
         } 
     }
-    printf("We have a good number\n");
-    strcpy(integral, "FUCK YOU");
-    return integral;*/
-    return "OKAY";
+    
+    char *integral = (char*)xmalloc(sizeof(char)* i + 1);
+
+    for(j = 0; j < i; j++){
+        integral[j] = word[j];
+    }
+    integral[i] = '\0';
+    return integral;
+    
 }
 
 char *return_string(char *word)
@@ -730,11 +733,11 @@ token_package get_sval(char *s)
             tk.val = 0;
         }
         else {
-            /*
             printf("%s\n", s);
             int i;
             int dot = FALSE;
             size_t size = strlen(s);
+            /*
             for (i = 0; i < size; i++){
                 if(s[i] == '.')
                     dot = TRUE;
@@ -742,7 +745,6 @@ token_package get_sval(char *s)
                     return tk;
                 }
             }*/
-           // printf("Digit!\n");
         
         }
         
