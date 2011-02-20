@@ -237,7 +237,6 @@ char *extract_token(char *word)
                 return return_integral(word);
             }
 			else {
-                
                 return return_keyword(word);
             }
             
@@ -347,16 +346,14 @@ char *return_keyword(char *word)
 int is_valid_id(char *word)
 {
 	size_t size = strlen(word);
-	
+	int is_valid;
 	int j;
 	for(j = 0; j < size; j++){
 		if( !isalpha(word[j]) && !isdigit(word[j]) && word[j] != '_' ){
-			
-			return 0;
+			return FALSE;
 		}
-		
 	}
-	return size;
+	return TRUE;
 }
 
 int parse_tokens(FILE *o, char *word)
@@ -766,9 +763,8 @@ token_package get_sval(char *s)
 			tk.type = TK_INTLIT;
             tk.val = extract_char(s); 
 		}
-        else {
-            
-            int i;
+		else if( isdigit(s[0]) ){
+			int i;
             int dot = FALSE;
             size_t size = strlen(s);
             
@@ -788,11 +784,12 @@ token_package get_sval(char *s)
 				tk.type = TK_INTLIT;
 				tk.val  = atoi(s);
 			}
+		}
+        else {
+            
+            // Last case, must be a valid id
         }
-        
-
     }
-    
     return tk;
 }
 
