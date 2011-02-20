@@ -49,7 +49,7 @@ void stab_insert(char* filename, record *rec, symbol_table *stab);
 
 /**
  */
-record *get_record(char *name, char*val, char type, int slot, char *scope);
+record *get_record(char *name, char *val, char type, int slot, char *scope);
 
 /**
  */

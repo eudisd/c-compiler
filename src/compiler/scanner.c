@@ -5,13 +5,17 @@
 #include "scanner.h"
 
 symbol_table *string_table;
+symbol_table *id_table;
 
 void run_scanner(file_struct *file)
 {
 	char *word;
     int _u = 0;
     
+	/* This is wasteful */
     string_table = create_stab(MAX_SLOTS);
+	id_table     = create_stab(MAX_SLOTS);
+
     /* Dispatcher. Suggested by professor Vulis to eliminate comparison overhead 
        incurred by switch statement!  Very nice.
     */
@@ -78,6 +82,7 @@ void run_scanner(file_struct *file)
 	}
     
     //print_stab(string_table);
+	print_stab(id_table);
 
 	fclose(i);
 	fclose(o);
@@ -377,6 +382,7 @@ int parse_tokens(FILE *o, char *word)
 		}	
 		tmp[diff] = '\n';
 		
+		printf("Token: %s\n", token);
 		tk = get_sval(token);
 
         if (tk.type == -1){
@@ -387,6 +393,15 @@ int parse_tokens(FILE *o, char *word)
             sprintf(tk_buffer0, "%d", TK_KEYWORD);
             sprintf(tk_buffer1, "%d", tk.val);
                     
+            put_lexeme(o, tk_buffer0, tk_buffer1);
+        }
+		else if (tk.type == TK_IDENTIFIER) {
+			record *rec = (record*)get_record(token, "no-value", 'V', 0, "\0");
+            stab_insert("symbol", rec, id_table);
+            index = hash(rec->name, id_table->size);
+
+			sprintf(tk_buffer0, "%d", TK_IDENTIFIER);
+            sprintf(tk_buffer1, "%d", index);
             put_lexeme(o, tk_buffer0, tk_buffer1);
         }
         else if (tk.type == TK_STRINGLIT) {
@@ -413,6 +428,7 @@ int parse_tokens(FILE *o, char *word)
             sprintf(tk_buffer1, "%f", tk.f_val);
             put_lexeme(o, tk_buffer0, tk_buffer1);
         }
+		
                     
 		free(token);
 		token = extract_token(tmp);
@@ -786,8 +802,11 @@ token_package get_sval(char *s)
 			}
 		}
         else {
-            
             // Last case, must be a valid id
+			if( is_valid_id(s) == TRUE){
+				tk.type = TK_IDENTIFIER;
+				tk.val = 0; /* Hash slot */
+			}
         }
     }
     return tk;

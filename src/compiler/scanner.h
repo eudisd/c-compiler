@@ -172,7 +172,7 @@ static int intlit_table[INTLIT_TABLE_MAX];
 static double floatlit_table[FLOATLIT_TABLE_MAX];
 
 extern symbol_table *string_table; /**> This holds all the string literals*/
-
+extern symbol_table *id_table; /**>This holds all of the identifier names */
 
 /* Token Defininitions */     
 
