@@ -95,7 +95,7 @@ char *getword(FILE *i)
             while( c != '\"' ){
 
                 if( c == '\n' ){
-                    //error("file-not-known(feature-incomplete)", total_newlines, 0, "Badly formatted string! Exiting\n");
+                    error("file-not-known(feature-incomplete)", total_newlines, 0, "Badly formatted string! Exiting\n");
                 }
 
                 size++;

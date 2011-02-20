@@ -217,6 +217,10 @@ char *extract_token(char *word);
 /** _MUST_ be freed.
   */
 
+char *return_char(char *word);
+
+/** _MUST_ be freed.
+  */
 char *return_integral(char *word);
 
 /** _MUST_ be freed.
@@ -227,6 +231,10 @@ char *return_string(char *word);
 /** _MUST_ be freed. 
   */
 char *return_keyword(char *word);
+
+/**
+  */
+int extract_char(char *word);
 
 /**
   */

@@ -225,7 +225,7 @@ char *extract_token(char *word)
 		/* Constants */
 
 		case '\'':
-			return copy_alloced("'");
+			return return_char(word);
 		/* String Literals */
 		/* Questioning if this even belongs here?*/
 		case '"':
@@ -246,6 +246,32 @@ char *extract_token(char *word)
 		
 	}
     return NULL;
+}
+
+char *return_char(char *word)
+{
+    int i, j;
+    size_t size = strlen(word);
+    char *tmp;
+    for(i = 1; i < size; i++){
+        if( word[i] == '\'' ){
+            i++;
+            break;
+        }
+    }
+
+    tmp = (char*)xmalloc(sizeof(char)*i + 1);
+
+    for(j = 0; j < i; j++){
+        tmp[j] = word[j];
+    }
+
+    tmp[i] = '\0';
+	if(strlen(tmp) > 3){
+		error("unknown-file", total_newlines, 0, "Bad character literal!\n");
+	}
+    
+    return tmp;
 }
 
 char *return_integral(char *word)
@@ -280,8 +306,8 @@ char *return_string(char *word)
             i++;
             break;
         }
+		
     }
-
     tmp = (char*)xmalloc(sizeof(char)*i + 1);
 
     for(j = 0; j < i; j++){
@@ -289,6 +315,7 @@ char *return_string(char *word)
     }
 
     tmp[i] = '\0';
+	printf("String: %s\n", tmp);
     
     
     return tmp;
@@ -735,6 +762,10 @@ token_package get_sval(char *s)
             tk.type = TK_STRINGLIT;
             tk.val = 0;
         }
+		else if( s[0] == '\''){
+			tk.type = TK_INTLIT;
+            tk.val = extract_char(s); 
+		}
         else {
             
             int i;
@@ -745,7 +776,7 @@ token_package get_sval(char *s)
                 if(s[i] == '.')
                     dot = TRUE;
                 else if ( !isdigit(s[i]) ){
-					// Error
+					printf("Bad number!!!! Has characters in it\n");
                     return tk;
                 }
             }
@@ -763,6 +794,17 @@ token_package get_sval(char *s)
     }
     
     return tk;
+}
+
+int extract_char(char *word)
+{
+	/* This looks like it's going to break any minute! */
+
+	size_t size = strlen(word);
+	char tmp[4];
+	sprintf(tmp, "%d", word[1]);
+	tmp[3] = '\n';
+	return atoi(tmp);
 }
 
 /************************* DISPATCH *****************************/
