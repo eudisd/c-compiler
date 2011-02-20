@@ -7,9 +7,9 @@
 void print_stab(symbol_table *stab)
 {
 	int i;
-	printf("\n\nCurrent STAB Status:\n"
+	printf("\n\nCurrent Symbol Table: '%s' \n - Status -\n"
            "Total Used: %4d\t Size: %4d\t Load Factor: %4.2f\n"
-		   "\n", (int)stab->in_use, (int)stab->size, stab->load_factor);
+		   "\n", stab->t_name, (int)stab->in_use, (int)stab->size, stab->load_factor);
 	printf("-------\t----\t-----\t----\n"
 		   "Address\tName\tValue\tSlot\n");
 	for(i = 0; i < stab->size; i++){
@@ -33,7 +33,7 @@ size_t hash(char *key,  size_t limit)
 	return (size_t)(hash_value%limit);
 }
 
-symbol_table *create_stab(size_t max)
+symbol_table *create_stab(char* t_name, size_t max)
 {
 	int i;
 	symbol_table *stab = (symbol_table*)xmalloc(sizeof(symbol_table)*1);
@@ -42,6 +42,7 @@ symbol_table *create_stab(size_t max)
 	stab->in_use = 0;
 	stab->load_factor = 0;
 	stab->size = max;
+	strcpy(stab->t_name, t_name);
 
 	for(i = 0; i < max; i++){
 		stab->table[i].addr = 0;

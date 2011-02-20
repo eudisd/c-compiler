@@ -27,6 +27,7 @@ typedef struct record_TAG{
 
 typedef struct symbol_table_TAG {
 	/* Public Fields */
+	char t_name[32];    /**> Table identifier. */
 	double load_factor;  /**> Load factor.  If it is > 0.5, it is bad. */
 	size_t in_use;       /**> How many slots are in use for this one symbol table */
 	size_t size;         /**> Total Size of the symbol talbe */
@@ -41,7 +42,7 @@ void print_stab(symbol_table *stab);
 
 /**
  */
-symbol_table *create_stab(size_t max);
+symbol_table *create_stab(char *t_name, size_t max);
 
 /**
  */

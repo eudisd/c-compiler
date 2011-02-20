@@ -13,8 +13,8 @@ void run_scanner(file_struct *file)
     int _u = 0;
     
 	/* This is wasteful */
-    string_table = create_stab(MAX_SLOTS);
-	id_table     = create_stab(MAX_SLOTS);
+    string_table = create_stab("String Literals", MAX_SLOTS);
+	id_table     = create_stab("ID Symbol Table", MAX_SLOTS);
 
     /* Dispatcher. Suggested by professor Vulis to eliminate comparison overhead 
        incurred by switch statement!  Very nice.

@@ -79,7 +79,7 @@ char *handle_defines(char* prog, char *filename)
 	int paren_flag = FALSE;
 		
 	/* create preprocessor symbol table here */
-	symbol_table *defines_stab = create_stab(MAX_SLOTS);
+	symbol_table *defines_stab = create_stab("Preprocessor", MAX_SLOTS);
 
 	FILE *i = fopen(filename, "r");
 
