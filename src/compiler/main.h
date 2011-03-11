@@ -14,5 +14,6 @@
 #include "utils.h"
 #include "preprocessor.h"
 #include "scanner.h"
+#include "stack.h"
 
 #endif
