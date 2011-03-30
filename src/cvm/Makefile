@@ -20,3 +20,7 @@ $(TARGET) : $(OBJS)
 cvm.o : cvm.c cvm.h
 	@echo "(Modified) Compiling Translation Unit: cvm.c + cvm.h"
 	$(CC) -c cvm.c -o cvm.o
+
+utils.o : ../compiler/utils.c ../compiler/utils.h
+	@echo "(Modified) Compiling Translation Unit: utils.c + utils.h"
+	$(CC) -c ../compiler/utils.c -o utils.o

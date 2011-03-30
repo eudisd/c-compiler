@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../compiler/utils.h"
+
 void usage();
 
 void run(char *program);

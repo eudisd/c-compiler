@@ -27,20 +27,23 @@ void run(char *program)
         exit(EXIT_FAILURE);
     } 
 
-    char *line = "push 1";
-    char *inst = "push";
-
-    switch(line[0])
-    {
+    char *line = (char*)malloc(sizeof(char)*64);
+    char *word;
+    size_t line_size = 100;
+    
+    while( -1 != getline(&line, &line_size, i) ){
+     while( 0 ){
+        switch(line[0])
+        {
         case 'a':
             
-            if( !strcmp(inst, "add") ){
+            if( !strcmp(word, "add") ){
                 
             }
-            else if ( !strcmp(inst, "addf") ){
+            else if ( !strcmp(word, "addf") ){
                 
             } 
-            else if ( !strcmp(inst, "and") ){
+            else if ( !strcmp(word, "and") ){
 
             }
             else {
@@ -49,13 +52,13 @@ void run(char *program)
             break;
         case 'p':
 
-            if( !strcmp(inst, "push") ){
+            if( !strcmp(word, "push") ){
                 
             }
-            else if ( !strcmp(inst, "pop") ){
+            else if ( !strcmp(word, "pop") ){
                 
             } 
-            else if ( !strcmp(inst, "pushi") ){
+            else if ( !strcmp(word, "pushi") ){
 
             }
             else {
@@ -65,13 +68,13 @@ void run(char *program)
             break;
 
         case 'e':
-            if( !strcmp(inst, "exch") ){
+            if( !strcmp(word, "exch") ){
                 
             }
-            else if ( !strcmp(inst, "eql") ){
+            else if ( !strcmp(word, "eql") ){
                 
             } 
-            else if ( !strcmp(inst, "and") ){
+            else if ( !strcmp(word, "and") ){
 
             }
             else {
@@ -80,7 +83,7 @@ void run(char *program)
             break;
 
         case 'i':
-            if( !strcmp(inst, "ip") ){
+            if( !strcmp(word, "ip") ){
                 
             }
             else {
@@ -90,13 +93,13 @@ void run(char *program)
             break;  
 
         case 'd':
-            if( !strcmp(inst, "dp") ){
+            if( !strcmp(word, "dp") ){
                 
             }
-            else if ( !strcmp(inst, "dup") ){
+            else if ( !strcmp(word, "dup") ){
                 
             } 
-            else if ( !strcmp(inst, "div") ){
+            else if ( !strcmp(word, "div") ){
 
             }
             else {
@@ -105,19 +108,19 @@ void run(char *program)
             break;
 
         case 'b':
-            if( !strcmp(inst, "bp") ){
+            if( !strcmp(word, "bp") ){
                 
             }
             break;
 
         case 's':
-            if( !strcmp(inst, "sp") ){
+            if( !strcmp(word, "sp") ){
                 
             }
-            else if ( !strcmp(inst, "sub") ){
+            else if ( !strcmp(word, "sub") ){
                 
             } 
-            else if ( !strcmp(inst, "subf") ){
+            else if ( !strcmp(word, "subf") ){
 
             }
             else {
@@ -125,10 +128,10 @@ void run(char *program)
             }
             break;
         case 'n':
-            if( !strcmp(inst, "neg") ){
+            if( !strcmp(word, "neg") ){
                 
             }
-            else if ( !strcmp(inst, "not") ){
+            else if ( !strcmp(word, "not") ){
                 
             } 
             else {
@@ -137,10 +140,10 @@ void run(char *program)
             break;
 
         case 'l':
-            if( !strcmp(inst, "leq") ){
+            if( !strcmp(word, "leq") ){
                 
             }
-            else if ( !strcmp(inst, "lss") ){
+            else if ( !strcmp(word, "lss") ){
                 
             } 
             else {
@@ -149,10 +152,10 @@ void run(char *program)
             break;
         case 'g':
 
-            if( !strcmp(inst, "gtr") ){
+            if( !strcmp(word, "gtr") ){
                 
             }
-            else if ( !strcmp(inst, "geq") ){
+            else if ( !strcmp(word, "geq") ){
                 
             } 
             else {
@@ -160,7 +163,7 @@ void run(char *program)
             }   
             break;
         case 'm':
-            if( !strcmp(inst, "mul") ){
+            if( !strcmp(word, "mul") ){
                 
             }
             
@@ -169,5 +172,9 @@ void run(char *program)
             }
             break;
        
+        }
+      }
     }
+    
+    
 }
