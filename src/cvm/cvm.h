@@ -4,4 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void usage();
+
+void run(char *program);
+
 #endif

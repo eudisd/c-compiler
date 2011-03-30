@@ -15,7 +15,6 @@ $(TARGET) : $(OBJS)
 	@echo 
 	@echo "Done Building C Virtual Machine."
 	@-rm *.o
-	@-mv $(TARGET) ../../bin  
 	@echo	
 
 cvm.o : cvm.c cvm.h
