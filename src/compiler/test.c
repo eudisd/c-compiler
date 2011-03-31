@@ -1,1 +1,3 @@
-printf();
+main(){
+    return 0;
+}

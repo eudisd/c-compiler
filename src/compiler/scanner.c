@@ -69,13 +69,17 @@ void run_scanner(file_struct *file)
     //dispatcher['$'] = &constant;
     //dispatcher['$'] = &stringlit;
     
-	FILE *i = fopen(INTERIM_FILENAME, "r");
-	FILE *o = fopen("data.tmp", "w");
-   
+	FILE *i = fopen(file->filename, "r");
+	FILE *o = fopen(INTERIM_FILENAME, "w");
+
+    if( i == NULL ){
+        error(file->filename, 0, 0, "Could not open file for processing!  Exiting");
+    }
+
 	/* getword() returns a string, so a NULL signifies that
      * nothing useful was retrieved from the input stream 
 	 */
-    
+
 	while( (word = getword(i)) != NULL ){
 		dispatcher[word[0]](o, word);
 		free(word);
@@ -86,6 +90,7 @@ void run_scanner(file_struct *file)
 
 	fclose(i);
 	fclose(o);
+
 }
 
 void put_lexeme(FILE *o, char *tk_name, char *tk_value)

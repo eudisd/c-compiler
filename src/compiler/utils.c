@@ -208,6 +208,13 @@ int floatlit_comp(const void *a, const void *b)
     if( *(double*)a < *(double*)b ) return -1;
 }
 
+char *cstr(char *s)
+{
+     char *tmp = (char*)xmalloc(sizeof(char)*strlen(s) + 1);
+     strcpy(tmp, s);
+     return tmp;
+}
+
 
 
 
