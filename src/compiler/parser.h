@@ -10,9 +10,12 @@
 #include <string.h>
 #include "error.h"
 #include "utils.h"
+#include "scanner.h"
 
 /* Globals */
 static char *cur_token;
+
+typedef char TYPE;
 
 /** Gets a lexeme.  _MUST_ be freed after use.
   */
@@ -29,9 +32,30 @@ int get_token_value(char *lexeme);
 /**
   */
 
-void get_token();
+char* get_token();
 
 /**
   */
 void match(char *token);
+
+/* Expression Productions */
+/**
+  */
+TYPE E();
+
+/**
+  */
+void EPrime();
+
+/**
+  */
+TYPE T();
+
+/**
+  */
+void TPrime();
+
+/**
+  */
+TYPE F();
 #endif
