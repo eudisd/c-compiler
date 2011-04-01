@@ -505,7 +505,7 @@ token_package get_sval(char *s)
     }
     else if( !strcmp(s, "*") ){
         tk.type = -1;
-        tk.val = TK_UNARY_STAR;
+        tk.val = TK_MULT_STAR;
     }
     else if( !strcmp(s, "&") ){
         tk.type = -1;

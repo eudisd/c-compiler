@@ -38,6 +38,10 @@ char* get_token();
   */
 void match(char *token);
 
+/**
+  */
+void matchi(int token);
+
 /* Expression Productions */
 /**
   */

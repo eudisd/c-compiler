@@ -23,7 +23,7 @@ void run_parser()
      }*/
 
      cur_token = get_token();
-     printf("cur_token: %s\n", cur_token);
+
      E();
 }
 
@@ -31,32 +31,58 @@ void match(char *token)
 {
      if( cur_token != NULL ){
          token_package tk = get_sval(token);
+         /*printf("cur_token: %d, tk: %d\n", get_token_name(cur_token), tk.val); */
          if( tk.val != get_token_name(cur_token) ){
+
              error(file.filename, 0, 0, "Does not match current token!");
          }
-         else
+         else {
+             free(cur_token);
              cur_token = get_token();
+
+         }
+     }
+
+}
+
+void matchi(int token)
+{
+     if( cur_token != NULL ){
+         if( token != get_token_name(cur_token) ){
+             error(file.filename, 0, 0, "Does not match current token!");
+         }
+         else {
+             free(cur_token);
+             cur_token = get_token();
+
+         }
      }
 
 }
 
 TYPE E()
 {
-     TYPE t = T();
+     TYPE t = T(); 
+     EPrime();
+
+     /*
      int tk = get_token_name(cur_token);
+
      while(tk == TK_PLUS ||
            tk == TK_MINUS ||
            tk == TK_LOGIC_OR){
            int op = tk;
-           match("op");
+           printf("%d\n", tk);
+           matchi(op);
            T();
-
+           }*/
            /* (op) */
-           }
 
-     
+
+
 
 }
+
 void EPrime()
 {
      int tk = get_token_name(cur_token);
@@ -64,18 +90,21 @@ void EPrime()
      if( tk == TK_PLUS ){
          match("+");
          T();
+         printf("add\n");
          /* (+) : Need to implement this! */
          EPrime();
      }
      else if ( tk == TK_MINUS ){
          match("-");
          T();
+         printf("sub\n");
          /* (-) : Need to implement this! */
          EPrime();
      }
      else if ( tk == TK_LOGIC_OR ){
          match("||");
          T();
+         printf("or\n");
          /* (||) : Need to implement this! */
          EPrime();
      }
@@ -92,7 +121,31 @@ TYPE T()
 
 void TPrime()
 {
-  
+     int tk = get_token_name(cur_token);
+     if( tk == TK_MULT_STAR ){
+         match("*");
+         T();
+         printf("mul\n");
+         /* (*) : Need to implement this! */
+         TPrime();
+     }
+     else if ( tk == TK_DIV ){
+         match("/");
+         T();
+         printf("div\n");
+         /* (/) : Need to implement this! */
+         TPrime();
+     }
+     else if ( tk == TK_LOGIC_AND ){
+         match("&&");
+         T();
+         printf("and\n");
+         /* (&&) : Need to implement this! */
+         TPrime();
+     }
+     else {
+
+     }
 }
 
 TYPE F()
@@ -107,6 +160,7 @@ TYPE F()
      else if ( tk == TK_INTLIT ){
        // generate pushi
        printf("pushi\n");
+       cur_token = get_token();
        return 'I';
      }
      else if ( tk == TK_STRINGLIT ){
@@ -116,16 +170,18 @@ TYPE F()
        // generate pushf
        return 'R';
      }
-     else if ( tk == TK_LEFTPAREN){
+     else if ( tk == TK_LEFTPAREN ){
           match("(");
+
           TYPE t = E();
+
           match(")");
           return t;
      }
      else if ( tk == TK_PLUS ){
           match("+");
           // Generate add
-          printf("add\n");
+
           TYPE t = F();
           if( t == 'I' || t == 'R' )
               return t;
@@ -142,12 +198,54 @@ TYPE F()
             // Type error
        }
      }
+
+     else if ( tk == TK_MULT_STAR ){
+       match("*");
+       TYPE t = F();
+       if ( t == 'I' || t == 'R' )
+          return t;
+       else {
+            // Type error
+       }
+     }
+     else if ( tk == TK_DIV ){
+       match("/");
+       TYPE t = F();
+       if ( t == 'I' || t == 'R' )
+          return t;
+       else {
+            // Type error
+       }
+     }
+     else if ( tk == TK_LOGIC_AND ){
+       match("&&");
+       TYPE t = F();
+       if ( t == 'I' || t == 'B' )
+          return t;
+       else {
+            // Type error
+       }
+     }
+     else if ( tk == TK_LOGIC_OR ){
+       match("||");
+       TYPE t = F();
+       if ( t == 'I' || t == 'B' )
+          return t;
+       else {
+            // Type error
+       }
+     }
+
      else if ( tk == TK_UNARY_EXCLAMATION ){ // TK_NOT 
      }
      else {
        
      }
 }
+
+
+
+
 
 char *get_token()
 {
