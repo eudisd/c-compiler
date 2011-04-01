@@ -31,7 +31,9 @@ void run_parser()
 
 
 
+     /* Write out Data Segment */
 
+     /* Write out Code Segment */
 
 }
 
@@ -98,22 +100,22 @@ void EPrime()
      if( tk == TK_PLUS ){
          match("+");
          T();
-         printf("add\n");
-         /* (+) : Need to implement this! */
+         /* (+) */
+         fprintf(output, "add\n");
          EPrime();
      }
      else if ( tk == TK_MINUS ){
          match("-");
          T();
-         printf("sub\n");
-         /* (-) : Need to implement this! */
+         /* (-) */
+         fprintf(output, "minus\n");
          EPrime();
      }
      else if ( tk == TK_LOGIC_OR ){
          match("||");
          T();
-         printf("or\n");
-         /* (||) : Need to implement this! */
+         fprintf(output, "or\n");
+         /* (||) */
          EPrime();
      }
      else {
@@ -167,7 +169,9 @@ TYPE F()
      }
      else if ( tk == TK_INTLIT ){
        // generate pushi
-       printf("pushi\n");
+       char *tmp = "pushi\n";
+
+       fprintf(output, "pushi %d\n", get_token_value(cur_token) );
        cur_token = get_token();
        return 'I';
      }
@@ -250,10 +254,6 @@ TYPE F()
        
      }
 }
-
-
-
-
 
 char *get_token()
 {
@@ -359,6 +359,9 @@ int get_token_name(char *lexeme)
 
 	return x;
 }
+
+
+
 
 
 

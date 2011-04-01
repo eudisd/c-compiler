@@ -19,9 +19,9 @@ typedef char TYPE;
 
 /* Globals */
 static char *cur_token;
-static uchar *code;
+
 static uchar *data;
-static uchar stack[256];
+
 
 /* Externals */
 extern file_struct file;
@@ -73,4 +73,9 @@ void TPrime();
 /**
   */
 TYPE F();
+
+
+/**
+  */
+
 #endif

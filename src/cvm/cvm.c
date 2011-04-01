@@ -33,6 +33,8 @@ void run(char *program)
     while( 1 ){
            switch( code[ip++] ){
                 case OP_ADD:
+                     stack[sp + 1].i += stack[sp].i;
+                     sp++;
                      break;
                 case OP_SUB:
                      break;
@@ -71,5 +73,5 @@ void run(char *program)
                 case OP_DUP:
                      break;
            }
-    } 
+    }
 }

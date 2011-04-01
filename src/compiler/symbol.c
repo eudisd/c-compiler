@@ -100,6 +100,11 @@ record *get_record(char *name, char*val, char type, int slot, char *scope)
 	return rec;
 }
 
+int return_value(symbol_table *stab, int target)
+{
+    return 1;
+}
+
 void purge_record(record *rec)
 {
 }

@@ -26,7 +26,8 @@
 #define OP_EXCH   17
 #define OP_DUP    18
 
-typedef unsigned char uchar;
+typedef unsigned char uchar;  
+typedef unsigned int uint;
 /* Globals */
 
 size_t sp;
@@ -35,7 +36,11 @@ size_t bp;
 
 uchar *code;
 uchar *data;
-uchar stack[256];
+
+union stack_TAG {
+      int i;
+      float f;
+} stack[256];
 
 void usage();
 

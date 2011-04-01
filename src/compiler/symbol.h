@@ -64,5 +64,8 @@ size_t hash(char *key, size_t limit);
  */
 int is_keyword(char *lexeme);
 
+/**
+*/
+int return_value(symbol_table *stab, int target);
 
 #endif
