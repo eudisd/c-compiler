@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
 	switch(argc){
 	case 1:
-		printf("%s: no input files\n", file.calling_prog);
+		printf("%s: no input files.\n Try --help for more options.\n", file.calling_prog);
 		break;
 
 	case 2:
@@ -64,6 +64,7 @@ int main(int argc, char *argv[])
 			//run_preprocessor(argv[0], argv[1], ofile);
 
             strcpy(file.filename, argv[1]);
+            strcpy(file.default_o, ofile);
 
 			run_scanner(&file); /* Outputs an interim file */
             run_parser();  /* Generates Stack Code */

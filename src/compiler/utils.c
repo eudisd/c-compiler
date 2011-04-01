@@ -8,9 +8,9 @@ void usage( void )
 {
 	printf("Usage: c [options] file...\n" 
 	       "Options:\n"
-		   "  --help\t\t\t Print help screen description\n"
-		   "  --version\t\t\t Print version number\n"
-		   "  -o <file>\t\t\t Specify a file name"
+		   "  --help\t\t\t Print help screen description.\n"
+		   "  --version\t\t\t Print version number.\n"
+		   "  -o <file>\t\t\t Specify an output file name."
 		   "\n"
 		   );
 }

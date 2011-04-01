@@ -10,12 +10,23 @@
 #include <string.h>
 #include "error.h"
 #include "utils.h"
+#include "symbol.h"
 #include "scanner.h"
+
+/* Type defs */
+typedef unsigned char uchar;
+typedef char TYPE;
 
 /* Globals */
 static char *cur_token;
+static uchar *code;
+static uchar *data;
+static uchar stack[256];
 
-typedef char TYPE;
+/* Externals */
+extern file_struct file;
+extern symbol_table *string_table;
+extern symbol_table *id_table;
 
 /** Gets a lexeme.  _MUST_ be freed after use.
   */

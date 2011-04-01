@@ -3,13 +3,13 @@
   */
 #include "parser.h"
 
-extern file_struct file;
-
 FILE *input; /**> Global File Discriptor */
+FILE *output; /**> Global File Discriptor */
 
 void run_parser()
 {
      input = fopen(INTERIM_FILENAME, "r");
+     output = fopen(file.default_o, "wb");
 
      if( input == NULL ){
          error(file.filename, 0, 0, "Error processing interim file, exiting...");
@@ -25,6 +25,14 @@ void run_parser()
      cur_token = get_token();
 
      E();
+
+     close(input);
+     close(output);
+
+
+
+
+
 }
 
 void match(char *token)

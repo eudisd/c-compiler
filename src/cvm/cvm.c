@@ -27,154 +27,49 @@ void run(char *program)
         exit(EXIT_FAILURE);
     } 
 
-    char *line = (char*)malloc(sizeof(char)*64);
-    char *word;
-    size_t line_size = 100;
-    
-    while( -1 != getline(&line, &line_size, i) ){
-     while( 0 ){
-        switch(line[0])
-        {
-        case 'a':
-            
-            if( !strcmp(word, "add") ){
-                
-            }
-            else if ( !strcmp(word, "addf") ){
-                
-            } 
-            else if ( !strcmp(word, "and") ){
+    ip = 0;
+    sp = 0;
 
-            }
-            else {
-
-            }
-            break;
-        case 'p':
-
-            if( !strcmp(word, "push") ){
-                
-            }
-            else if ( !strcmp(word, "pop") ){
-                
-            } 
-            else if ( !strcmp(word, "pushi") ){
-
-            }
-            else {
-
-            }
-
-            break;
-
-        case 'e':
-            if( !strcmp(word, "exch") ){
-                
-            }
-            else if ( !strcmp(word, "eql") ){
-                
-            } 
-            else if ( !strcmp(word, "and") ){
-
-            }
-            else {
-
-            }
-            break;
-
-        case 'i':
-            if( !strcmp(word, "ip") ){
-                
-            }
-            else {
-
-            }
-
-            break;  
-
-        case 'd':
-            if( !strcmp(word, "dp") ){
-                
-            }
-            else if ( !strcmp(word, "dup") ){
-                
-            } 
-            else if ( !strcmp(word, "div") ){
-
-            }
-            else {
-
-            }
-            break;
-
-        case 'b':
-            if( !strcmp(word, "bp") ){
-                
-            }
-            break;
-
-        case 's':
-            if( !strcmp(word, "sp") ){
-                
-            }
-            else if ( !strcmp(word, "sub") ){
-                
-            } 
-            else if ( !strcmp(word, "subf") ){
-
-            }
-            else {
-
-            }
-            break;
-        case 'n':
-            if( !strcmp(word, "neg") ){
-                
-            }
-            else if ( !strcmp(word, "not") ){
-                
-            } 
-            else {
-
-            }
-            break;
-
-        case 'l':
-            if( !strcmp(word, "leq") ){
-                
-            }
-            else if ( !strcmp(word, "lss") ){
-                
-            } 
-            else {
-
-            }
-            break;
-        case 'g':
-
-            if( !strcmp(word, "gtr") ){
-                
-            }
-            else if ( !strcmp(word, "geq") ){
-                
-            } 
-            else {
-
-            }   
-            break;
-        case 'm':
-            if( !strcmp(word, "mul") ){
-                
-            }
-            
-            else {
-
-            }
-            break;
-       
-        }
-      }
-    }
-    
-    
+    while( 1 ){
+           switch( code[ip++] ){
+                case OP_ADD:
+                     break;
+                case OP_SUB:
+                     break;
+                case OP_PUSH:
+                     break;
+                case OP_POP:
+                     break;
+                case OP_MUL:
+                     break;
+                case OP_DIV:
+                     break;
+                case OP_AND:
+                     break;
+                case OP_OR:
+                     break;
+                case OP_NOT:
+                     break;
+                case OP_ADDF:
+                     break;
+                case OP_SUBF:
+                     break;
+                case OP_EQL:
+                     break;
+                case OP_NEG:
+                     break;
+                case OP_LSS:
+                     break;
+                case OP_GTR:
+                     break;
+                case OP_LEQ:
+                     break;
+                case OP_GEQ:
+                     break;
+                case OP_EXCH:
+                     break;
+                case OP_DUP:
+                     break;
+           }
+    } 
 }
