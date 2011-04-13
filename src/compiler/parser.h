@@ -98,13 +98,17 @@ void match(char *token);
   */
 void matchi(int token);
 
+/**
+  */
+char *peek_next_token();
+
 
 /**** PRODUCTIONS ******/
 
 TYPE CProgram();
 
 void Declarations();
-
+void Assignment();
 void MainEntry();
 
 void IntDec();

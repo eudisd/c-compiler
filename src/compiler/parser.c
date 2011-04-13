@@ -9,6 +9,9 @@ FILE *output; /**> Global File Discriptor */
 short data_count = 0; /**> Used to determine the size of the data output */
 short code_count = 0; /**> Used to determine the size of the code output */
 
+
+int global_pos = 0;
+
 void run_parser()
 {
      input = fopen(INTERIM_FILENAME, "r");
@@ -27,9 +30,9 @@ void run_parser()
 
      cur_token = get_token();
 
-
-     Declarations();
-     //CProgram();
+     //Statements();
+     //Declarations();
+     CProgram();
      //E();
 
      /* Write out Data Segment */
@@ -52,7 +55,7 @@ void match(char *token)
 {
      if( cur_token != NULL ){
          token_package tk = get_sval(token);
-         //printf("cur_token: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
+         printf("cur_token: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
          /*printf("cur_token: %d, tk: %d\n", get_token_name(cur_token), tk.val); */
          if( tk.val != get_token_name(cur_token) ){
              error(file.filename, 0, 0, "Token mismatch!");
@@ -93,15 +96,59 @@ TYPE CProgram()
 
 void Statements()
 {
+    char *tmp_token = peek_next_token();
+    int tk = get_token_name(tmp_token);
+    
+    if( tk == TK_DO ){
+
+    }
+    else if (tk == TK_WHILE ){
+
+    }
+    else if (tk == TK_FOR){
+
+    }
+    else if (tk == TK_SWITCH) {
+
+    }
+    else if (tk == TK_FUNCTION_CALL) {
+
+    }
+    else if (tk == TK_GOTO) {
+
+    }
+    else if (tk == TK_IF){
+
+    }
+    else if (tk == TK_EQU){
+        // Save Type And Address
+
+        cur_token = get_token();
+        match("=");
+        TYPE t = E();
+        match(";");
+        printf("Type of E(): %c\n", t);
+    }
+    free(tmp_token);
+
+    /*
     E();
+    Assignment();
     match(";");
+    */
 }
 
+void Assignment()
+{
+    
+    TYPE t = E();
+}
 
 void Declarations()
 {
     int tk = get_token_name(cur_token);
     if( tk == TK_INT ){
+        global_pos = ftell(input);
         IntDec();
         Declarations();
     }
@@ -128,6 +175,17 @@ void IntDec()
         char *tmp = (char*)cstr(cur_token);
 
         matchi(TK_IDENTIFIER);
+
+        cur_token = get_token();
+        printf("%s\n", cur_token);
+    
+        /* Test to see that it's not a function */
+        if( get_token_name(cur_token) == TK_LEFTPAREN ){
+            
+            
+            free(tmp);
+            return;
+        }
 
         int index = get_token_value(tmp);
         printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
@@ -272,6 +330,7 @@ void MainEntry()
 
      if( tk == TK_INT ){
          match("int");
+
          /* Main is in the symbol table, so I must get the index first */
          int index = get_token_value(cur_token);
 
@@ -288,7 +347,11 @@ void MainEntry()
          match(")");
 
          match("{");
-         // Stagements
+        
+
+           Statements();
+
+
          match("return");
            Statements();
          match("}");
@@ -306,7 +369,7 @@ TYPE E()
 {
      TYPE t = T(); 
      TYPE t2 = EPrime();
-     
+     return t;
 }
 
 TYPE EPrime()
@@ -436,6 +499,14 @@ TYPE F()
        // Get type from stab
        // genarate push
        // return type
+        int index = get_token_value(cur_token);
+        printf("push @%s\n", id_table->table[index].name);
+        code_count++;
+        
+        free(cur_token);
+        cur_token = get_token();
+        
+        return id_table->table[index].type;
      }
      else if ( tk == TK_INTLIT ){
        // generate pushi
@@ -448,7 +519,7 @@ TYPE F()
        /* I write code, so I increment counter */
        code_count++;
 
-
+       free(cur_token);
        cur_token = get_token();
        return 'I';
      }
@@ -683,6 +754,14 @@ int get_token_name(char *lexeme)
     free(tmp);
 
 	return x;
+}
+
+char *peek_next_token()
+{
+    int pos = ftell(input);
+    char *tmp = get_token();
+    fseek(input, pos, SEEK_SET);
+    return tmp;
 }
 
 

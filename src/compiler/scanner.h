@@ -151,6 +151,9 @@
 #define TK_STRINGLIT           87   /**> need a symbol table for this */
 #define TK_FLOATLIT            88   /**> need a symbol table for this too.  This is for both float and double */
 
+#define TK_LABEL               89
+#define TK_FUNCTION_CALL       90
+
 
 /*-------------------------Typedefs -------------------------*/
 typedef struct token_package_Tag {

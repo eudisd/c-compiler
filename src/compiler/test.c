@@ -1,5 +1,6 @@
-int x, y, z;
+int main()
+{
+    return 0;
+}
 
-char x2, y2, z2;
 
-float x3, y3, z3;
