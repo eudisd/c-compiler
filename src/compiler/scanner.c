@@ -395,13 +395,19 @@ int parse_tokens(FILE *o, char *word)
             put_ulexeme(o, tk_buffer0);
         }
         else if (tk.type == TK_KEYWORD) {
+            /*
             sprintf(tk_buffer0, "%d", TK_KEYWORD);
             sprintf(tk_buffer1, "%d", tk.val);
-                    
             put_lexeme(o, tk_buffer0, tk_buffer1);
+            */
+            // Switching from <TK_KEYWORD, TK_VALUE> to <TK_VALUE> only
+            sprintf(tk_buffer0, "%d", tk.val);
+            printf("FUCKING %d", tk.val);
+            put_ulexeme(o, tk_buffer0);
         }
 		else if (tk.type == TK_IDENTIFIER) {
 			record *rec = (record*)get_record(token, "no-value", 'V', 0, "\0");
+            
             stab_insert("symbol", rec, id_table);
             index = hash(rec->name, id_table->size);
 
@@ -432,7 +438,8 @@ int parse_tokens(FILE *o, char *word)
 			sprintf(tk_buffer0, "%d", TK_FLOATLIT);
             sprintf(tk_buffer1, "%f", tk.f_val);
             put_lexeme(o, tk_buffer0, tk_buffer1);
-        }
+        } 
+        
 		
                     
 		free(token);
@@ -834,9 +841,8 @@ void a(FILE *o, char *word)
 {
     /* auto */
     if ( !strcmp(word, "auto") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_AUTO);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_AUTO);
+        put_ulexeme(o, tk_buffer0);
     }
     else {
         parse_tokens(o,word);
@@ -847,9 +853,8 @@ void b(FILE *o, char *word)
 {
     /* break */
     if ( !strcmp(word, "break") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_BREAK);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_BREAK);
+        put_ulexeme(o, tk_buffer0);
     }
     else {
         parse_tokens(o,word);
@@ -862,25 +867,21 @@ void c(FILE *o, char *word)
     /* const */
     /* continue */
     if( !strcmp(word, "case") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_CASE);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_CASE);
+        put_ulexeme(o, tk_buffer0);
     }
     else if ( !strcmp(word, "char") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_CHAR);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_CHAR);
+        put_ulexeme(o, tk_buffer0);
                     
     }   
     else if ( !strcmp(word, "const") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_CONST);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_CONST);
+        put_ulexeme(o, tk_buffer0);
     }
     else if ( !strcmp(word, "continue") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_CONTINUE);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_CONTINUE);
+        put_ulexeme(o, tk_buffer0);
     }
     else {
         parse_tokens(o,word);
@@ -892,19 +893,16 @@ void d(FILE *o, char *word)
     /* do */
     /* double */
     if( !strcmp(word, "default") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_DEFAULT);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_DEFAULT);
+        put_ulexeme(o, tk_buffer0);
     }
     else if ( !strcmp(word, "do") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_DO);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_DO);
+        put_ulexeme(o, tk_buffer0);
     }   
     else if ( !strcmp(word, "double") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_DOUBLE);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_DOUBLE);
+        put_ulexeme(o, tk_buffer0);
     }
     else {
         parse_tokens(o,word);
@@ -916,19 +914,16 @@ void e(FILE *o, char *word)
     /* enum */
     /* extern */
     if( !strcmp(word, "else") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_ELSE);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_ELSE);
+        put_ulexeme(o, tk_buffer0);
     }
     else if ( !strcmp(word, "enum") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_ENUM);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_ENUM);
+        put_ulexeme(o, tk_buffer0);
     }   
     else if ( !strcmp(word, "extern") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_EXTERN);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_EXTERN);
+        put_ulexeme(o, tk_buffer0);
     }
     else {
         parse_tokens(o,word);
@@ -940,14 +935,12 @@ void f(FILE *o, char *word)
     /* float */
 	/* for */
     if( !strcmp(word, "float") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_FLOAT);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_FLOAT);
+        put_ulexeme(o, tk_buffer0);
     }
     else if ( !strcmp(word, "for") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_FOR);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_FOR);
+        put_ulexeme(o, tk_buffer0);
     }
     else {
         parse_tokens(o,word);
@@ -958,9 +951,8 @@ void g(FILE *o, char *word)
 {
     /* goto */
     if( !strcmp(word, "goto") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_GOTO);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_GOTO);
+        put_ulexeme(o, tk_buffer0);
     }
     else {
         parse_tokens(o,word);
@@ -972,14 +964,12 @@ void i(FILE *o, char *word)
     /* if */
     
     if( !strcmp(word, "int") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_INT);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_INT);
+        put_ulexeme(o, tk_buffer0);
     }
     else if ( !strcmp(word, "if") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_IF);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_IF);
+        put_ulexeme(o, tk_buffer0);
     }
     else {  
         
@@ -990,9 +980,8 @@ void l(FILE *o, char *word)
 {
     /* long */
     if( !strcmp(word, "long") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_LONG);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_LONG);
+        put_ulexeme(o, tk_buffer0);
     }
     else {
         parse_tokens(o,word);
@@ -1003,14 +992,12 @@ void r(FILE *o, char *word)
     /* register */
     /* return */
     if( !strcmp(word, "register") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_REGISTER);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_REGISTER);
+        put_ulexeme(o, tk_buffer0);
     }
     else if ( !strcmp(word, "return") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_RETURN);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_RETURN);
+        put_ulexeme(o, tk_buffer0);
     }
     else {
         parse_tokens(o,word);
@@ -1025,34 +1012,28 @@ void s(FILE *o, char *word)
     /* struct */
     /* switch */
     if( !strcmp(word, "short") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_SHORT);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_SHORT);
+        put_ulexeme(o, tk_buffer0);
     }
     else if ( !strcmp(word, "signed") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_SIGNED);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_SIGNED);
+        put_ulexeme(o, tk_buffer0);
     }
     else if ( !strcmp(word, "sizeof") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_SIZEOF);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_SIZEOF);
+        put_ulexeme(o, tk_buffer0);
     } 
     else if ( !strcmp(word, "static") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_STATIC);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_STATIC);
+        put_ulexeme(o, tk_buffer0);
         }
     else if ( !strcmp(word, "struct") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_STRUCT);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_STRUCT);
+        put_ulexeme(o, tk_buffer0);
     } 
     else if ( !strcmp(word, "switch") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_SWITCH);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_SWITCH);
+        put_ulexeme(o, tk_buffer0);
     } 
     else {
         parse_tokens(o,word);
@@ -1063,9 +1044,8 @@ void t(FILE *o, char *word)
 {
     /* typedef */
     if( !strcmp(word, "typedef") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_TYPEDEF);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_TYPEDEF);
+        put_ulexeme(o, tk_buffer0);
     }
     else {
         parse_tokens(o,word);
@@ -1076,15 +1056,12 @@ void u(FILE *o, char *word)
     /* union */
     /* unsigned */
     if( !strcmp(word, "union") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_UNION);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_UNION);
+        put_ulexeme(o, tk_buffer0);
     }
     else if ( !strcmp(word, "unsigned") ){
-        
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_UNSIGNED);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_UNSIGNED);
+        put_ulexeme(o, tk_buffer0);
         }
     else {
         parse_tokens(o,word);
@@ -1095,14 +1072,12 @@ void v(FILE *o, char *word)
     /* void */
     /* volatile */
     if( !strcmp(word, "void") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_VOID);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_VOID);
+        put_ulexeme(o, tk_buffer0);
     }
     else if ( !strcmp(word, "volatile") ){
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_VOLATILE);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_VOLATILE);
+        put_ulexeme(o, tk_buffer0);
     }
     else {
         parse_tokens(o,word);
@@ -1112,9 +1087,8 @@ void w(FILE *o, char *word)
 {
     /* while */
     if( !strcmp(word, "while") ) {
-        sprintf(tk_buffer0, "%d", TK_KEYWORD);
-        sprintf(tk_buffer1, "%d", TK_WHILE);
-        put_lexeme(o, tk_buffer0, tk_buffer1);
+        sprintf(tk_buffer0, "%d", TK_WHILE);
+        put_ulexeme(o, tk_buffer0);
     }
     else {
         parse_tokens(o,word);

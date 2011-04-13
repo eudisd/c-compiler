@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
             strcpy(file.default_o, ofile);
 
 			run_scanner(&file); /* Outputs an interim file */
-            run_parser();  /* Generates Stack Code */
+            //run_parser();  /* Generates Stack Code */
 			free(ofile);
 		}
 

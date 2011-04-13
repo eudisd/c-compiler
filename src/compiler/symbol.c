@@ -64,6 +64,7 @@ void stab_insert(char* filename, record *rec, symbol_table *stab)
 	/* Before inserting anything into the table, we check that the 
 	   given identifier is NOT a reserved keyword */
 	  
+    //printf("Rect Name %s\n", rec->name);
 	//if( is_keyword(rec->name) ){
 	//	fprintf(stderr, "%s: This keyword is reserved!  Cannot be inserted into symbol table.", rec->name);	
 	//}
@@ -72,7 +73,7 @@ void stab_insert(char* filename, record *rec, symbol_table *stab)
 	rec->slot = index;
     
     if( stab->table[index].slot != EMPTY_SLOT ){
-        printf("Symbol table collision!! Do something!\n");
+        //printf("Symbol table collision!! Do something!\n");
     }  
     else {
 	    stab->table[index] = *rec;

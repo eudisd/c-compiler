@@ -6,6 +6,9 @@
 FILE *input; /**> Global File Discriptor */
 FILE *output; /**> Global File Discriptor */
 
+short data_count = 0; /**> Used to determine the size of the data output */
+short code_count = 0; /**> Used to determine the size of the code output */
+
 void run_parser()
 {
      input = fopen(INTERIM_FILENAME, "r");
@@ -24,16 +27,23 @@ void run_parser()
 
      cur_token = get_token();
 
-     E();
+
+     CProgram();
+     //E();
+
+     /* Write out Data Segment */
+
+     /* Write out Code Segment */
+     fwrite(&code_count, sizeof(short), 1, output);
 
      close(input);
      close(output);
 
 
 
-     /* Write out Data Segment */
 
-     /* Write out Code Segment */
+     
+
 
 }
 
@@ -43,8 +53,9 @@ void match(char *token)
          token_package tk = get_sval(token);
          /*printf("cur_token: %d, tk: %d\n", get_token_name(cur_token), tk.val); */
          if( tk.val != get_token_name(cur_token) ){
+             printf("cur_token:%s \nToken: %d\n Value: %d", cur_token, get_token_name(cur_token), tk.val);
 
-             error(file.filename, 0, 0, "Does not match current token!");
+             error(file.filename, 0, 0, "Token mismatch!");
          }
          else {
              free(cur_token);
@@ -70,97 +81,177 @@ void matchi(int token)
 
 }
 
-TYPE E()
+
+TYPE CProgram()
 {
-     TYPE t = T(); 
-     EPrime();
-
-     /*
-     int tk = get_token_name(cur_token);
-
-     while(tk == TK_PLUS ||
-           tk == TK_MINUS ||
-           tk == TK_LOGIC_OR){
-           int op = tk;
-           printf("%d\n", tk);
-           matchi(op);
-           T();
-           }*/
-           /* (op) */
-
-
-
-
+      Declarations();
+      MainEntry();
 }
 
-void EPrime()
-{
-     int tk = get_token_name(cur_token);
 
-     if( tk == TK_PLUS ){
-         match("+");
-         T();
-         /* (+) */
-         fprintf(output, "add\n");
-         EPrime();
-     }
-     else if ( tk == TK_MINUS ){
-         match("-");
-         T();
-         /* (-) */
-         fprintf(output, "minus\n");
-         EPrime();
-     }
-     else if ( tk == TK_LOGIC_OR ){
-         match("||");
-         T();
-         fprintf(output, "or\n");
-         /* (||) */
-         EPrime();
+void Statements()
+{
+  
+}
+
+void MainEntry()
+{
+     int tk = get_token_value(cur_token);
+
+
+     if( tk == TK_INT ){
+         match("int");
+         match("main");
+         match("(");
+         // Command Line Arguments
+         match(")");
+
+         match("{");
+         // Block Begin
+         match("return");
+           Statements();
+         match("}");
      }
      else {
        
      }
 }
 
-TYPE T()
+void Declarations()
 {
-     F();
-     TPrime();
+  
 }
 
-void TPrime()
+
+TYPE E()
+{
+     TYPE t = T(); 
+     TYPE t2 = EPrime();
+     
+}
+
+TYPE EPrime()
+{
+     Instruction inst;
+     int tk = get_token_name(cur_token);
+     TYPE t = -1;
+
+     if( tk == TK_PLUS ){
+         match("+");
+         t = T();
+         /* (+) */
+         
+         printf("add\n");
+         inst.opcode = OP_ADD;
+         inst.operand.i = 0;
+         fwrite(&inst, sizeof(Instruction), 1, output);
+          
+         /* I write code, so I increment counter */
+         code_count++;
+            
+         
+         EPrime();
+     }
+     else if ( tk == TK_MINUS ){
+         match("-");
+         t = T();
+         /* (-) */
+         printf("sub\n");
+         inst.opcode = OP_SUB;
+         inst.operand.i = 0;
+         
+         fwrite(&inst, sizeof(Instruction), 1, output);
+         /* I write code, so I increment counter */
+         code_count++;
+
+         
+         EPrime();
+     }
+     else if ( tk == TK_LOGIC_OR ){
+         match("||");
+         t = T();
+         printf("or\n");
+
+         inst.opcode = OP_OR;
+         inst.operand.i = 0;
+         
+         fwrite(&inst, sizeof(Instruction), 1, output);
+         /* I write code, so I increment counter */
+         code_count++;
+
+         
+         /* (||) */
+         EPrime();
+     }
+     
+     return t;
+}
+
+TYPE T()
+{
+     TYPE t = F();
+     TYPE t2 = TPrime();
+     //printf("Type1: %c, Type2: %c, %d, %d\n", t, t2, t, t2);
+     return t;
+}
+
+TYPE TPrime()
 {
      int tk = get_token_name(cur_token);
+     Instruction inst;
+     TYPE t;
+
      if( tk == TK_MULT_STAR ){
          match("*");
-         T();
+         t = T();
          printf("mul\n");
          /* (*) : Need to implement this! */
+
+         inst.opcode = OP_MUL;
+         inst.operand.i = 0;
+         
+         fwrite(&inst, sizeof(Instruction), 1, output);
+         /* I write code, so I increment counter */
+         code_count++;
+        
          TPrime();
      }
      else if ( tk == TK_DIV ){
          match("/");
-         T();
+         t = T();
          printf("div\n");
          /* (/) : Need to implement this! */
+         inst.opcode = OP_DIV;
+         inst.operand.i = 0;
+         
+         fwrite(&inst, sizeof(Instruction), 1, output);
+         /* I write code, so I increment counter */
+         code_count++;
+         
+         
          TPrime();
      }
      else if ( tk == TK_LOGIC_AND ){
          match("&&");
-         T();
+         t = T();
          printf("and\n");
          /* (&&) : Need to implement this! */
+         inst.opcode = OP_AND;
+         inst.operand.i = 0;
+         
+         fwrite(&inst, sizeof(Instruction), 1, output);
+         /* I write code, so I increment counter */
+         code_count++;
+         
          TPrime();
      }
-     else {
-
-     }
+     return t;
 }
 
 TYPE F()
 {
      int tk = get_token_name(cur_token);
+     Instruction inst;
 
      if( tk == TK_IDENTIFIER ){
        // Get type from stab
@@ -169,9 +260,16 @@ TYPE F()
      }
      else if ( tk == TK_INTLIT ){
        // generate pushi
-       char *tmp = "pushi\n";
 
-       fprintf(output, "pushi %d\n", get_token_value(cur_token) );
+       printf("pushi %d\n", get_token_value(cur_token) );
+
+       inst.opcode = OP_PUSHI;
+       inst.operand.i = get_token_value(cur_token);
+       fwrite(&inst, sizeof(Instruction), 1, output);
+       /* I write code, so I increment counter */
+       code_count++;
+
+
        cur_token = get_token();
        return 'I';
      }
@@ -179,7 +277,18 @@ TYPE F()
        
      }
      else if ( tk == TK_FLOATLIT ){
-       // generate pushf
+      // generate pushi 
+        
+       printf("pushi %f\n", get_token_value_f(cur_token) );
+
+       inst.opcode = OP_PUSHI;
+       inst.operand.f = get_token_value(cur_token);
+       fwrite(&inst, sizeof(Instruction), 1, output);
+      
+       code_count++;
+
+       cur_token = get_token(); 
+        
        return 'R';
      }
      else if ( tk == TK_LEFTPAREN ){
@@ -323,6 +432,43 @@ int get_token_value(char *lexeme)
     tmp[(end - start)] = '\0';
     
     int x = atoi(tmp);
+    free(tmp);
+
+	return x;
+}
+
+float get_token_value_f(char *lexeme)
+{
+	if(lexeme == NULL){
+        return -1;
+    }
+
+    int k = 0;
+    while( lexeme[k] != ',' ){
+        k++;
+    }
+    
+    int start = k + 1;
+
+    int end = 0;
+
+    int i = 0;
+    while(end < strlen(lexeme)){
+        if( lexeme[end] == '>' ){
+            break;
+        }
+        end++;
+    }
+
+    char *tmp = (char*)malloc(sizeof(char)*(end - start)+1);
+    int j;
+
+    for(j = 0; j < (end - start + 1); j ++){
+        tmp[j] = lexeme[start + j];
+    }
+    tmp[(end - start)] = '\0';
+    
+    float x = atof(tmp);
     free(tmp);
 
 	return x;
