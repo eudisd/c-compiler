@@ -28,7 +28,8 @@ void run_parser()
      cur_token = get_token();
 
 
-     CProgram();
+     //Declarations();
+     //CProgram();
      //E();
 
      /* Write out Data Segment */
@@ -51,10 +52,9 @@ void match(char *token)
 {
      if( cur_token != NULL ){
          token_package tk = get_sval(token);
+         printf("cur_token: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
          /*printf("cur_token: %d, tk: %d\n", get_token_name(cur_token), tk.val); */
          if( tk.val != get_token_name(cur_token) ){
-             printf("cur_token:%s \nToken: %d\n Value: %d", cur_token, get_token_name(cur_token), tk.val);
-
              error(file.filename, 0, 0, "Token mismatch!");
          }
          else {
@@ -91,17 +91,58 @@ TYPE CProgram()
 
 void Statements()
 {
+    E();
+    match(";");
+}
+
+
+void Declarations()
+{
+    IntDec();
+    FloatDec();
+    CharDec();
+}
+
+void IntDec()
+{
+    int tk = get_token_name(cur_token);
+    if( tk == TK_INT ){
+        matchi(TK_IDENTIFIER);
+        match(",");
+        IntDec();
+    }
+    else if( tk == TK_SEMICOLON ){
+        match(";");
+    }
+}
+
+void FloatDec()
+{
   
 }
 
+void CharDec()
+{
+
+}
 void MainEntry()
 {
-     int tk = get_token_value(cur_token);
+     int tk = get_token_name(cur_token);
 
 
      if( tk == TK_INT ){
          match("int");
-         match("main");
+         /* Main is in the symbol table, so I must get the index first */
+         int index = get_token_value(cur_token);
+
+         if(strcmp(id_table->table[index].name, "main") == 0){
+            cur_token = get_token();
+         }
+         else {
+            fprintf(stderr, "Entry point not specified!  Exiting...\n");
+            exit(EXIT_FAILURE);
+         }
+
          match("(");
          // Command Line Arguments
          match(")");
@@ -113,14 +154,12 @@ void MainEntry()
          match("}");
      }
      else {
-       
+        fprintf(stderr, "main() must return int!  Exiting...\n");
+        exit(EXIT_FAILURE);
      }
 }
 
-void Declarations()
-{
-  
-}
+
 
 
 TYPE E()
@@ -486,7 +525,7 @@ int get_token_name(char *lexeme)
 
     int i = 0;
     while(end < strlen(lexeme)){
-        if( lexeme[end] == ',' ){
+        if( lexeme[end] == ',' || lexeme[end] == '>'){
             break;
         }
         end++;

@@ -106,6 +106,9 @@ void Declarations();
 
 void MainEntry();
 
+void IntDec();
+void FloatDec();
+void CharDec();
 
 void Statements();
 

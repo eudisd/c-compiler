@@ -77,7 +77,7 @@ void run_scanner(file_struct *file)
     }
 
 	/* getword() returns a string, so a NULL signifies that
-     * nothing useful was retrieved from the input stream 
+     * nothing useful was retrieved from the input stream
 	 */
 
 	while( (word = getword(i)) != NULL ){
@@ -136,6 +136,8 @@ char *extract_token(char *word)
 			return copy_alloced("[");
 		case '.':
 			return copy_alloced(".");
+		case ',':
+			return copy_alloced(",");
 		case '!':
 			return copy_alloced("!");
 		case '~':
@@ -1170,6 +1172,7 @@ void dot(FILE *o, char *word)
 }
 void comma(FILE *o, char *word)
 {
+
     if( !strcmp(word, ",") ) {
         sprintf(tk_buffer0, "%d", TK_COMMA);
         put_ulexeme(o, tk_buffer0);
