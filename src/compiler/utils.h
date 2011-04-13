@@ -101,11 +101,18 @@ int intlit_comp(const void *a, const void *b);
   */
 int floatlit_comp(const void *a, const void *b);
 
+/**
+  */
+char *cstr(char *s);
+
+
 /* Debug Functions */
 
 /** 
   */
 char *strip_whitesp(char *str);
+
+
 
 
 

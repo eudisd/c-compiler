@@ -85,8 +85,6 @@ void run_scanner(file_struct *file)
 		free(word);
 	}
     
-    //print_stab(string_table);
-	//print_stab(id_table);
 
 	fclose(i);
 	fclose(o);
@@ -408,7 +406,7 @@ int parse_tokens(FILE *o, char *word)
             put_ulexeme(o, tk_buffer0);
         }
 		else if (tk.type == TK_IDENTIFIER) {
-			record *rec = (record*)get_record(token, "no-value", 'V', 0, "\0");
+			record *rec = (record*)get_record(token, "NULL", 'V', 0, "\0");
             
             stab_insert("symbol", rec, id_table);
             index = hash(rec->name, id_table->size);
@@ -419,7 +417,7 @@ int parse_tokens(FILE *o, char *word)
         }
         else if (tk.type == TK_STRINGLIT) {
             
-            record *rec = (record*)get_record(token, "no-value", 'S', 0, "\0");
+            record *rec = (record*)get_record(token, "NULL", 'S', 0, "\0");
             stab_insert("c-string-literal", rec, string_table);
             index = hash(rec->name, string_table->size);
             /* If there are any collisions, the we just ignore those.  I 
@@ -1013,6 +1011,7 @@ void s(FILE *o, char *word)
     /* static */
     /* struct */
     /* switch */
+
     if( !strcmp(word, "short") ) {
         sprintf(tk_buffer0, "%d", TK_SHORT);
         put_ulexeme(o, tk_buffer0);

@@ -131,6 +131,11 @@ void IntDec()
 
         int index = get_token_value(tmp);
         printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+
+        /* Here I modify the symbol table to account for type and address */
+        id_table->table[index].addr = dp;
+        id_table->table[index].type = 'I';
+
         dp += 4;
 
         free(tmp);
@@ -145,6 +150,11 @@ void IntDec()
         
         int index = get_token_value(tmp);
         printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+
+        /* Here I modify the symbol table to account for type and address */
+        id_table->table[index].addr = dp;
+        id_table->table[index].type = 'I';
+
         dp += 4;
 
         free(tmp);
@@ -171,6 +181,10 @@ void FloatDec()
 
         int index = get_token_value(tmp);
         printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+
+        id_table->table[index].addr = dp;
+        id_table->table[index].type = 'F';
+
         dp += 4;
 
         free(tmp);
@@ -185,6 +199,10 @@ void FloatDec()
         
         int index = get_token_value(tmp);
         printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        
+        id_table->table[index].addr = dp;
+        id_table->table[index].type = 'F';
+
         dp += 4;
 
         free(tmp);
@@ -211,6 +229,10 @@ void CharDec()
 
         int index = get_token_value(tmp);
         printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        
+        id_table->table[index].addr = dp;
+        id_table->table[index].type = 'C';
+
         dp += 1;
 
         free(tmp);
@@ -225,6 +247,11 @@ void CharDec()
         
         int index = get_token_value(tmp);
         printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+
+        id_table->table[index].addr = dp;
+        id_table->table[index].type = 'C';
+
+
         dp += 1;
 
         free(tmp);

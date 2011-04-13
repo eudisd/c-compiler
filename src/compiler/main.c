@@ -8,6 +8,9 @@ size_t total_newlines = 1;
 
 extern file_struct file;
 
+symbol_table *string_table;
+symbol_table *id_table;
+
 int main(int argc, char *argv[])
 {
 	char *ofile;                 /**> Filename of the output file                                   */
@@ -68,6 +71,10 @@ int main(int argc, char *argv[])
 
 			run_scanner(&file); /* Outputs an interim file */
             run_parser();  /* Generates Stack Code */
+
+            //print_stab(string_table);
+	        print_stab(id_table);
+
 			free(ofile);
 		}
 
