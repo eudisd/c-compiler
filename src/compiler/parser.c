@@ -261,7 +261,7 @@ void MainEntry()
          match(")");
 
          match("{");
-         // Block Begin
+         // Stagements
          match("return");
            Statements();
          match("}");
