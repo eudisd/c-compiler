@@ -111,7 +111,7 @@ void Declarations();
 void Assignment();
 void MainEntry();
 
-void IntDec();
+int IntDec();
 void FloatDec();
 void CharDec();
 

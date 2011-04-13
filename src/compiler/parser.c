@@ -9,8 +9,7 @@ FILE *output; /**> Global File Discriptor */
 short data_count = 0; /**> Used to determine the size of the data output */
 short code_count = 0; /**> Used to determine the size of the code output */
 
-
-int global_pos = 0;
+int entry_start = 0;
 
 void run_parser()
 {
@@ -28,7 +27,7 @@ void run_parser()
          cur_token = get_token(input);
      }*/
 
-     cur_token = get_token();
+     
 
      //Statements();
      //Declarations();
@@ -89,6 +88,7 @@ void matchi(int token)
 
 TYPE CProgram()
 {
+      cur_token = get_token();  /* INITIAL CUR_TOKEN CALL */
       Declarations();
       MainEntry();
 }
@@ -129,6 +129,9 @@ void Statements()
         match(";");
         printf("Type of E(): %c\n", t);
     }
+    else if (tk == TK_INTLIT ){
+        fprintf(stderr, "Singular expression without assignment found! Exiting\n");
+    }
     free(tmp_token);
 
     /*
@@ -146,11 +149,25 @@ void Assignment()
 
 void Declarations()
 {
+    printf("CUR_TOKEN: %s\n", cur_token);
     int tk = get_token_name(cur_token);
+    int initial_dec = ftell(input);
+    printf("Initial Dec: %d\n", initial_dec);
+
     if( tk == TK_INT ){
-        global_pos = ftell(input);
-        IntDec();
-        Declarations();
+       
+        if( IntDec() != -1 ) { //Exit loop
+            
+            Declarations();
+        }
+        else {
+            fseek(input, initial_dec, SEEK_SET);
+            
+            free(cur_token);
+            cur_token = get_token();
+            printf("Inside Initial Dec: %d\n", initial_dec);
+            printf("Cr: %s\n", cur_token);
+        }
     }
     else if (tk == TK_FLOAT){
         FloatDec();
@@ -160,9 +177,10 @@ void Declarations()
         CharDec();
         Declarations();
     }
+    
 }
 
-void IntDec()
+int IntDec()
 {
     int tk = get_token_name(cur_token);
     if( tk == TK_INT ){
@@ -176,16 +194,13 @@ void IntDec()
 
         matchi(TK_IDENTIFIER);
 
-        cur_token = get_token();
-        printf("%s\n", cur_token);
     
         /* Test to see that it's not a function */
         if( get_token_name(cur_token) == TK_LEFTPAREN ){
-            
-            
             free(tmp);
-            return;
+            return -1;
         }
+        
 
         int index = get_token_value(tmp);
         printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
@@ -197,7 +212,7 @@ void IntDec()
         dp += 4;
 
         free(tmp);
-        IntDec();
+        return IntDec();
     }
     else if( tk == TK_COMMA ){
         match(",");
@@ -216,10 +231,11 @@ void IntDec()
         dp += 4;
 
         free(tmp);
-        IntDec();
+        return IntDec();
     }
     else if (tk == TK_SEMICOLON){
         match(";");
+        return 0;
     }
     else {
         printf("Error (Int Declaration Part)!\n");
@@ -338,6 +354,8 @@ void MainEntry()
             cur_token = get_token();
          }
          else {
+            print_stab(id_table);
+            printf("INDEX: %d\n", index);
             fprintf(stderr, "Entry point not specified!  Exiting...\n");
             exit(EXIT_FAILURE);
          }
@@ -348,12 +366,8 @@ void MainEntry()
 
          match("{");
         
+         Statements();
 
-           Statements();
-
-
-         match("return");
-           Statements();
          match("}");
      }
      else {
@@ -537,6 +551,7 @@ TYPE F()
       
        code_count++;
 
+       free(cur_token);
        cur_token = get_token(); 
         
        return 'R';
