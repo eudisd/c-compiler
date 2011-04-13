@@ -28,7 +28,7 @@ void run_parser()
      cur_token = get_token();
 
 
-     //Declarations();
+     Declarations();
      //CProgram();
      //E();
 
@@ -52,7 +52,7 @@ void match(char *token)
 {
      if( cur_token != NULL ){
          token_package tk = get_sval(token);
-         printf("cur_token: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
+         //printf("cur_token: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
          /*printf("cur_token: %d, tk: %d\n", get_token_name(cur_token), tk.val); */
          if( tk.val != get_token_name(cur_token) ){
              error(file.filename, 0, 0, "Token mismatch!");
@@ -68,8 +68,10 @@ void match(char *token)
 
 void matchi(int token)
 {
+     int tk = get_token_name(cur_token);
+     printf("cur_token: %s, Token Name: %d, tk: %d\n", cur_token, get_token_name(cur_token), tk);
      if( cur_token != NULL ){
-         if( token != get_token_name(cur_token) ){
+         if( token != tk ){
              error(file.filename, 0, 0, "Does not match current token!");
          }
          else {
@@ -107,12 +109,38 @@ void IntDec()
 {
     int tk = get_token_name(cur_token);
     if( tk == TK_INT ){
+        match("int");
+
+        /* We store the current token first, since we need to test
+           if the token indeed matches an ID first before we can operate 
+           on the ID table 
+           */
+        char *tmp = (char*)cstr(cur_token);
+
         matchi(TK_IDENTIFIER);
-        match(",");
+
+        int index = get_token_value(tmp);
+        printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        dp += 4;
+
+        free(tmp);
         IntDec();
-    }
-    else if( tk == TK_SEMICOLON ){
+
         match(";");
+    }
+    else if( tk == TK_COMMA ){
+        match(",");
+
+        char *tmp = (char*)cstr(cur_token);
+
+        matchi(TK_IDENTIFIER);
+        
+        int index = get_token_value(tmp);
+        printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        dp += 4;
+
+        free(tmp);
+        IntDec();
     }
 }
 

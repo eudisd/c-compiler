@@ -63,6 +63,7 @@ typedef struct Instruction_TAG {
 
 /* Globals */
 static char *cur_token;
+static int dp = 0;
 
 
 /* Externals */

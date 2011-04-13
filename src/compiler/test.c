@@ -1,1 +1,1 @@
-int x, y, z;
+int x, y, z
