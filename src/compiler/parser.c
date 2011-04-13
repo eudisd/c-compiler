@@ -100,9 +100,19 @@ void Statements()
 
 void Declarations()
 {
-    IntDec();
-    FloatDec();
-    CharDec();
+    int tk = get_token_name(cur_token);
+    if( tk == TK_INT ){
+        IntDec();
+        Declarations();
+    }
+    else if (tk == TK_FLOAT){
+        FloatDec();
+        Declarations();
+    }
+    else if (tk == TK_CHAR){
+        CharDec();
+        Declarations();
+    }
 }
 
 void IntDec()
@@ -125,8 +135,6 @@ void IntDec()
 
         free(tmp);
         IntDec();
-
-        match(";");
     }
     else if( tk == TK_COMMA ){
         match(",");
@@ -142,16 +150,93 @@ void IntDec()
         free(tmp);
         IntDec();
     }
+    else if (tk == TK_SEMICOLON){
+        match(";");
+    }
+    else {
+        printf("Error (Int Declaration Part)!\n");
+        exit(EXIT_FAILURE);
+    }
 }
 
 void FloatDec()
 {
-  
+    int tk = get_token_name(cur_token);
+    if( tk == TK_FLOAT ){
+        match("float");
+
+        char *tmp = (char*)cstr(cur_token);
+
+        matchi(TK_IDENTIFIER);
+
+        int index = get_token_value(tmp);
+        printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        dp += 4;
+
+        free(tmp);
+        FloatDec();
+    }
+    else if( tk == TK_COMMA ){
+        match(",");
+
+        char *tmp = (char*)cstr(cur_token);
+
+        matchi(TK_IDENTIFIER);
+        
+        int index = get_token_value(tmp);
+        printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        dp += 4;
+
+        free(tmp);
+        FloatDec();
+    }
+    else if (tk == TK_SEMICOLON){
+        match(";");
+    }
+    else {
+        printf("Error (Float Declaration Part)!\n");
+        exit(EXIT_FAILURE);
+    }
 }
 
 void CharDec()
 {
+    int tk = get_token_name(cur_token);
+    if( tk == TK_CHAR ){
+        match("char");
 
+        char *tmp = (char*)cstr(cur_token);
+
+        matchi(TK_IDENTIFIER);
+
+        int index = get_token_value(tmp);
+        printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        dp += 1;
+
+        free(tmp);
+        CharDec();
+    }
+    else if( tk == TK_COMMA ){
+        match(",");
+
+        char *tmp = (char*)cstr(cur_token);
+
+        matchi(TK_IDENTIFIER);
+        
+        int index = get_token_value(tmp);
+        printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        dp += 1;
+
+        free(tmp);
+        CharDec();
+    }
+    else if (tk == TK_SEMICOLON){
+        match(";");
+    }
+    else {
+        printf("Error (Char Declaration Part)!\n");
+        exit(EXIT_FAILURE);
+    }
 }
 void MainEntry()
 {
