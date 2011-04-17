@@ -79,6 +79,8 @@ void run(char *program)
                     
                     stack[sp].i = code[ip].operand.i;
                     sp++;
+                    print_stack(sp);
+                    
                     break;
                 case OP_POP:
                     dp = code[ip].operand.i;
@@ -174,18 +176,18 @@ void run(char *program)
                 case OP_JMP:
                     break;
                 case OP_JFALSE:
-                    /*
+                    
                     printf("IP: %d\n",ip);
                     printf("code: %d\n", code[ip].opcode);
                     printf("oper: %d\n", code[ip].operand.i);
                     printf("TopofStack: %d\n", stack[sp - 1].i);
                     for(j = 0; j < code_count; j++){
                         printf("opcode: %d, operand: %d\n", code[j].opcode, code[j].operand.i);
-                    }*/
+                    }
                     if( stack[sp - 1].i == 0 ){
                         ip = code[ip].operand.i;
                     }
-                    sp--; /* If it's false, we rid the result */
+                    //sp--; /* If it's false, we rid the result */
                     break;
                 case OP_JTRUE:
                     if( stack[sp - 1].i != 0 )    
@@ -209,6 +211,18 @@ void run(char *program)
                     break;
            }
            ip++;
+          
            
     }
+}
+
+void print_stack(int sp)
+{
+    int i;
+    printf("\nBottom: ");
+    for(i = 0; i < sp; i++){
+        printf("%d < ", stack[i]);
+
+    }
+    printf(": Top\n");
 }

@@ -77,4 +77,6 @@ void usage();
 
 void run(char *program);
 
+
+void print_stack();
 #endif
