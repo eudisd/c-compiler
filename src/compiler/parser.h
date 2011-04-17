@@ -47,6 +47,9 @@
 #define OP_WRITEFLOAT 29
 #define OP_MOD        30
 
+#define OP_PUSHF 31
+#define OP_POPF 32
+
 /* Type defs */
 typedef unsigned char uchar;
 typedef char TYPE;
@@ -113,7 +116,7 @@ void MainEntry();
 
 int IntDec();
 int FloatDec();
-void CharDec();
+int CharDec();
 
 void Statements();
 

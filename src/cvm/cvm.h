@@ -38,6 +38,9 @@
 #define OP_WRITEFLOAT 29
 #define OP_MOD 30
 
+#define OP_PUSHF 31
+#define OP_POPF 32
+
 typedef unsigned char uchar;  
 typedef unsigned int uint;
 typedef union Operand_TAG {

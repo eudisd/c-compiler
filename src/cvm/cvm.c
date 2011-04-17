@@ -30,21 +30,32 @@ void run(char *program)
         exit(EXIT_FAILURE);
     } 
 
-    /* Determine Code Segment size */
     int cur_pos = ftell(i);
-    fseek(i, -2, SEEK_END);
+    fseek(i, -4, SEEK_END);
+
+    /* Determine Data Segment size */
+    
+    fread(&data_count, sizeof(short), 1, i);
+
+    /* Determine Code Segment size */
+    
     fread(&code_count, sizeof(short), 1, i);
 
     fseek(i, cur_pos, SEEK_SET);
 
+    printf("Code_count: %d\n Data_count: %d\n", code_count, data_count);
+    
 
+
+    /* Read in data array (semi last short holds the code size) */
+
+    code = (Instruction*)malloc(sizeof(Instruction)* code_count); 
+    fread(code, sizeof(Instruction), code_count, i);
 
     /* Read in code array (last short holds the code size) */
     
     code = (Instruction*)malloc(sizeof(Instruction)* code_count); 
     fread(code, sizeof(Instruction), code_count, i);
-
-    /* Read in the data array (second to last short holds the data size) */
     
     ip = 0;
     sp = 0;
@@ -56,6 +67,10 @@ void run(char *program)
                     sp--;
                     break;
                 case OP_PUSH:
+                    //stack[sp].i = code[code[ip]
+                    sp++;
+                    break;
+                case OP_PUSHF:
                     break;
                 case OP_PUSHI: 
                     // Here we need to test if we are push an immediate
@@ -64,6 +79,7 @@ void run(char *program)
                     sp++;
                     break;
                 case OP_POP:
+                    
                     break;
                 case OP_EXCH:
                     break;

@@ -6,11 +6,12 @@
 FILE *input; /**> Global File Discriptor */
 FILE *output; /**> Global File Discriptor */
 
-short data_count = 0; /**> Used to determine the size of the data output */
-short code_count = 0; /**> Used to determine the size of the code output */
+short data_count = 1024; /**>  Default is 1kb, could be more */
+short code_count = 1024; /**>  Default is 1kb, could be more  */
+char *data; /**> Data must be dynamically allocated */
+Instruction *code; /**> Code must be dynamically allocated too */
 
 int dec_rollback = 0;
-
 
 void run_parser()
 {
@@ -21,25 +22,27 @@ void run_parser()
          error(file.filename, 0, 0, "Error processing interim file, exiting...");
      }
 
-     /*
-     cur_token = get_token(input);
-     while( NULL != cur_token ){
-         printf("cur_token: %s\n", cur_token);
-         cur_token = get_token(input);
-     }*/
-
-     
+     data = (char*)malloc(sizeof(char)*data_count);
+     code = (Instruction*)malloc(sizeof(Instruction)*code_count);
 
      //Statements();
      //Declarations();
-     CProgram();
-     //E();
+     //CProgram();
+     E();
 
-     /* Write out Data Segment */
+     
+     /* Write Out Data */
+     fwrite(data, sizeof(char), data_count, output);
+     /* Write Out Code */
+     fwrite(code, sizeof(Instruction), code_count, output);
 
-     /* Write out Code Segment */
+     /* Write out Data Segment Size */
+     fwrite(&data_count, sizeof(short), 1, output);
+     /* Write out Code Segment Size */
      fwrite(&code_count, sizeof(short), 1, output);
 
+     free(data);
+     free(code);
      close(input);
      close(output);
 
@@ -55,7 +58,7 @@ void match(char *token)
 {
      if( cur_token != NULL ){
          token_package tk = get_sval(token);
-         printf("match: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
+         //printf("match: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
          /*printf("cur_token: %d, tk: %d\n", get_token_name(cur_token), tk.val); */
          if( tk.val != get_token_name(cur_token) ){
              error(file.filename, 0, 0, "Token mismatch!");
@@ -72,7 +75,7 @@ void match(char *token)
 void matchi(int token)
 {
      int tk = get_token_name(cur_token);
-     printf("match: %s, Token Name: %d, tk: %d\n", cur_token, get_token_name(cur_token), tk);
+     //printf("match: %s, Token Name: %d, tk: %d\n", cur_token, get_token_name(cur_token), tk);
      if( cur_token != NULL ){
          if( token != tk ){
              error(file.filename, 0, 0, "Does not match current token!");
@@ -95,13 +98,55 @@ TYPE CProgram()
 }
 
 
+void MainEntry()
+{
+     int tk = get_token_name(cur_token);
+
+
+     if( tk == TK_INT ){
+         match("int");
+
+         /* Main is in the symbol table, so I must get the index first */
+         int index = get_token_value(cur_token);
+
+         if(strcmp(id_table->table[index].name, "main") == 0){
+            id_table->table[index].addr = -1;
+            id_table->table[index].type = 'P';
+            cur_token = get_token();
+         }
+         else {
+            print_stab(id_table);
+            printf("INDEX: %d\n", index);
+            fprintf(stderr, "Possible collision in symbol table! (Bug)\n"
+                            "Apparently 'y2' == 'main'\n");
+            fprintf(stderr, "Entry point not specified!  Exiting...\n");
+            exit(EXIT_FAILURE);
+         }
+
+         match("(");
+         // Command Line Arguments
+         match(")");
+
+         match("{");
+
+         Declarations();
+         Statements();
+
+         match("}");
+     }
+     else {
+        fprintf(stderr, "main() must return int!  Exiting...\n");
+        exit(EXIT_FAILURE);
+     }
+}
+
 void Statements()
 {
-    char *tmp_token = peek_next_token();
-    int tk = get_token_name(tmp_token);
+    int tk = get_token_name(cur_token);
     
-    if( tk == TK_DO ){
-
+    if( tk == TK_IDENTIFIER ){
+        Assignment();
+        Statements();
     }
     else if (tk == TK_WHILE ){
 
@@ -121,42 +166,67 @@ void Statements()
     else if (tk == TK_IF){
 
     }
-    else if (tk == TK_EQU){
-        // Save Type And Address
-
-        cur_token = get_token();
-        match("=");
-        TYPE t = E();
-        match(";");
-        printf("Type of E(): %c\n", t);
+    else if (tk == TK_DO){
+       
     }
     else if (tk == TK_INTLIT ){
         fprintf(stderr, "Singular expression without assignment found! Exiting\n");
+        exit(EXIT_SUCCESS);
     }
-    free(tmp_token);
 
-    /*
-    E();
-    Assignment();
-    match(";");
-    */
+    
+
 }
 
 void Assignment()
 {
+    // Save Type And Address
+    int index = get_token_value(cur_token);
+    TYPE id_type = id_table->table[index].type;
+    int id_addr = id_table->table[index].addr;
     
+    Instruction inst;
+
+    free(cur_token);
+    cur_token = get_token();
+    match("=");
     TYPE t = E();
+    match(";");
+    // Pop at an address!
+
+    printf("pop @%s (Type: %c)\n", id_table->table[index].name, id_type);
+
+        /* Encode the address into the instruction */
+    inst.opcode = OP_POP;
+    if ( id_type == 'I' ){
+        inst.operand.i = id_addr; /* Int */
+        fwrite(&inst, sizeof(Instruction), 1, output);
+    }
+    else if (id_type == 'C'){
+        inst.operand.i = id_addr; /* Char */
+        fwrite(&inst, sizeof(Instruction), 1, output);
+    }
+    else if (id_type == 'F'){
+        inst.opcode = OP_POPF;
+        inst.operand.f = id_addr; /* Float */
+        fwrite(&inst, sizeof(Instruction), 1, output);
+    }
+
+    code_count++;
+        
+    free(cur_token);
+    cur_token = get_token();
 }
 
 void Declarations()
 {
-    printf("\n\n");
-    printf("CUR_TOKEN: %s\n", cur_token);
+    //printf("\n\n");
+    //printf("CUR_TOKEN: %s\n", cur_token);
     
     int tk = get_token_name(cur_token);
    
     
-    printf("Initial Dec: %d\n", dec_rollback);
+    //printf("Initial Dec: %d\n", dec_rollback);
 
     if( tk == TK_INT ){
         if( IntDec() != -1 ) { //Exit loop
@@ -164,16 +234,17 @@ void Declarations()
         }
         
     }
-    /*
+    
     else if (tk == TK_FLOAT){
         if( FloatDec() != -1 ) { //Exit loop
             Declarations();
         }
     }
     else if (tk == TK_CHAR){
-        CharDec();
-        Declarations();
-    }*/
+        if( CharDec() != -1 ) { //Exit loop
+            Declarations();
+        }
+    }
     
 }
 
@@ -195,18 +266,18 @@ int IntDec()
     
         /* Test to see that it's not a function */
         if( get_token_name(cur_token) == TK_LEFTPAREN ){
-            printf("\nLooking at the current(int)\n");
+            //printf("\nLooking at the current(int)\n");
             fseek(input, dec_rollback, SEEK_SET);
             free(cur_token);
             cur_token = get_token();
-            printf("now: %s\n", cur_token);
+            //printf("now: %s\n", cur_token);
             free(tmp);
             return -1;
         }
         
 
         int index = get_token_value(tmp);
-        printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 
         /* Here I modify the symbol table to account for type and address */
         id_table->table[index].addr = dp;
@@ -235,7 +306,7 @@ int IntDec()
         matchi(TK_IDENTIFIER);
         
         int index = get_token_value(tmp);
-        printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 
         /* Here I modify the symbol table to account for type and address */
         id_table->table[index].addr = dp;
@@ -283,13 +354,13 @@ int FloatDec()
             fseek(input, dec_rollback, SEEK_SET);
             free(cur_token);
             cur_token = get_token();
-            printf("now: %s\n", cur_token);
+            //printf("now: %s\n", cur_token);
             free(tmp);
             return -1;
         }
 
         int index = get_token_value(tmp);
-        printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 
         id_table->table[index].addr = dp;
         id_table->table[index].type = 'F';
@@ -313,7 +384,7 @@ int FloatDec()
         matchi(TK_IDENTIFIER);
         
         int index = get_token_value(tmp);
-        printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
         
         id_table->table[index].addr = dp;
         id_table->table[index].type = 'F';
@@ -332,6 +403,7 @@ int FloatDec()
     else if (tk == TK_SEMICOLON){
         dec_rollback = ftell(input);
         match(";");
+        return 0;
     }
     else {
         printf("Error (Float Declaration Part)!\n");
@@ -339,7 +411,7 @@ int FloatDec()
     }
 }
 
-void CharDec()
+int CharDec()
 {
     int tk = get_token_name(cur_token);
     if( tk == TK_CHAR ){
@@ -349,13 +421,31 @@ void CharDec()
 
         matchi(TK_IDENTIFIER);
 
+
+        /* Test to see that it's not a function */
+        if( get_token_name(cur_token) == TK_LEFTPAREN ){
+            
+            fseek(input, dec_rollback, SEEK_SET);
+            free(cur_token);
+            cur_token = get_token();
+            //printf("now: %s\n", cur_token);
+            free(tmp);
+            return -1;
+        }
+
         int index = get_token_value(tmp);
-        printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
         
         id_table->table[index].addr = dp;
         id_table->table[index].type = 'C';
 
         dp += 1;
+
+        int tmp_tk = get_token_name(cur_token);
+        if( tmp_tk != TK_COMMA && tmp_tk != TK_SEMICOLON ){
+            fprintf(stderr, "Error in 'char' declaration! Exiting...\n");
+            exit(EXIT_FAILURE);
+        }
 
         free(tmp);
         CharDec();
@@ -368,7 +458,7 @@ void CharDec()
         matchi(TK_IDENTIFIER);
         
         int index = get_token_value(tmp);
-        printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+        printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 
         id_table->table[index].addr = dp;
         id_table->table[index].type = 'C';
@@ -376,56 +466,26 @@ void CharDec()
 
         dp += 1;
 
+        int tmp_tk = get_token_name(cur_token);
+        if( tmp_tk != TK_COMMA && tmp_tk != TK_SEMICOLON ){
+            fprintf(stderr, "Error in 'char' declaration! Exiting...\n");
+            exit(EXIT_FAILURE);
+        }
+
         free(tmp);
         CharDec();
     }
     else if (tk == TK_SEMICOLON){
+        dec_rollback = ftell(input);
         match(";");
+        return 0;
     }
     else {
         printf("Error (Char Declaration Part)!\n");
         exit(EXIT_FAILURE);
     }
 }
-void MainEntry()
-{
-     int tk = get_token_name(cur_token);
 
-
-     if( tk == TK_INT ){
-         match("int");
-
-         /* Main is in the symbol table, so I must get the index first */
-         int index = get_token_value(cur_token);
-
-         if(strcmp(id_table->table[index].name, "main") == 0){
-            id_table->table[index].addr = -1;
-            id_table->table[index].type = 'P';
-            cur_token = get_token();
-         }
-         else {
-            print_stab(id_table);
-            printf("INDEX: %d\n", index);
-            fprintf(stderr, "Possible collision in symbol table! (Bug)\n");
-            fprintf(stderr, "Entry point not specified!  Exiting...\n");
-            exit(EXIT_FAILURE);
-         }
-
-         match("(");
-         // Command Line Arguments
-         match(")");
-
-         match("{");
-        
-         Statements();
-
-         match("}");
-     }
-     else {
-        fprintf(stderr, "main() must return int!  Exiting...\n");
-        exit(EXIT_FAILURE);
-     }
-}
 
 
 
@@ -565,7 +625,26 @@ TYPE F()
        // genarate push
        // return type
         int index = get_token_value(cur_token);
-        printf("push @%s\n", id_table->table[index].name);
+        TYPE id_type = id_table->table[index].type;
+        int id_addr = id_table->table[index].addr;
+
+        printf("push @%s (Type: %c)\n", id_table->table[index].name, id_type);
+        
+        /* Encode the address into the instruction */
+        inst.opcode = OP_PUSH;
+        if ( id_type == 'I' ){
+            inst.operand.i = id_addr; /* Int */
+            fwrite(&inst, sizeof(Instruction), 1, output);
+        }
+        else if (id_type == 'C'){
+            inst.operand.i = id_addr; /* Char */
+            fwrite(&inst, sizeof(Instruction), 1, output);
+        }
+        else if (id_type == 'F'){
+            inst.operand.f = id_addr; /* Float */
+            fwrite(&inst, sizeof(Instruction), 1, output);
+        }
+
         code_count++;
         
         free(cur_token);
