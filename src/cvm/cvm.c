@@ -43,7 +43,7 @@ void run(char *program)
 
     fseek(i, cur_pos, SEEK_SET);
 
-    printf("Code_count: %d\n Data_count: %d\n", code_count, data_count);
+    printf("Code_count: %d\nData_count: %d\n", code_count, data_count);
     
 
     /* Read in data array (semi last short holds the code size) */
@@ -66,7 +66,9 @@ void run(char *program)
                     sp--;
                     break;
                 case OP_PUSH:
-                    //stack[sp].i = code[code[ip]
+                    dp = code[ip].operand.i;
+                    stack[sp].i = *(int*)(data + dp);
+                    printf("Value: %d\n", stack[sp].i);
                     sp++;
                     break;
                 case OP_PUSHF:
@@ -78,7 +80,10 @@ void run(char *program)
                     sp++;
                     break;
                 case OP_POP:
-                    
+                    dp = code[ip].operand.i;
+                    *(int*)(data + dp) = stack[sp - 1].i;
+                    printf("stackhere: %d\n", stack[sp - 1].i);
+                    sp--;
                     break;
                 case OP_EXCH:
                     break;

@@ -58,9 +58,10 @@ typedef struct Instruction_TAG {
 size_t sp;
 size_t ip;
 size_t bp;
+size_t dp;
 
 Instruction *code;
-uchar *data;
+char *data;
 
 union stack_TAG {
       int i;

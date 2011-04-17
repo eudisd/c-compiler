@@ -29,9 +29,9 @@ void run_parser()
 
      //Statements();
      //Declarations();
-     //CProgram();
+     CProgram();
      cur_token = get_token();
-     E();
+     //E();
 
      
      /* Write Out Data */
@@ -217,8 +217,7 @@ void Assignment()
 
     code_count++;
         
-    free(cur_token);
-    cur_token = get_token();
+    
 }
 
 void Declarations()

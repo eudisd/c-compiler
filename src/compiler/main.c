@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
             run_parser();  /* Generates Stack Code */
 
             //print_stab(string_table);
-	        //print_stab(id_table);
+	        print_stab(id_table);
 
 			free(ofile);
 		}
