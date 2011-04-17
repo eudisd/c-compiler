@@ -35,14 +35,14 @@ void run_parser()
 
      
      /* Write Out Data */
-     fwrite(data, sizeof(char), data_max, output);
+     fwrite(data, sizeof(char), data_count, output);
      /* Write Out Code */
-     fwrite(code, sizeof(Instruction), code_max, output);
+     fwrite(code, sizeof(Instruction), code_count, output);
 
      /* Write out Data Segment Size */
-     fwrite(&data_max, sizeof(short), 1, output);
+     fwrite(&data_count, sizeof(short), 1, output);
      /* Write out Code Segment Size */
-     fwrite(&code_max, sizeof(short), 1, output);
+     fwrite(&code_count, sizeof(short), 1, output);
 
      free(data);
      free(code);

@@ -46,11 +46,10 @@ void run(char *program)
     printf("Code_count: %d\n Data_count: %d\n", code_count, data_count);
     
 
-
     /* Read in data array (semi last short holds the code size) */
 
-    code = (Instruction*)malloc(sizeof(Instruction)* code_count); 
-    fread(code, sizeof(Instruction), code_count, i);
+    data = (char*)malloc(sizeof(char)* data_count); 
+    fread(data, sizeof(char), data_count, i);
 
     /* Read in code array (last short holds the code size) */
     
