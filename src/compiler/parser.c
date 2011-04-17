@@ -6,8 +6,10 @@
 FILE *input; /**> Global File Discriptor */
 FILE *output; /**> Global File Discriptor */
 
-short data_count = 1024; /**>  Default is 1kb, could be more */
-short code_count = 1024; /**>  Default is 1kb, could be more  */
+short data_max = 1024; /**>  Default is 1kb, could be more */
+short code_max = 1024; /**>  Default is 1kb, could be more  */
+short data_count = 0;
+short code_count = 0;
 char *data; /**> Data must be dynamically allocated */
 Instruction *code; /**> Code must be dynamically allocated too */
 
@@ -22,24 +24,25 @@ void run_parser()
          error(file.filename, 0, 0, "Error processing interim file, exiting...");
      }
 
-     data = (char*)malloc(sizeof(char)*data_count);
-     code = (Instruction*)malloc(sizeof(Instruction)*code_count);
+     data = (char*)malloc(sizeof(char)*data_max);
+     code = (Instruction*)malloc(sizeof(Instruction)*code_max);
 
      //Statements();
      //Declarations();
      //CProgram();
+     cur_token = get_token();
      E();
 
      
      /* Write Out Data */
-     fwrite(data, sizeof(char), data_count, output);
+     fwrite(data, sizeof(char), data_max, output);
      /* Write Out Code */
-     fwrite(code, sizeof(Instruction), code_count, output);
+     fwrite(code, sizeof(Instruction), code_max, output);
 
      /* Write out Data Segment Size */
-     fwrite(&data_count, sizeof(short), 1, output);
+     fwrite(&data_max, sizeof(short), 1, output);
      /* Write out Code Segment Size */
-     fwrite(&code_count, sizeof(short), 1, output);
+     fwrite(&code_max, sizeof(short), 1, output);
 
      free(data);
      free(code);
@@ -200,16 +203,16 @@ void Assignment()
     inst.opcode = OP_POP;
     if ( id_type == 'I' ){
         inst.operand.i = id_addr; /* Int */
-        fwrite(&inst, sizeof(Instruction), 1, output);
+        code[code_count] = inst;
     }
     else if (id_type == 'C'){
         inst.operand.i = id_addr; /* Char */
-        fwrite(&inst, sizeof(Instruction), 1, output);
+        code[code_count] = inst;
     }
     else if (id_type == 'F'){
         inst.opcode = OP_POPF;
         inst.operand.f = id_addr; /* Float */
-        fwrite(&inst, sizeof(Instruction), 1, output);
+        code[code_count] = inst;
     }
 
     code_count++;
@@ -511,7 +514,7 @@ TYPE EPrime()
          printf("add\n");
          inst.opcode = OP_ADD;
          inst.operand.i = 0;
-         fwrite(&inst, sizeof(Instruction), 1, output);
+         code[code_count] = inst;
           
          /* I write code, so I increment counter */
          code_count++;
@@ -527,7 +530,7 @@ TYPE EPrime()
          inst.opcode = OP_SUB;
          inst.operand.i = 0;
          
-         fwrite(&inst, sizeof(Instruction), 1, output);
+         code[code_count] = inst;
          /* I write code, so I increment counter */
          code_count++;
 
@@ -542,7 +545,7 @@ TYPE EPrime()
          inst.opcode = OP_OR;
          inst.operand.i = 0;
          
-         fwrite(&inst, sizeof(Instruction), 1, output);
+         code[code_count] = inst;
          /* I write code, so I increment counter */
          code_count++;
 
@@ -577,7 +580,7 @@ TYPE TPrime()
          inst.opcode = OP_MUL;
          inst.operand.i = 0;
          
-         fwrite(&inst, sizeof(Instruction), 1, output);
+         code[code_count] = inst;
          /* I write code, so I increment counter */
          code_count++;
         
@@ -591,7 +594,7 @@ TYPE TPrime()
          inst.opcode = OP_DIV;
          inst.operand.i = 0;
          
-         fwrite(&inst, sizeof(Instruction), 1, output);
+         code[code_count] = inst;
          /* I write code, so I increment counter */
          code_count++;
          
@@ -606,7 +609,7 @@ TYPE TPrime()
          inst.opcode = OP_AND;
          inst.operand.i = 0;
          
-         fwrite(&inst, sizeof(Instruction), 1, output);
+         code[code_count] = inst;
          /* I write code, so I increment counter */
          code_count++;
          
@@ -619,7 +622,7 @@ TYPE F()
 {
      int tk = get_token_name(cur_token);
      Instruction inst;
-
+     
      if( tk == TK_IDENTIFIER ){
        // Get type from stab
        // genarate push
@@ -634,15 +637,15 @@ TYPE F()
         inst.opcode = OP_PUSH;
         if ( id_type == 'I' ){
             inst.operand.i = id_addr; /* Int */
-            fwrite(&inst, sizeof(Instruction), 1, output);
+            code[code_count] = inst;
         }
         else if (id_type == 'C'){
             inst.operand.i = id_addr; /* Char */
-            fwrite(&inst, sizeof(Instruction), 1, output);
+            code[code_count] = inst;
         }
         else if (id_type == 'F'){
             inst.operand.f = id_addr; /* Float */
-            fwrite(&inst, sizeof(Instruction), 1, output);
+            code[code_count] = inst;
         }
 
         code_count++;
@@ -659,7 +662,8 @@ TYPE F()
 
        inst.opcode = OP_PUSHI;
        inst.operand.i = get_token_value(cur_token);
-       fwrite(&inst, sizeof(Instruction), 1, output);
+       code[code_count] = inst;
+       
        /* I write code, so I increment counter */
        code_count++;
 
@@ -677,7 +681,7 @@ TYPE F()
 
        inst.opcode = OP_PUSHI;
        inst.operand.f = get_token_value(cur_token);
-       fwrite(&inst, sizeof(Instruction), 1, output);
+       code[code_count] = inst;
       
        code_count++;
 
