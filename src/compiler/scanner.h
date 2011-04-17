@@ -154,6 +154,8 @@
 #define TK_LABEL               89
 #define TK_FUNCTION_CALL       90
 
+#define TK_PRINTF              91
+
 
 /*-------------------------Typedefs -------------------------*/
 typedef struct token_package_Tag {
@@ -257,6 +259,7 @@ inline static void l(FILE *o, char *word);
 inline static void r(FILE *o, char *word);
 inline static void s(FILE *o, char *word);
 inline static void t(FILE *o, char *word);
+inline static void p(FILE *o, char *word);
 inline static void u(FILE *o, char *word);
 inline static void v(FILE *o, char *word);
 inline static void w(FILE *o, char *word);

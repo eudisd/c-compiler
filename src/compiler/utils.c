@@ -8,9 +8,13 @@ void usage( void )
 {
 	printf("Usage: c [options] file...\n" 
 	       "Options:\n"
-		   "  --help\t\t\t Print help screen description.\n"
-		   "  --version\t\t\t Print version number.\n"
-		   "  -o <file>\t\t\t Specify an output file name."
+		   "  --help\tPrint help screen description.\n"
+		   "  --version\tPrint version number.\n"
+           "  --verbose\tPrint extra information.\n"
+		   "  -o <file>\tSpecify an output file name.\n"
+           "  -Sc      \tSpecify the size of the Code Segment.\n"
+           "  -Sd      \tSpecify the size of the Data Segment.\n"
+           "  -Sh      \tSpecify the default size of the Symbol Table Tash.\n"
 		   "\n"
 		   );
 }

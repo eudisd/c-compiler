@@ -41,6 +41,7 @@ void run_scanner(file_struct *file)
     dispatcher['u'] = &u;
     dispatcher['v'] = &v;
     dispatcher['w'] = &w;
+    dispatcher['p'] = &p;
     dispatcher['{'] = &leftbracket;
     dispatcher['}'] = &rightbracket;
     dispatcher['('] = &leftparen;
@@ -781,6 +782,10 @@ token_package get_sval(char *s)
         tk.type = TK_KEYWORD;
         tk.val = TK_WHILE;
     }
+    else if( !strcmp(s, "printf") ){
+        tk.type = TK_KEYWORD;
+        tk.val = TK_PRINTF;
+    }
 
     else {
         if( s[0] == '\"'){
@@ -836,6 +841,18 @@ int extract_char(char *word)
 }
 
 /************************* DISPATCH *****************************/
+
+void p(FILE *o, char *word)
+{
+    /* printf */
+    if( !strcmp(word, "printf") ) {
+        sprintf(tk_buffer0, "%d", TK_PRINTF);
+        put_ulexeme(o, tk_buffer0);
+    }
+    else {
+        parse_tokens(o,word);
+    }
+}
 
 void a(FILE *o, char *word)
 {
@@ -1344,6 +1361,8 @@ void xor(FILE *o, char *word)
         parse_tokens(o,word);
     }
 }
+
+
 void question(FILE *o, char *word)
 {
     if( !strcmp(word, "?") ) {

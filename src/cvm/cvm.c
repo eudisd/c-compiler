@@ -43,13 +43,11 @@ void run(char *program)
 
     fseek(i, cur_pos, SEEK_SET);
 
-    printf("Code_count: %d\nData_count: %d\n", code_count, data_count);
-    
 
-    /* Read in data array (semi last short holds the code size) */
+    /* Allocate data array (semi last short holds the code size) */
 
     data = (char*)malloc(sizeof(char)* data_count); 
-    fread(data, sizeof(char), data_count, i);
+
 
     /* Read in code array (last short holds the code size) */
     
@@ -68,21 +66,26 @@ void run(char *program)
                 case OP_PUSH:
                     dp = code[ip].operand.i;
                     stack[sp].i = *(int*)(data + dp);
-                    printf("Value: %d\n", stack[sp].i);
                     sp++;
                     break;
-                case OP_PUSHF:
+                case OP_PUSHF:  
+                    dp = code[ip].operand.i;
+                    stack[sp].f = *(float*)(data + dp);
+                    sp++;
                     break;
                 case OP_PUSHI: 
-                    // Here we need to test if we are push an immediate
-                    // float or int.
+                    
                     stack[sp].i = code[ip].operand.i;
                     sp++;
                     break;
                 case OP_POP:
                     dp = code[ip].operand.i;
                     *(int*)(data + dp) = stack[sp - 1].i;
-                    printf("stackhere: %d\n", stack[sp - 1].i);
+                    sp--;
+                    break;
+                case OP_POPF:
+                    dp = code[ip].operand.i;
+                    *(float*)(data + dp) = stack[sp - 1].f;
                     sp--;
                     break;
                 case OP_EXCH:
@@ -157,8 +160,10 @@ void run(char *program)
                     sp--;
                     break;
                 case OP_CVI:
+                    stack[sp - 1].i = (int)stack[sp - 1].f;
                     break;
                 case OP_CVR:
+                    stack[sp - 1].f = (float)stack[sp - 1].i;
                     break;
                 case OP_JMP:
                     break;
@@ -170,7 +175,7 @@ void run(char *program)
                     exit(-1);
                     break;
                 case OP_WRITEINT:
-                    printf("%d\n", stack[sp - 1].i);
+                    printf("%d\n", *(int*)(data + code[ip].operand.i));
                     sp--;
                     break;
                 case OP_WRITEFLOAT:
@@ -181,6 +186,6 @@ void run(char *program)
                     break;
            }
            ip++;
-           printf("Result: %d\n", stack[sp - 1].i);
+           
     }
 }

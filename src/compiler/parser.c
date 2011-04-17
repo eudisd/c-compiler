@@ -8,9 +8,9 @@ FILE *output; /**> Global File Discriptor */
 
 short data_max = 1024; /**>  Default is 1kb, could be more */
 short code_max = 1024; /**>  Default is 1kb, could be more  */
-short data_count = 0;
+
 short code_count = 0;
-char *data; /**> Data must be dynamically allocated */
+
 Instruction *code; /**> Code must be dynamically allocated too */
 
 int dec_rollback = 0;
@@ -24,27 +24,24 @@ void run_parser()
          error(file.filename, 0, 0, "Error processing interim file, exiting...");
      }
 
-     data = (char*)malloc(sizeof(char)*data_max);
      code = (Instruction*)malloc(sizeof(Instruction)*code_max);
-
-     //Statements();
-     //Declarations();
-     CProgram();
+    
      cur_token = get_token();
+     
+     Declarations();
+     Statements();
+     //CProgram();
+     
      //E();
 
-     
-     /* Write Out Data */
-     fwrite(data, sizeof(char), data_count, output);
      /* Write Out Code */
      fwrite(code, sizeof(Instruction), code_count, output);
 
      /* Write out Data Segment Size */
-     fwrite(&data_count, sizeof(short), 1, output);
+     fwrite(&data_max, sizeof(short), 1, output);
      /* Write out Code Segment Size */
      fwrite(&code_count, sizeof(short), 1, output);
 
-     free(data);
      free(code);
      close(input);
      close(output);
@@ -172,6 +169,70 @@ void Statements()
     else if (tk == TK_DO){
        
     }
+    else if (tk == TK_PRINTF){
+        
+        Instruction inst;
+
+        free(cur_token);
+        cur_token = get_token();
+
+        int tk = get_token_name(cur_token);
+       
+        if (tk == TK_IDENTIFIER){
+            
+            // Save Type And Address
+            int index = get_token_value(cur_token);
+            TYPE id_type = id_table->table[index].type;
+            int id_addr = id_table->table[index].addr;
+
+            matchi(TK_IDENTIFIER);
+            match(";");
+
+            printf("writeint @%s (Type: %c)\n", id_table->table[index].name, id_type);
+
+            /* Encode the address into the instruction */
+            inst.opcode = OP_WRITEINT;
+            if ( id_type == 'I' ){
+                inst.operand.i = id_addr; /* Int */
+                code[code_count] = inst;
+            }
+            else if (id_type == 'C'){
+                inst.operand.i = id_addr; /* Char */
+                code[code_count] = inst;
+            }
+            else if (id_type == 'F'){
+                inst.opcode = OP_POPF;
+                inst.operand.i = id_addr; /* Float */
+                code[code_count] = inst;
+            }
+
+            code_count++;
+        }
+        else {
+            TYPE t = E();
+            match(";");
+            // generate print
+            printf("writeint\n");
+
+            /* Encode the address into the instruction */
+            inst.opcode = OP_WRITEINT;
+            if ( t == 'I' ){
+                inst.operand.i = 0;
+                code[code_count] = inst;
+            }
+            else if (t == 'C'){
+                inst.operand.i = 0;
+                code[code_count] = inst;
+            }
+            else if (t == 'F'){
+                inst.opcode = OP_WRITEFLOAT;
+                inst.operand.i = 0;
+                code[code_count] = inst;
+            }
+
+            code_count++;
+        }
+    }
     else if (tk == TK_INTLIT ){
         fprintf(stderr, "Singular expression without assignment found! Exiting\n");
         exit(EXIT_SUCCESS);
@@ -211,7 +272,7 @@ void Assignment()
     }
     else if (id_type == 'F'){
         inst.opcode = OP_POPF;
-        inst.operand.f = id_addr; /* Float */
+        inst.operand.i = id_addr; /* Float */
         code[code_count] = inst;
     }
 
@@ -509,11 +570,18 @@ TYPE EPrime()
          match("+");
          t = T();
          /* (+) */
-         
-         printf("add\n");
-         inst.opcode = OP_ADD;
-         inst.operand.i = 0;
-         code[code_count] = inst;
+         if( t == 'I' ){
+            printf("add\n");
+            inst.opcode = OP_ADD;
+            inst.operand.i = 0;
+            code[code_count] = inst;
+         }
+         else if( t == 'F' ){
+            printf("addf\n");
+            inst.opcode = OP_ADDF;
+            inst.operand.i = 0;
+            code[code_count] = inst;
+         }
           
          /* I write code, so I increment counter */
          code_count++;
@@ -643,7 +711,8 @@ TYPE F()
             code[code_count] = inst;
         }
         else if (id_type == 'F'){
-            inst.operand.f = id_addr; /* Float */
+            inst.opcode = OP_PUSHF;
+            inst.operand.i = id_addr; /* Float */
             code[code_count] = inst;
         }
 
@@ -657,7 +726,7 @@ TYPE F()
      else if ( tk == TK_INTLIT ){
        // generate pushi
 
-       printf("pushi %d\n", get_token_value(cur_token) );
+       printf("pushi %d (Type: %c)\n", get_token_value(cur_token), 'I' );
 
        inst.opcode = OP_PUSHI;
        inst.operand.i = get_token_value(cur_token);
@@ -676,10 +745,11 @@ TYPE F()
      else if ( tk == TK_FLOATLIT ){
       // generate pushi 
         
-       printf("pushi %f\n", get_token_value_f(cur_token) );
+       printf("pushi %f (Type: %c)\n", get_token_value_f(cur_token), 'F' );
 
        inst.opcode = OP_PUSHI;
-       inst.operand.f = get_token_value(cur_token);
+       inst.operand.f = get_token_value_f(cur_token);
+       
        code[code_count] = inst;
       
        code_count++;

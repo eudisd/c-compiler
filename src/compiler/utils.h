@@ -11,9 +11,9 @@
 #include <time.h>
 #include <malloc.h>
 
-#define VERSION "0.0.1"     /**< Holds the current version (semver.org). */
+#define VERSION "- 0.0.3 -"     /**< Holds the current version (semver.org). */
 #define RELEASE 0           /**< Holds the current release candidate number. */
-#define BUILD_NUMBER 51     /**< Holds the current build number. */
+#define BUILD_NUMBER 201    /**< Holds the current build number. */
 #define BUILD_DATE 20101231 /**< Holds the current build date in Year-Month-Day format. */
 
 #define INTERIM_FILENAME "data"
