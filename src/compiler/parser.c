@@ -118,7 +118,7 @@ void MainEntry()
          else {
             print_stab(id_table);
             fprintf(stderr, "Possible collision in symbol table! (Bug)\n"
-                            "Apparently 'y2' == 'main'\n");
+                            "Apparently 'y2' == 'main' LOL\n");
             fprintf(stderr, "Entry point not specified!  Exiting...\n");
             exit(EXIT_FAILURE);
          }

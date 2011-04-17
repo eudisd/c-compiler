@@ -79,7 +79,7 @@ void run(char *program)
                     
                     stack[sp].i = code[ip].operand.i;
                     sp++;
-                    print_stack(sp);
+                    //print_stack(sp);
                     
                     break;
                 case OP_POP:
@@ -182,16 +182,18 @@ void run(char *program)
                     printf("oper: %d\n", code[ip].operand.i);
                     printf("TopofStack: %d\n", stack[sp - 1].i);
                     for(j = 0; j < code_count; j++){
-                        printf("opcode: %d, operand: %d\n", code[j].opcode, code[j].operand.i);
+                        printf("%d: opcode: %d, operand: %d\n",j, code[j].opcode, code[j].operand.i);
                     }
                     if( stack[sp - 1].i == 0 ){
-                        ip = code[ip].operand.i;
+                        ip = code[ip].operand.i - 1;  /* -1 because we increment right after the break here
+                                                         so we need code to execute one instruction back on
+                                                         the next VM iteration! */
                     }
-                    //sp--; /* If it's false, we rid the result */
+                    sp--; /* If it's false, we rid the result */
                     break;
                 case OP_JTRUE:
                     if( stack[sp - 1].i != 0 )    
-                        ip = code[ip].operand.i;
+                        ip = code[ip].operand.i - 1;
                     break;
                 case OP_HALT:
                     exit(-1);
