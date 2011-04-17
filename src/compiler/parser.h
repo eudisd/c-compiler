@@ -112,7 +112,7 @@ void Assignment();
 void MainEntry();
 
 int IntDec();
-void FloatDec();
+int FloatDec();
 void CharDec();
 
 void Statements();

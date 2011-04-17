@@ -9,7 +9,8 @@ FILE *output; /**> Global File Discriptor */
 short data_count = 0; /**> Used to determine the size of the data output */
 short code_count = 0; /**> Used to determine the size of the code output */
 
-int entry_start = 0;
+int dec_rollback = 0;
+
 
 void run_parser()
 {
@@ -54,7 +55,7 @@ void match(char *token)
 {
      if( cur_token != NULL ){
          token_package tk = get_sval(token);
-         printf("cur_token: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
+         printf("match: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
          /*printf("cur_token: %d, tk: %d\n", get_token_name(cur_token), tk.val); */
          if( tk.val != get_token_name(cur_token) ){
              error(file.filename, 0, 0, "Token mismatch!");
@@ -71,7 +72,7 @@ void match(char *token)
 void matchi(int token)
 {
      int tk = get_token_name(cur_token);
-     printf("cur_token: %s, Token Name: %d, tk: %d\n", cur_token, get_token_name(cur_token), tk);
+     printf("match: %s, Token Name: %d, tk: %d\n", cur_token, get_token_name(cur_token), tk);
      if( cur_token != NULL ){
          if( token != tk ){
              error(file.filename, 0, 0, "Does not match current token!");
@@ -149,34 +150,30 @@ void Assignment()
 
 void Declarations()
 {
+    printf("\n\n");
     printf("CUR_TOKEN: %s\n", cur_token);
+    
     int tk = get_token_name(cur_token);
-    int initial_dec = ftell(input);
-    printf("Initial Dec: %d\n", initial_dec);
+   
+    
+    printf("Initial Dec: %d\n", dec_rollback);
 
     if( tk == TK_INT ){
-       
         if( IntDec() != -1 ) { //Exit loop
-            
             Declarations();
         }
-        else {
-            fseek(input, initial_dec, SEEK_SET);
-            
-            free(cur_token);
-            cur_token = get_token();
-            printf("Inside Initial Dec: %d\n", initial_dec);
-            printf("Cr: %s\n", cur_token);
-        }
+        
     }
+    /*
     else if (tk == TK_FLOAT){
-        FloatDec();
-        Declarations();
+        if( FloatDec() != -1 ) { //Exit loop
+            Declarations();
+        }
     }
     else if (tk == TK_CHAR){
         CharDec();
         Declarations();
-    }
+    }*/
     
 }
 
@@ -184,6 +181,7 @@ int IntDec()
 {
     int tk = get_token_name(cur_token);
     if( tk == TK_INT ){
+        
         match("int");
 
         /* We store the current token first, since we need to test
@@ -197,6 +195,11 @@ int IntDec()
     
         /* Test to see that it's not a function */
         if( get_token_name(cur_token) == TK_LEFTPAREN ){
+            printf("\nLooking at the current(int)\n");
+            fseek(input, dec_rollback, SEEK_SET);
+            free(cur_token);
+            cur_token = get_token();
+            printf("now: %s\n", cur_token);
             free(tmp);
             return -1;
         }
@@ -210,8 +213,18 @@ int IntDec()
         id_table->table[index].type = 'I';
 
         dp += 4;
+        
+        /* Test here to see if the next token is not = to ',' or not = ot ';'
+           then throw error */
+    
+        int tmp_tk = get_token_name(cur_token);
+        if( tmp_tk != TK_COMMA && tmp_tk != TK_SEMICOLON ){
+            fprintf(stderr, "Error in 'int' declaration! Exiting...\n");
+            exit(EXIT_FAILURE);
+        }
 
         free(tmp);
+        
         return IntDec();
     }
     else if( tk == TK_COMMA ){
@@ -230,10 +243,21 @@ int IntDec()
 
         dp += 4;
 
+        /* Test here to see if the next token is not = to ',' or not = ot ';'
+           then throw error if not */
+    
+        int tmp_tk = get_token_name(cur_token);
+        if( tmp_tk != TK_COMMA && tmp_tk != TK_SEMICOLON ){
+            fprintf(stderr, "Error in 'int' declaration! Exiting...\n");
+            exit(EXIT_FAILURE);
+        }
+
         free(tmp);
         return IntDec();
     }
     else if (tk == TK_SEMICOLON){
+        
+        dec_rollback = ftell(input);
         match(";");
         return 0;
     }
@@ -243,7 +267,7 @@ int IntDec()
     }
 }
 
-void FloatDec()
+int FloatDec()
 {
     int tk = get_token_name(cur_token);
     if( tk == TK_FLOAT ){
@@ -253,6 +277,17 @@ void FloatDec()
 
         matchi(TK_IDENTIFIER);
 
+        /* Test to see that it's not a function */
+        if( get_token_name(cur_token) == TK_LEFTPAREN ){
+            
+            fseek(input, dec_rollback, SEEK_SET);
+            free(cur_token);
+            cur_token = get_token();
+            printf("now: %s\n", cur_token);
+            free(tmp);
+            return -1;
+        }
+
         int index = get_token_value(tmp);
         printf("Storing Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 
@@ -260,6 +295,12 @@ void FloatDec()
         id_table->table[index].type = 'F';
 
         dp += 4;
+
+        int tmp_tk = get_token_name(cur_token);
+        if( tmp_tk != TK_COMMA && tmp_tk != TK_SEMICOLON ){
+            fprintf(stderr, "Error in 'float' declaration! Exiting...\n");
+            exit(EXIT_FAILURE);
+        }
 
         free(tmp);
         FloatDec();
@@ -279,10 +320,17 @@ void FloatDec()
 
         dp += 4;
 
+        int tmp_tk = get_token_name(cur_token);
+        if( tmp_tk != TK_COMMA && tmp_tk != TK_SEMICOLON ){
+            fprintf(stderr, "Error in 'float' declaration! Exiting...\n");
+            exit(EXIT_FAILURE);
+        }
+
         free(tmp);
         FloatDec();
     }
     else if (tk == TK_SEMICOLON){
+        dec_rollback = ftell(input);
         match(";");
     }
     else {
@@ -351,11 +399,14 @@ void MainEntry()
          int index = get_token_value(cur_token);
 
          if(strcmp(id_table->table[index].name, "main") == 0){
+            id_table->table[index].addr = -1;
+            id_table->table[index].type = 'P';
             cur_token = get_token();
          }
          else {
             print_stab(id_table);
             printf("INDEX: %d\n", index);
+            fprintf(stderr, "Possible collision in symbol table! (Bug)\n");
             fprintf(stderr, "Entry point not specified!  Exiting...\n");
             exit(EXIT_FAILURE);
          }
