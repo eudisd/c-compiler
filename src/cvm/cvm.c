@@ -56,7 +56,9 @@ void run(char *program)
     
     ip = 0;
     sp = 0;
-   
+    int j;
+    //printf("code_count: %d, data_count: %d\n", code_count, data_count);
+
     while( ip < code_count ){
            switch( code[ip].opcode ){
                 case OP_ADD:
@@ -81,6 +83,10 @@ void run(char *program)
                 case OP_POP:
                     dp = code[ip].operand.i;
                     *(int*)(data + dp) = stack[sp - 1].i;
+                    sp--;
+                    break;
+                case OP_POPEMPTY:
+                    stack[ip - 1].i = 0;
                     sp--;
                     break;
                 case OP_POPF:
@@ -168,14 +174,31 @@ void run(char *program)
                 case OP_JMP:
                     break;
                 case OP_JFALSE:
+                    /*
+                    printf("IP: %d\n",ip);
+                    printf("code: %d\n", code[ip].opcode);
+                    printf("oper: %d\n", code[ip].operand.i);
+                    printf("TopofStack: %d\n", stack[sp - 1].i);
+                    for(j = 0; j < code_count; j++){
+                        printf("opcode: %d, operand: %d\n", code[j].opcode, code[j].operand.i);
+                    }*/
+                    if( stack[sp - 1].i == 0 ){
+                        ip = code[ip].operand.i;
+                    }
+                    sp--; /* If it's false, we rid the result */
                     break;
                 case OP_JTRUE:
+                    if( stack[sp - 1].i != 0 )    
+                        ip = code[ip].operand.i;
                     break;
                 case OP_HALT:
                     exit(-1);
                     break;
-                case OP_WRITEINT:
+                case OP_WRITEINTID:
                     printf("%d\n", *(int*)(data + code[ip].operand.i));
+                    break;
+                case OP_WRITEINT:
+                    printf("%d\n", stack[sp - 1].i);
                     sp--;
                     break;
                 case OP_WRITEFLOAT:

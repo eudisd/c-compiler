@@ -26,14 +26,15 @@ void run_parser()
 
      code = (Instruction*)malloc(sizeof(Instruction)*code_max);
     
-     cur_token = get_token();
+     //cur_token = get_token();
      
-     Declarations();
-     Statements();
-     //CProgram();
+     //Declarations();
+     //Statements();
+     CProgram();
      
      //E();
 
+     printf("code_count: %d, data_count: %d\n", code_count, data_max);
      /* Write Out Code */
      fwrite(code, sizeof(Instruction), code_count, output);
 
@@ -116,7 +117,6 @@ void MainEntry()
          }
          else {
             print_stab(id_table);
-            printf("INDEX: %d\n", index);
             fprintf(stderr, "Possible collision in symbol table! (Bug)\n"
                             "Apparently 'y2' == 'main'\n");
             fprintf(stderr, "Entry point not specified!  Exiting...\n");
@@ -164,7 +164,8 @@ void Statements()
 
     }
     else if (tk == TK_IF){
-
+        IfStatement();
+        Statements();
     }
     else if (tk == TK_DO){
        
@@ -188,10 +189,10 @@ void Statements()
             matchi(TK_IDENTIFIER);
             match(";");
 
-            printf("writeint @%s (Type: %c)\n", id_table->table[index].name, id_type);
+            printf("%d: writeintid @%s (Type: %c)\n", code_count, id_table->table[index].name, id_type);
 
             /* Encode the address into the instruction */
-            inst.opcode = OP_WRITEINT;
+            inst.opcode = OP_WRITEINTID;
             if ( id_type == 'I' ){
                 inst.operand.i = id_addr; /* Int */
                 code[code_count] = inst;
@@ -201,7 +202,7 @@ void Statements()
                 code[code_count] = inst;
             }
             else if (id_type == 'F'){
-                inst.opcode = OP_POPF;
+                inst.opcode = OP_WRITEFLOAT;
                 inst.operand.i = id_addr; /* Float */
                 code[code_count] = inst;
             }
@@ -212,7 +213,7 @@ void Statements()
             TYPE t = E();
             match(";");
             // generate print
-            printf("writeint\n");
+            printf("%d: writeint\n", code_count);
 
             /* Encode the address into the instruction */
             inst.opcode = OP_WRITEINT;
@@ -232,6 +233,7 @@ void Statements()
 
             code_count++;
         }
+        Statements();
     }
     else if (tk == TK_INTLIT ){
         fprintf(stderr, "Singular expression without assignment found! Exiting\n");
@@ -240,6 +242,70 @@ void Statements()
 
     
 
+}
+
+void IfStatement()
+{
+    Instruction inst;
+    int save;
+    int hole; 
+
+    match("if");
+    match("(");
+     TYPE t = E();
+     if( t != 'I' && t != 'C' ){
+        fprintf(stderr, "\n'if' conditional expression must be of integer type! Exiting...\n\n");
+        exit(EXIT_FAILURE);
+     }
+     
+        /*
+        // I must remove the result from the top of the stack
+        Instruction inst2;
+        inst2.opcode = OP_POPEMPTY;
+        inst2.operand.i = 0;
+        code[code_count] = inst2;
+        printf("%d: pop (Empty)\n", code_count);
+        code_count++;*/
+    
+     
+    match(")");
+    match("{");
+     
+     hole = code_count;
+     /* Generate Code (but don't write it out yet) */
+     inst.opcode = OP_JFALSE;
+     inst.operand.i = 0;
+     code[code_count] = inst;
+     printf("%d: jfalse 0\n", code_count);
+     code_count++;
+
+    
+     Statements();
+    match("}");
+    int tk = get_token_name(cur_token);
+    if(tk == TK_ELSE){
+        /* Save ip 
+        save = ip;
+         = hole;
+        
+       
+        printf("
+            
+    
+        match("else");
+        match("{");
+         Statements();
+        match("}");*/
+    }
+
+    save = code_count;
+    code_count = hole;
+    code[hole].operand.i = save;
+    code_count = save;
+    int i;
+    for(i = 0; i < code_count; i++)
+        printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);
+    
 }
 
 void Assignment()
@@ -258,7 +324,7 @@ void Assignment()
     match(";");
     // Pop at an address!
 
-    printf("pop @%s (Type: %c)\n", id_table->table[index].name, id_type);
+    printf("%d: pop @%s (Type: %c)\n", code_count, id_table->table[index].name, id_type);
 
         /* Encode the address into the instruction */
     inst.opcode = OP_POP;
@@ -571,13 +637,13 @@ TYPE EPrime()
          t = T();
          /* (+) */
          if( t == 'I' ){
-            printf("add\n");
+            printf("%d: add\n", code_count);
             inst.opcode = OP_ADD;
             inst.operand.i = 0;
             code[code_count] = inst;
          }
          else if( t == 'F' ){
-            printf("addf\n");
+            printf("%d: addf\n", code_count);
             inst.opcode = OP_ADDF;
             inst.operand.i = 0;
             code[code_count] = inst;
@@ -593,7 +659,7 @@ TYPE EPrime()
          match("-");
          t = T();
          /* (-) */
-         printf("sub\n");
+         printf("%d: sub\n", code_count);
          inst.opcode = OP_SUB;
          inst.operand.i = 0;
          
@@ -607,7 +673,7 @@ TYPE EPrime()
      else if ( tk == TK_LOGIC_OR ){
          match("||");
          t = T();
-         printf("or\n");
+         printf("%d: or\n", code_count);
 
          inst.opcode = OP_OR;
          inst.operand.i = 0;
@@ -641,7 +707,7 @@ TYPE TPrime()
      if( tk == TK_MULT_STAR ){
          match("*");
          t = T();
-         printf("mul\n");
+         printf("%d: mul\n", code_count);
          /* (*) : Need to implement this! */
 
          inst.opcode = OP_MUL;
@@ -656,7 +722,7 @@ TYPE TPrime()
      else if ( tk == TK_DIV ){
          match("/");
          t = T();
-         printf("div\n");
+         printf("%d: div\n", code_count);
          /* (/) : Need to implement this! */
          inst.opcode = OP_DIV;
          inst.operand.i = 0;
@@ -671,7 +737,7 @@ TYPE TPrime()
      else if ( tk == TK_LOGIC_AND ){
          match("&&");
          t = T();
-         printf("and\n");
+         printf("%d: and\n", code_count);
          /* (&&) : Need to implement this! */
          inst.opcode = OP_AND;
          inst.operand.i = 0;
@@ -698,7 +764,7 @@ TYPE F()
         TYPE id_type = id_table->table[index].type;
         int id_addr = id_table->table[index].addr;
 
-        printf("push @%s (Type: %c)\n", id_table->table[index].name, id_type);
+        printf("%d: push @%s (Type: %c)\n", code_count, id_table->table[index].name, id_type);
         
         /* Encode the address into the instruction */
         inst.opcode = OP_PUSH;
@@ -726,7 +792,7 @@ TYPE F()
      else if ( tk == TK_INTLIT ){
        // generate pushi
 
-       printf("pushi %d (Type: %c)\n", get_token_value(cur_token), 'I' );
+       printf("%d: pushi %d (Type: %c)\n", code_count, get_token_value(cur_token), 'I' );
 
        inst.opcode = OP_PUSHI;
        inst.operand.i = get_token_value(cur_token);
@@ -745,7 +811,7 @@ TYPE F()
      else if ( tk == TK_FLOATLIT ){
       // generate pushi 
         
-       printf("pushi %f (Type: %c)\n", get_token_value_f(cur_token), 'F' );
+       printf("%d: pushi %f (Type: %c)\n", code_count, get_token_value_f(cur_token), 'F' );
 
        inst.opcode = OP_PUSHI;
        inst.operand.f = get_token_value_f(cur_token);
@@ -828,7 +894,7 @@ TYPE F()
      else if ( tk == TK_UNARY_EXCLAMATION ){ // TK_NOT 
      }
      else {
-       
+       return 'V'; // Return VOID
      }
 }
 

@@ -1,5 +1,8 @@
 int x, y;
 
-x = 5 + 1 + 2 + 3;
-
-printf x;
+int main(){
+    if ( 0 ){
+        printf 1;
+    }
+    printf 2;
+}

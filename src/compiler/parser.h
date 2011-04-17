@@ -44,11 +44,15 @@
 #define OP_JTRUE      26
 #define OP_HALT       27
 #define OP_WRITEINT   28
+
 #define OP_WRITEFLOAT 29
 #define OP_MOD        30
 
 #define OP_PUSHF 31
 #define OP_POPF 32
+
+#define OP_WRITEINTID    33
+#define OP_POPEMPTY 34
 
 /* Type defs */
 typedef unsigned char uchar;
@@ -119,6 +123,7 @@ int FloatDec();
 int CharDec();
 
 void Statements();
+void IfStatement();
 
 /* Expression Productions */
 /**

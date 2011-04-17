@@ -41,6 +41,9 @@
 #define OP_PUSHF 31
 #define OP_POPF 32
 
+#define OP_WRITEINTID 33
+#define OP_POPEMPTY 34
+
 typedef unsigned char uchar;  
 typedef unsigned int uint;
 typedef union Operand_TAG {
