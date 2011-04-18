@@ -4,11 +4,8 @@ int main(int argc, char *argv[])
 {
     /* Types */
     int x = 10, y = 0, z = 0;
-    short int x3 = 5; /* 16 bit */
-    long int x4 = 10, y4 = 0, z4 = 0; /* 32 bit */
-    unsigned int x5 = 20;
-    float x1 = 2.0;
-    double x2 = 2.000011110;
+    
+    float x1 = 2.78867;
     char a = 'a';
     char *s = "This is a string";
 

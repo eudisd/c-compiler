@@ -130,6 +130,7 @@ int CharDec();
 void Statements();
 void IfStatement();
 void DoWhile();
+void While();
 
 /* Expression Productions */
 /**

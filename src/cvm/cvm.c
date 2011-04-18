@@ -160,7 +160,7 @@ void run(char *program)
                     sp--;
                     break;
                 case OP_GTR:
-                    stack[sp - 2].i = stack[sp - 2].i < stack[sp - 1].i;
+                    stack[sp - 2].i = stack[sp - 2].i > stack[sp - 1].i;
                     sp--;
                     break;
                 case OP_LEQ:

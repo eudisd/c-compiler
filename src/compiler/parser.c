@@ -150,7 +150,8 @@ void Statements()
         Statements();
     }
     else if (tk == TK_WHILE ){
-
+        While();
+        Statements();
     }
     else if (tk == TK_FOR){
 
@@ -272,6 +273,51 @@ void DoWhile()
     
     match(")");
     match(";");
+}
+
+void While()
+{
+    int target = code_count;
+    int hole, save;
+    Instruction inst, inst_hole;
+
+    match("while");
+    match("(");
+    TYPE t = L();
+    if( t != 'I' && t != 'C' ){
+        fprintf(stderr, "\n'while' conditional expression must be of integer type! Exiting...\n\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    hole = code_count;
+    inst_hole.opcode = OP_JFALSE;
+    inst_hole.operand.i = 0;
+    code[code_count] = inst_hole;
+    printf("%d: jfalse %d\n", code_count, target);
+    code_count++;
+    
+
+    match(")");
+    match("{");
+        Statements();
+
+        inst.opcode = OP_JMP;
+        inst.operand.i = target;
+        code[code_count] = inst;
+        printf("%d: jmp %d\n", code_count, target);
+        code_count++;
+    
+        /* Fill in hole */
+        save = code_count;
+        code[hole].operand.i = save;
+
+    match("}");
+
+    int i;
+    for(i = 0; i < code_count; i++)
+        printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);
+        
+    
 }
 
 void IfStatement()
