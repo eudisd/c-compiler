@@ -174,22 +174,32 @@ void run(char *program)
                     stack[sp - 1].f = (float)stack[sp - 1].i;
                     break;
                 case OP_JMP:
-                    break;
-                case OP_JFALSE:
-                    
+                    /*
                     printf("IP: %d\n",ip);
                     printf("code: %d\n", code[ip].opcode);
                     printf("oper: %d\n", code[ip].operand.i);
                     printf("TopofStack: %d\n", stack[sp - 1].i);
                     for(j = 0; j < code_count; j++){
                         printf("%d: opcode: %d, operand: %d\n",j, code[j].opcode, code[j].operand.i);
-                    }
+                    }*/
+                    ip = code[ip].operand.i - 1;
+                    
+                    break;
+                case OP_JFALSE:
+                    /*
+                    printf("IP: %d\n",ip);
+                    printf("code: %d\n", code[ip].opcode);
+                    printf("oper: %d\n", code[ip].operand.i);
+                    printf("TopofStack: %d\n", stack[sp - 1].i);
+                    for(j = 0; j < code_count; j++){
+                        printf("%d: opcode: %d, operand: %d\n",j, code[j].opcode, code[j].operand.i);
+                    }*/
                     if( stack[sp - 1].i == 0 ){
                         ip = code[ip].operand.i - 1;  /* -1 because we increment right after the break here
                                                          so we need code to execute one instruction back on
                                                          the next VM iteration! */
                     }
-                    sp--; /* If it's false, we rid the result */
+                    //sp--; /* If it's false, we rid the result */
                     break;
                 case OP_JTRUE:
                     if( stack[sp - 1].i != 0 )    
@@ -209,12 +219,12 @@ void run(char *program)
                     printf("%f\n", stack[sp - 1].f);
                     sp--;
                     break;
+                case OP_NOP:
+                    break;
                 default:
                     break;
            }
            ip++;
-          
-           
     }
 }
 

@@ -284,28 +284,46 @@ void IfStatement()
     match("}");
     int tk = get_token_name(cur_token);
     if(tk == TK_ELSE){
-        /* Save ip 
-        save = ip;
-         = hole;
+        Instruction inst2;
+
+        save = code_count;
+
+        code[hole].operand.i = save;
         
+        inst2.opcode = OP_JTRUE;
+        inst2.operand.i = 0;  // Dummy jmp
        
-        printf("
-            
-    
+        hole = code_count; /* The hole comes after the jmp */
+        code[code_count] = inst2;
+       
+        printf("%d: jtrue 0\n", code_count);
+
+        code_count++;
+
         match("else");
         match("{");
          Statements();
-        match("}");*/
+        match("}");
     }
 
     save = code_count;
     code_count = hole;
     code[hole].operand.i = save;
     code_count = save;
-    int i;
-    for(i = 0; i < code_count; i++)
-        printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);
+
+    //int i;
+    //for(i = 0; i < code_count; i++)
+    //    printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);
     
+    /* Once the else is done, we pop off the value in the
+       stack that holds the conditional result */
+
+    Instruction inst3;
+    inst3.opcode = OP_POPEMPTY;
+    inst3.operand.i = 0;
+    code[code_count] = inst3;
+    code_count++;
+    printf("%d: pop (Empty)\n");
 }
 
 void Assignment()

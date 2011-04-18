@@ -403,7 +403,7 @@ int parse_tokens(FILE *o, char *word)
             */
             // Switching from <TK_KEYWORD, TK_VALUE> to <TK_VALUE> only
             sprintf(tk_buffer0, "%d", tk.val);
-            printf("FUCKING %d", tk.val);
+           
             put_ulexeme(o, tk_buffer0);
         }
 		else if (tk.type == TK_IDENTIFIER) {

@@ -4,5 +4,7 @@ int main(){
     if ( 0 ){
         printf 1;
     }
-    printf 2;
+    else {
+        printf 2;
+    }
 }
