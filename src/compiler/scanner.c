@@ -138,7 +138,11 @@ char *extract_token(char *word)
 		case ',':
 			return copy_alloced(",");
 		case '!':
-			return copy_alloced("!");
+            if (word[1] == '='){
+                return copy_alloced("!=");
+            }
+            else 
+			    return copy_alloced("!");
 		case '~':
 			if (word[1] == '=')
                 return copy_alloced("~=");

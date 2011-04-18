@@ -1,8 +1,11 @@
 int x;
 int main(){
     x = 0;
-    if( x != 1 ){
-        printf 2;
+    if( 2 != 1 ){
+        printf x;
+    }
+    else {
+        printf 1;
     }
 }
 

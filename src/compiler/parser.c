@@ -68,7 +68,6 @@ void match(char *token)
          else {
              free(cur_token);
              cur_token = get_token();
-
          }
      }
 
@@ -328,7 +327,7 @@ void IfStatement()
 
     match("if");
     match("(");
-     TYPE t = E();
+     TYPE t = L();
      if( t != 'I' && t != 'C' ){
         fprintf(stderr, "\n'if' conditional expression must be of integer type! Exiting...\n\n");
         exit(EXIT_FAILURE);
