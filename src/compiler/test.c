@@ -1,9 +1,5 @@
-int x, y;
-
+int x;
 int main(){
-    x = 0;
-    do {
-    printf x;
-    x = x + 1;
-    } while (1);
+   printf -1.5; 
 }
+

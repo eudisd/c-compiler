@@ -148,6 +148,10 @@ void run(char *program)
                 case OP_NEG:
                     stack[sp - 1].i = -stack[sp - 1].i;
                     break;
+                case OP_NEGF:
+                    stack[sp - 1].f = -stack[sp - 1].f;
+                    break;
+
                 case OP_NOT:
                     stack[sp - 1].i = !stack[sp - 1].i;
                     break;
@@ -165,6 +169,14 @@ void run(char *program)
                     break;
                 case OP_GEQ:
                     stack[sp - 2].i = stack[sp - 2].i >= stack[sp - 1].i;
+                    sp--;
+                    break;
+                case OP_NEQ:
+                    stack[sp - 2].i = stack[sp - 2].i != stack[sp - 1].i;
+                    sp--;
+                    break;
+                case OP_EQU:
+                    stack[sp - 2].i = stack[sp - 2].i == stack[sp - 1].i;
                     sp--;
                     break;
                 case OP_CVI:

@@ -55,6 +55,10 @@
 #define OP_POPEMPTY 34
 #define OP_NOP 35
 
+#define OP_NEQ 36
+#define OP_EQU 37
+#define OP_NEGF 38
+
 /* Type defs */
 typedef unsigned char uchar;
 typedef char TYPE;
@@ -151,5 +155,11 @@ TYPE F();
 
 /**
   */
+
+TYPE L();
+
+/**
+  */
+TYPE LPrime();
 
 #endif

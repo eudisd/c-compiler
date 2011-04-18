@@ -30,9 +30,10 @@ void run_parser()
      
      //Declarations();
      //Statements();
-     //CProgram();
+     CProgram();
      
      //E();
+     //L();
 
      printf("code_count: %d, data_count: %d\n", code_count, data_max);
      /* Write Out Code */
@@ -214,11 +215,12 @@ void Statements()
             TYPE t = E();
             match(";");
             // generate print
-            printf("%d: writeint\n", code_count);
+            
 
             /* Encode the address into the instruction */
             inst.opcode = OP_WRITEINT;
             if ( t == 'I' ){
+                printf("%d: writeint\n", code_count);
                 inst.operand.i = 0;
                 code[code_count] = inst;
             }
@@ -227,6 +229,7 @@ void Statements()
                 code[code_count] = inst;
             }
             else if (t == 'F'){
+                printf("%d: writefloat\n", code_count);
                 inst.opcode = OP_WRITEFLOAT;
                 inst.operand.i = 0;
                 code[code_count] = inst;
@@ -734,6 +737,94 @@ TYPE T()
      return t;
 }
 
+TYPE L()
+{
+    TYPE t = E();
+    TYPE t2 = LPrime();
+}
+
+
+TYPE LPrime()
+{
+    int tk = get_token_name(cur_token);
+    TYPE t;
+    Instruction inst;
+    if( tk == TK_LESS_LOGIC ){
+        match("<");
+        t = L();
+        printf("%d: lss\n", code_count);
+        /* (<) */
+        inst.opcode = OP_LSS;
+        inst.operand.i = 0;
+         
+        code[code_count] = inst;
+        /* I write code, so I increment counter */
+        code_count++;
+        LPrime();
+    }
+    else if( tk == TK_GREATER_LOGIC ){
+        match(">");
+        t = L();
+        printf("%d: gtr\n", code_count);
+        /* (>) */
+        inst.opcode = OP_GTR;
+        inst.operand.i = 0;
+         
+        code[code_count] = inst;
+        /* I write code, so I increment counter */
+        code_count++;
+        LPrime();
+    }
+    else if( tk == TK_LESS_EQU_LOGIC ){
+        match("<=");
+        t = L();
+        printf("%d: leq\n", code_count);
+        /* (<=) */
+        inst.opcode = OP_LEQ;
+        inst.operand.i = 0;
+         
+        code[code_count] = inst;
+        /* I write code, so I increment counter */
+        code_count++;
+        LPrime();
+    }
+    else if( tk == TK_GREATER_EQU_LOGIC ){
+        match(">=");
+        t = L();
+        printf("%d: geq\n", code_count);
+        /* (>=) */
+        LPrime();
+    }
+    else if( tk == TK_NOT_EQU_LOGIC ){
+        match("!=");
+        t = L();
+        printf("%d: neq\n", code_count);
+        /* (!=) */
+        inst.opcode = OP_NEQ;
+        inst.operand.i = 0;
+         
+        code[code_count] = inst;
+        /* I write code, so I increment counter */
+        code_count++;
+        LPrime();
+    }
+    else if( tk == TK_EQU_EQU_LOGIC ){
+        match("==");
+        t = L();
+        printf("%d: equ\n", code_count);
+        /* (==) */
+        inst.opcode = OP_EQU;
+        inst.operand.i = 0;
+         
+        code[code_count] = inst;
+        /* I write code, so I increment counter */
+        code_count++;
+        LPrime();
+    }
+    
+    return t;
+}
+
 TYPE TPrime()
 {
      int tk = get_token_name(cur_token);
@@ -859,7 +950,7 @@ TYPE F()
        free(cur_token);
        cur_token = get_token(); 
         
-       return 'R';
+       return 'F';
      }
      else if ( tk == TK_LEFTPAREN ){
           match("(");
@@ -874,7 +965,7 @@ TYPE F()
           // Generate add
 
           TYPE t = F();
-          if( t == 'I' || t == 'R' )
+          if( t == 'I' || t == 'F' )
               return t;
           else {
                // Type error 
@@ -883,8 +974,29 @@ TYPE F()
      else if ( tk == TK_MINUS ){
        match("-");
        TYPE t = F();
-       if ( t == 'I' || t == 'R' )
-          return t;
+
+       if( t == 'I' ){
+           printf("%d: neg\n", code_count);
+
+           inst.opcode = OP_NEG;
+           inst.operand.i = 0;
+           code[code_count] = inst;
+       
+           code_count++;
+           return t;
+       }
+       if (t == 'F'){
+
+           printf("%d: negf\n", code_count);
+
+           inst.opcode = OP_NEGF;
+           inst.operand.i = 0;
+           code[code_count] = inst;
+       
+           code_count++;
+           return t;
+       }
+        
        else {
             // Type error
        }
@@ -893,7 +1005,7 @@ TYPE F()
      else if ( tk == TK_MULT_STAR ){
        match("*");
        TYPE t = F();
-       if ( t == 'I' || t == 'R' )
+       if ( t == 'I' || t == 'F' )
           return t;
        else {
             // Type error
@@ -902,7 +1014,7 @@ TYPE F()
      else if ( tk == TK_DIV ){
        match("/");
        TYPE t = F();
-       if ( t == 'I' || t == 'R' )
+       if ( t == 'I' || t == 'F' )
           return t;
        else {
             // Type error
@@ -911,7 +1023,7 @@ TYPE F()
      else if ( tk == TK_LOGIC_AND ){
        match("&&");
        TYPE t = F();
-       if ( t == 'I' || t == 'B' )
+       if ( t == 'I' || t == 'C' )
           return t;
        else {
             // Type error
@@ -920,7 +1032,7 @@ TYPE F()
      else if ( tk == TK_LOGIC_OR ){
        match("||");
        TYPE t = F();
-       if ( t == 'I' || t == 'B' )
+       if ( t == 'I' || t == 'C' )
           return t;
        else {
             // Type error
