@@ -388,7 +388,7 @@ int parse_tokens(FILE *o, char *word)
 		}	
 		tmp[diff] = '\n';
 		
-		//printf("Token: %s\n", token);
+		printf("Token: %s\n", token);
 		tk = get_sval(token);
 
         if (tk.type == -1){
@@ -1199,11 +1199,12 @@ void comma(FILE *o, char *word)
 }
 void exclamation(FILE *o, char *word)
 {
+    
     if( !strcmp(word, "!") ) {
         sprintf(tk_buffer0, "%d", TK_UNARY_EXCLAMATION);
         put_ulexeme(o, tk_buffer0);
     }
-    else {
+    else {  
         parse_tokens(o,word);
     }
 }

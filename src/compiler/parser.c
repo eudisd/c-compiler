@@ -60,7 +60,7 @@ void match(char *token)
 {
      if( cur_token != NULL ){
          token_package tk = get_sval(token);
-         //printf("match: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
+         printf("match: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
          /*printf("cur_token: %d, tk: %d\n", get_token_name(cur_token), tk.val); */
          if( tk.val != get_token_name(cur_token) ){
              error(file.filename, 0, 0, "Token mismatch!");
@@ -77,7 +77,7 @@ void match(char *token)
 void matchi(int token)
 {
      int tk = get_token_name(cur_token);
-     //printf("match: %s, Token Name: %d, tk: %d\n", cur_token, get_token_name(cur_token), tk);
+     printf("match: %s, Token Name: %d, tk: %d\n", cur_token, get_token_name(cur_token), tk);
      if( cur_token != NULL ){
          if( token != tk ){
              error(file.filename, 0, 0, "Does not match current token!");
@@ -839,6 +839,12 @@ TYPE LPrime()
         t = L();
         printf("%d: geq\n", code_count);
         /* (>=) */
+        inst.opcode = OP_GEQ;
+        inst.operand.i = 0;
+         
+        code[code_count] = inst;
+        
+        code_count++;
         LPrime();
     }
     else if( tk == TK_NOT_EQU_LOGIC ){
@@ -1028,7 +1034,7 @@ TYPE F()
            inst.operand.i = 0;
            code[code_count] = inst;
        
-           code_count                                                                                                                                                                                     ++;
+           code_count++;
            return t;
        }
        if (t == 'F'){
