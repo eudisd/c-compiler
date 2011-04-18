@@ -259,7 +259,7 @@ void DoWhile()
     match("}");
     match("while");
     match("(");
-    TYPE t = E();
+    TYPE t = L();
     if (t != 'I' && t != 'C'){
         fprintf(stderr, "\n'do-while' conditional expression must be of integer type! Exiting...\n\n");
         exit(EXIT_FAILURE);
@@ -958,7 +958,7 @@ TYPE F()
           TYPE t = E();
 
           match(")");
-          return t;
+          return t;  
      }
      else if ( tk == TK_PLUS ){
           match("+");
@@ -982,7 +982,7 @@ TYPE F()
            inst.operand.i = 0;
            code[code_count] = inst;
        
-           code_count++;
+           code_count                                                                                                                                                                                     ++;
            return t;
        }
        if (t == 'F'){

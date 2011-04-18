@@ -1,5 +1,9 @@
 int x;
 int main(){
-   printf -1.5; 
+    x = 0;
+   do {
+    printf x;
+    x = x + 1;
+    }while(x < 10);
 }
 
