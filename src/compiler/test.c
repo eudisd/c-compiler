@@ -1,10 +1,9 @@
 int x, y;
 
 int main(){
-    if ( 0 ){
-        printf 1;
-    }
-    else {
-        printf 2;
-    }
+    x = 0;
+    do {
+    printf x;
+    x = x + 1;
+    } while (1);
 }

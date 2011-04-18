@@ -30,7 +30,7 @@ void run_parser()
      
      //Declarations();
      //Statements();
-     CProgram();
+     //CProgram();
      
      //E();
 
@@ -168,7 +168,8 @@ void Statements()
         Statements();
     }
     else if (tk == TK_DO){
-       
+        DoWhile();
+        Statements();   
     }
     else if (tk == TK_PRINTF){
         
@@ -244,6 +245,32 @@ void Statements()
 
 }
 
+void DoWhile()
+{
+    int target = code_count;
+    Instruction inst;
+
+    match("do");
+    match("{");
+        Statements();
+    match("}");
+    match("while");
+    match("(");
+    TYPE t = E();
+    if (t != 'I' && t != 'C'){
+        fprintf(stderr, "\n'do-while' conditional expression must be of integer type! Exiting...\n\n");
+        exit(EXIT_FAILURE);
+    }
+    inst.opcode = OP_JTRUE;
+    inst.operand.i = target;
+    code[code_count] = inst;
+    printf("%d: jfalse %d\n", code_count, target);
+    code_count++;
+    
+    match(")");
+    match(";");
+}
+
 void IfStatement()
 {
     Instruction inst;
@@ -257,15 +284,6 @@ void IfStatement()
         fprintf(stderr, "\n'if' conditional expression must be of integer type! Exiting...\n\n");
         exit(EXIT_FAILURE);
      }
-     
-        /*
-        // I must remove the result from the top of the stack
-        Instruction inst2;
-        inst2.opcode = OP_POPEMPTY;
-        inst2.operand.i = 0;
-        code[code_count] = inst2;
-        printf("%d: pop (Empty)\n", code_count);
-        code_count++;*/
     
      
     match(")");
@@ -323,7 +341,7 @@ void IfStatement()
     inst3.operand.i = 0;
     code[code_count] = inst3;
     code_count++;
-    printf("%d: pop (Empty)\n");
+    printf("%d: pop (Empty)\n", code_count);
 }
 
 void Assignment()
