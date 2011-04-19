@@ -13,7 +13,8 @@ $(TARGET) : $(OBJS)
 	@echo 
 	@echo "Done Building C Compiler."
 	@-rm *.o
-#@-mv $(TARGET) ../../bin  
+	@-cp ./$(TARGET) ../../bin  
+	@-cp ./$(TARGET) ../../examples/bin
 	@echo	
 	
 main.o : main.c main.h
