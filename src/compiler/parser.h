@@ -58,6 +58,7 @@
 #define OP_NEQ 36
 #define OP_EQU 37
 #define OP_NEGF 38
+#define OP_WRITESTRING 39
 
 /* Type defs */
 typedef unsigned char uchar;

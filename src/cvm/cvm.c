@@ -24,6 +24,7 @@ void run(char *program)
 
     short code_count = 0;
     short data_count = 0;
+    short str_data_end = 0;
 
     if( i == NULL ){
         printf("\nCould not open program file, exiting...\n");
@@ -31,7 +32,10 @@ void run(char *program)
     } 
 
     int cur_pos = ftell(i);
-    fseek(i, -4, SEEK_END);
+    fseek(i, -6, SEEK_END);
+
+    /* Determine Run Time Data Segment Start */
+    fread(&str_data_end, sizeof(short), 1, i);
 
     /* Determine Data Segment size */
     
@@ -42,12 +46,12 @@ void run(char *program)
     fread(&code_count, sizeof(short), 1, i);
 
     fseek(i, cur_pos, SEEK_SET);
-
-
+    printf("code_count: %d, data_count: %d\n", code_count, data_count);
+    
     /* Allocate data array (semi last short holds the code size) */
 
     data = (char*)malloc(sizeof(char)* data_count); 
-
+    fread(data, sizeof(char), data_count, i);
 
     /* Read in code array (last short holds the code size) */
     
@@ -56,8 +60,18 @@ void run(char *program)
     
     ip = 0;
     sp = 0;
+    dp = str_data_end + 1; /* The last byte is the terminating null, we cannot override it
+                              when assigning run time allocation! */
+    
     int j;
-    //printf("code_count: %d, data_count: %d\n", code_count, data_count);
+    printf("code_count: %d, data_count: %d, dp: %d\n", code_count, data_count, dp);
+
+    
+    int c;
+            printf("Code Segment: ");
+            for(c = 0; c < data_count; c++){
+                printf("%x ", data[c]);
+            }
 
     while( ip < code_count ){
            switch( code[ip].opcode ){
@@ -233,6 +247,11 @@ void run(char *program)
                     break;
                 case OP_NOP:
                     break;
+                case OP_WRITESTRING:
+                
+                    printf("%s\n", &data[code[ip].operand.i]);
+                    
+                    break;
                 default:
                     break;
            }
@@ -245,7 +264,7 @@ void print_stack(int sp)
     int i;
     printf("\nBottom: ");
     for(i = 0; i < sp; i++){
-        printf("%d < ", stack[i]);
+        printf("%d < ", stack[i].i);
 
     }
     printf(": Top\n");

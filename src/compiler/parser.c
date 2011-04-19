@@ -10,10 +10,14 @@ short data_max = 1024; /**>  Default is 1kb, could be more */
 short code_max = 1024; /**>  Default is 1kb, could be more  */
 
 short code_count = 0;
+short data_count = 0;
 
 Instruction *code; /**> Code must be dynamically allocated too */
 
+char *data;
+
 int dec_rollback = 0;
+int str_start = 0; /**> Holds the begining position of statically allocated strings */
 
 void run_parser()
 {
@@ -25,7 +29,19 @@ void run_parser()
      }
 
      code = (Instruction*)malloc(sizeof(Instruction)*code_max);
+     data = (char*)malloc(sizeof(char)*data_max);
+     /*
+     int c;
+     printf("Code Segment: ");
+     for(c = 0; c < code_max; c++){
+        printf("%x ", data[c]);
+     }*/
     
+     /* Clear both data and code segment */
+     memset(code, 0, sizeof(Instruction)*code_max);
+     memset(data, 0, sizeof(char)*data_max);
+
+
      //cur_token = get_token();
      
      //Declarations();
@@ -36,11 +52,19 @@ void run_parser()
      //L();
 
      printf("code_count: %d, data_count: %d\n", code_count, data_max);
+
+     /* Write Out Data */
+     fwrite(data, sizeof(char), data_max, output);
+
      /* Write Out Code */
      fwrite(code, sizeof(Instruction), code_count, output);
 
+     /* Write out Static Data Segment Size */
+     fwrite(&data_count, sizeof(short), 1, output);
+
      /* Write out Data Segment Size */
      fwrite(&data_max, sizeof(short), 1, output);
+
      /* Write out Code Segment Size */
      fwrite(&code_count, sizeof(short), 1, output);
 
@@ -211,31 +235,55 @@ void Statements()
 
             code_count++;
         }
+        
         else {
+            char *peek = peek_next_token();
+            int tk2 = get_token_name(peek);
+            int str_flag = -1;
+
+            if (tk2 == TK_STRINGLIT){
+                str_flag = 0;
+            }
+            free(peek);
+
             TYPE t = E();
             match(";");
+        
+            
+            
             // generate print
             
 
             /* Encode the address into the instruction */
-            inst.opcode = OP_WRITEINT;
-            if ( t == 'I' ){
+            if( str_flag == 0 ){
+                inst.opcode = OP_WRITESTRING;
+                printf("%d: writestring @%d\n", code_count, str_start);
+                inst.operand.i = str_start;
+                code[code_count] = inst;
+                code_count++;                
+            }
+            else if ( t == 'I' ){
+                inst.opcode = OP_WRITEINT;
                 printf("%d: writeint\n", code_count);
                 inst.operand.i = 0;
                 code[code_count] = inst;
+                code_count++;
             }
             else if (t == 'C'){
+                inst.opcode = OP_WRITEINT;
                 inst.operand.i = 0;
                 code[code_count] = inst;
+                code_count++;
             }
             else if (t == 'F'){
                 printf("%d: writefloat\n", code_count);
                 inst.opcode = OP_WRITEFLOAT;
                 inst.operand.i = 0;
                 code[code_count] = inst;
+                code_count++;
             }
 
-            code_count++;
+            
         }
         Statements();
     }
@@ -984,7 +1032,33 @@ TYPE F()
        return 'I';
      }
      else if ( tk == TK_STRINGLIT ){
-       
+            
+            int index = get_token_value(cur_token);
+            matchi(TK_STRINGLIT);
+            
+            int i;
+
+            str_start = data_count;
+          
+
+            for(i = 1; i < strlen(string_table->table[index].name) - 1; i++){
+                //printf("%x ", string_table->table[index].name[i]);
+                data[data_count] = string_table->table[index].name[i];
+                data_count++;
+            }
+            /* These strings are null terminated, just like in real C. */
+            data_count++;
+            
+            /*
+            int c;
+            printf("Code Segment: ");
+            for(c = 0; c < code_max; c++){
+                printf("%x ", data[c]);
+            }*/
+
+            /* Put the string in the proper data segment */
+
+            return 'S';
      }
      else if ( tk == TK_FLOATLIT ){
       // generate pushi 

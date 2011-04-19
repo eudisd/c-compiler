@@ -392,7 +392,7 @@ int parse_tokens(FILE *o, char *word)
 		}	
 		tmp[diff] = '\n';
 		
-		printf("Token: %s\n", token);
+		//printf("Token: %s\n", token);
 		tk = get_sval(token);
 
         if (tk.type == -1){

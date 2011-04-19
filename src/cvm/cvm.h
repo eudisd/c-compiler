@@ -49,6 +49,8 @@
 #define OP_EQU 37
 #define OP_NEGF 38
 
+#define OP_WRITESTRING 39
+
 typedef unsigned char uchar;  
 typedef unsigned int uint;
 typedef union Operand_TAG {
