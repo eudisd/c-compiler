@@ -1,6 +1,7 @@
 int x;
 int main(){
-    printf (1);
+    x = 10;
+    printf (1.5);
     printf ("Hello");
     printf ("World!");
     printf ("AGAIN!");

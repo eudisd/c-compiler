@@ -73,6 +73,8 @@ void run(char *program)
                 printf("%x ", data[c]);
             }
 
+    int alloc = 0;
+
     while( ip < code_count ){
            switch( code[ip].opcode ){
                 case OP_ADD:
@@ -80,13 +82,13 @@ void run(char *program)
                     sp--;
                     break;
                 case OP_PUSH:
-                    dp = code[ip].operand.i;
-                    stack[sp].i = *(int*)(data + dp);
+                    alloc = code[ip].operand.i;
+                    stack[sp].i = *(int*)(data + (dp + alloc));
                     sp++;
                     break;
                 case OP_PUSHF:  
-                    dp = code[ip].operand.i;
-                    stack[sp].f = *(float*)(data + dp);
+                    alloc = code[ip].operand.i;
+                    stack[sp].f = *(float*)(data + (dp + alloc));
                     sp++;
                     break;
                 case OP_PUSHI: 
@@ -97,8 +99,8 @@ void run(char *program)
                     
                     break;
                 case OP_POP:
-                    dp = code[ip].operand.i;
-                    *(int*)(data + dp) = stack[sp - 1].i;
+                    alloc = code[ip].operand.i;
+                    *(int*)(data + (dp + alloc)) = stack[sp - 1].i;
                     sp--;
                     break;
                 case OP_POPEMPTY:
@@ -106,8 +108,8 @@ void run(char *program)
                     sp--;
                     break;
                 case OP_POPF:
-                    dp = code[ip].operand.i;
-                    *(float*)(data + dp) = stack[sp - 1].f;
+                    alloc = code[ip].operand.i;
+                    *(float*)(data + (dp + alloc)) = stack[sp - 1].f;
                     sp--;
                     break;
                 case OP_EXCH:
