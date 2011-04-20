@@ -5,7 +5,7 @@ By Eudis Duran
 
 ## Compiling
 
-Linux:
+### Linux:
 
 You can build the source with a single command.
 Make sure you are in the root src directory, and 
@@ -15,16 +15,22 @@ be placed in the root binary folder for the project.
 The programs are named "c" for the compiler, and "cvm" for 
 the virtual machine.
 
-Windows:
+### Example Programs/Tests
+
+The example programs can be built in a similar fasion.
+Change directory to examples/ and execute a "make"
+call.  That will build all the examples for execution.
+
+### Windows:
 
 Assuming you have visual C++, building the compiler is
 only a matter of creating a project and adding the files
-to the project.  Then build.  The compiler is written in
-ansi C, so it should work just fine.
+to that project and building.  The compiler is written in
+ansi C, so it should work just fine (I have not tested it).
 
 ## Usage:
 
-To compil a source file, first make sure that it adheres
+To compile a source file, first make sure that it adheres
 to the small C subset that is specified in the Documentation
 file, as not all of C is implemented yet.
 

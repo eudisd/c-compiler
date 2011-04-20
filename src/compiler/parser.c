@@ -42,7 +42,8 @@ void run_parser()
      memset(data, 0, sizeof(char)*data_max);
 
 
-     //cur_token = get_token();
+     cur_token = get_token();
+     
      
      //Declarations();
      Statements();
@@ -56,6 +57,7 @@ void run_parser()
      
      //E();
      //L();
+     
 
      printf("code_count: %d, data_count: %d\n", code_count, data_max);
 
@@ -190,7 +192,8 @@ void Statements()
 
     }
     else if (tk == TK_SWITCH) {
-
+        Switch();
+        Statements();
     }
     else if (tk == TK_FUNCTION_CALL) {
 
@@ -307,6 +310,28 @@ void Statements()
 
 }
 
+void Switch()
+{
+    if( cur_token == NULL ){
+		return;
+	}
+    
+    TYPE t;
+    int index = get_token_value(cur_token);
+	Instruction inst_hole;
+	int hole;
+
+	match("switch");
+    match("(");
+     t = E();
+    match(")");
+    match("{");
+        
+    match("}");
+
+	
+}
+
 void Label()
 {	
 	char *peek = peek_next_token();
@@ -319,7 +344,11 @@ void Label()
 		int index = get_token_value(cur_token);
 
 		/* First, we check and see if the label has been seen or not already */
-		if( id_table->table[index].seen == 0 ){
+        if( id_table->table[index].seen == 1 ){
+            fprintf(stderr, "Multiple lables with same name!  Exiting\n");
+            exit(EXIT_FAILURE);
+        }
+		else if( id_table->table[index].seen == 0 ){
 			printf("\nSee: %d\n", id_table->table[index].addr);
 			if (id_table->table[index].addr == -1){
 				id_table->table[index].addr = code_count;

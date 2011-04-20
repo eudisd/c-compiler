@@ -1,4 +1,4 @@
-int main()
-{
-	printf "hellosdfadfadfafadfadadadfadadfadf";
-}
+label1:
+
+
+    goto label1;

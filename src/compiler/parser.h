@@ -134,6 +134,7 @@ void DoWhile();
 void While();
 void Goto();
 void Label();
+void Switch();
 
 /* Expression Productions */
 /**
