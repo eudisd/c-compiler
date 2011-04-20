@@ -12,9 +12,11 @@ void usage( void )
 		   "  --version\tPrint version number.\n"
            "  --verbose\tPrint extra information.\n"
 		   "  -o <file>\tSpecify an output file name.\n"
-           "  -Sc      \tSpecify the size of the Code Segment.\n"
-           "  -Sd      \tSpecify the size of the Data Segment.\n"
-           "  -Sh      \tSpecify the default size of the Symbol Table Tash.\n"
+           "  -Sc      \tSpecify the size of the Code Segment (Not Implemented Yet).\n"
+           "  -Sd      \tSpecify the size of the Data Segment (Not Implemented Yet).\n"
+           "  -Ss      \tSpecify String Symbol Table Hash (Not Implemented Yet).\n"
+		   "  -Si      \tSpecify ID Symbol Table Hash (Not Implemented Yet).\n"
+		   "  -So      \tPrint VM Assembly to stdout.\n"
 		   "\n"
 		   );
 }

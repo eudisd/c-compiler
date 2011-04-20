@@ -11,6 +11,8 @@ extern file_struct file;
 symbol_table *string_table;
 symbol_table *id_table;
 
+int so = 0;
+
 int main(int argc, char *argv[])
 {
 	char *ofile;                 /**> Filename of the output file                                   */
@@ -57,6 +59,9 @@ int main(int argc, char *argv[])
 	default:
 		/* These next few lines handle the -o flag */	
 
+		if( strcmp(argv[1], "-So") == 0 ){
+			printf("\n%s\n", argv[2]);
+		}
 		o_name_len = strlen((char*)scan_for_o(argc, argv));
 
 		if(o_name_len > 0){ 
@@ -72,7 +77,7 @@ int main(int argc, char *argv[])
 			run_scanner(&file); /* Outputs an interim file */
             run_parser();  /* Generates Stack Code */
 
-            //print_stab(string_table);
+            print_stab(string_table);
 	        //print_stab(id_table);
 
 			free(ofile);

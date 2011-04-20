@@ -2,7 +2,7 @@
 
 CC    := gcc
 LIBS  := -lm
-FLAGS := -Wall -O2
+FLAGS := -Wall -O2 -g
 
 OBJS := main.o error.o parser.o scanner.o symbol.o preprocessor.o semantic.o  utils.o stack.o
 

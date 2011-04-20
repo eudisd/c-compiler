@@ -17,5 +17,9 @@
 #include "stack.h"
 
 
+/* Command Line Options (externals)*/
+
+extern int So;
+
 
 #endif

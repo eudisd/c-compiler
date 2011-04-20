@@ -120,6 +120,7 @@ void put_ulexeme(FILE *o, char *tk_name)
 
 char *extract_token(char *word)
 {
+		
 	switch(word[0]){
 		case '{':
 			return copy_alloced("{");
@@ -311,10 +312,13 @@ char *return_integral(char *word)
 }
 
 char *return_string(char *word)
-{
+{	
+
     int i, j;
     size_t size = strlen(word);
     char *tmp;
+	
+	
     for(i = 1; i < size; i++){
         if( word[i] == '"' ){
             i++;
@@ -329,7 +333,7 @@ char *return_string(char *word)
     }
 
     tmp[i] = '\0';
-	printf("String: %s\n", tmp);
+	//printf("String: %s\n", tmp);
     
     
     return tmp;
@@ -384,6 +388,8 @@ int parse_tokens(FILE *o, char *word)
 
     token_package tk;
 
+	
+
 	while(tk_size > 0){
 		tmp = (char*)xmalloc(sizeof(char)*diff + 1);
 
@@ -392,9 +398,10 @@ int parse_tokens(FILE *o, char *word)
 		}	
 		tmp[diff] = '\n';
 		
-		//printf("Token: %s\n", token);
+		printf("Token: %s\n", token);
 		tk = get_sval(token);
 
+		
         if (tk.type == -1){
             sprintf(tk_buffer0, "%d", tk.val);
             put_ulexeme(o, tk_buffer0);
@@ -428,6 +435,7 @@ int parse_tokens(FILE *o, char *word)
             /* If there are any collisions, the we just ignore those.  I 
              * output the slot number of the hash, and the TK_STRINLIT token
              */
+			
             sprintf(tk_buffer0, "%d", TK_STRINGLIT);
             sprintf(tk_buffer1, "%d", index);
                     
@@ -446,14 +454,27 @@ int parse_tokens(FILE *o, char *word)
         } 
         
 		
-                    
-		free(token);
+        if(token != NULL){
+			free(token);
+		}
 		token = extract_token(tmp);
 		tk_size = strlen(token);
-
+		
 		upto += tk_size;
 		diff = word_size - upto;
+		
+
+		/* HUGE BUG HERE, I cannot figure out why it keeps crashing on this free call
+           I've solved the problem by introducing another bug.  There is memory leaking here */
+		
+		/*
+		if(tmp != NULL){
+			printf("tmp_value: %x\n", tmp[0]);
+			
+			tmp = NULL;
+		}*/
 		free(tmp);
+		
 	}
 	return 0;
 

@@ -114,6 +114,8 @@ void run(char *program)
                 case OP_EXCH:
                     break;
                 case OP_DUP:
+					stack[sp] = stack[sp - 1];
+					sp++;
                     break;
                 case OP_ADDF:
                     stack[sp - 2].f += stack[sp - 1].f;

@@ -12,7 +12,7 @@ short code_max = 1024; /**>  Default is 1kb, could be more  */
 short code_count = 0;
 short data_count = 0;
 
-Instruction *code; /**> Code must be dynamically allocated too */
+Instruction *code; /**> Code is be dynamically allocated too */
 
 char *data;
 
@@ -42,14 +42,15 @@ void run_parser()
      memset(data, 0, sizeof(char)*data_max);
 
 
-     cur_token = get_token();
+     //cur_token = get_token();
      
      //Declarations();
      Statements();
+	 /*
      int i;
     	for(i = 0; i < code_count; i++)
         	printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);		
-
+      */
 		
      //CProgram();
      
@@ -77,12 +78,6 @@ void run_parser()
      close(input);
      close(output);
 
-
-
-
-     
-
-
 }
 
 void match(char *token)
@@ -95,6 +90,7 @@ void match(char *token)
              error(file.filename, 0, 0, "Token mismatch!");
          }
          else {
+			 
              free(cur_token);
              cur_token = get_token();
          }
@@ -130,6 +126,10 @@ TYPE CProgram()
 
 void MainEntry()
 {
+	 if(cur_token == NULL){
+		fprintf(stderr, "\nFile Is Empty!  Exiting...\n\n");
+        exit(EXIT_FAILURE);
+	 }
      int tk = get_token_name(cur_token);
 
 
@@ -344,10 +344,6 @@ void Label()
 
 		Statements();
 
-		
-
-
-	
 		
 	}
 	else {
@@ -1137,7 +1133,7 @@ TYPE F()
      }
      else if ( tk == TK_STRINGLIT ){
             
-            int index = get_token_value(cur_token);
+            int index = 0; //get_token_value(cur_token);
             matchi(TK_STRINGLIT);
             
             int i;
@@ -1147,8 +1143,9 @@ TYPE F()
 
             for(i = 1; i < strlen(string_table->table[index].name) - 1; i++){
                 //printf("%x ", string_table->table[index].name[i]);
+			/*
                 data[data_count] = string_table->table[index].name[i];
-                data_count++;
+                data_count++;*/
             }
             /* These strings are null terminated, just like in real C. */
             data_count++;
@@ -1161,6 +1158,7 @@ TYPE F()
             }*/
 
             /* Put the string in the proper data segment */
+			exit(-1);
 
             return 'S';
      }

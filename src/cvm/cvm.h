@@ -76,7 +76,7 @@ char *data;
 union stack_TAG {
       int i;
       float f;
-} stack[256];
+} stack[1024];  /* 1kb for stack */
 
 
 
