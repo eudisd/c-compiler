@@ -23,6 +23,8 @@ typedef struct record_TAG{
 	char *value;
 	int slot;         /**> Either EMPTY_SLOT or NOT_EMPTY */
 	char *scope;
+	int seen;
+	char *block_info;
 }record;
 
 typedef struct symbol_table_TAG {

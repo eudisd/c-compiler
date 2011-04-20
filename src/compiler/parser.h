@@ -132,6 +132,8 @@ void Statements();
 void IfStatement();
 void DoWhile();
 void While();
+void Goto();
+void Label();
 
 /* Expression Productions */
 /**

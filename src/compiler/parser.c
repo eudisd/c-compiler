@@ -42,11 +42,11 @@ void run_parser()
      memset(data, 0, sizeof(char)*data_max);
 
 
-     //cur_token = get_token();
+     cur_token = get_token();
      
      //Declarations();
-     //Statements();
-     CProgram();
+     Statements();
+     //CProgram();
      
      //E();
      //L();
@@ -84,7 +84,7 @@ void match(char *token)
 {
      if( cur_token != NULL ){
          token_package tk = get_sval(token);
-         //printf("match: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
+         printf("match: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
          /*printf("cur_token: %d, tk: %d\n", get_token_name(cur_token), tk.val); */
          if( tk.val != get_token_name(cur_token) ){
              error(file.filename, 0, 0, "Token mismatch!");
@@ -100,7 +100,7 @@ void match(char *token)
 void matchi(int token)
 {
      int tk = get_token_name(cur_token);
-     //printf("match: %s, Token Name: %d, tk: %d\n", cur_token, get_token_name(cur_token), tk);
+     printf("match: %s, Token Name: %d, tk: %d\n", cur_token, get_token_name(cur_token), tk);
      if( cur_token != NULL ){
          if( token != tk ){
              error(file.filename, 0, 0, "Does not match current token!");
@@ -166,9 +166,14 @@ void MainEntry()
 
 void Statements()
 {
+	if(cur_token == NULL){
+		return;
+	}
     int tk = get_token_name(cur_token);
     
     if( tk == TK_IDENTIFIER ){
+		Label();
+			
         Assignment();
         Statements();
     }
@@ -186,7 +191,8 @@ void Statements()
 
     }
     else if (tk == TK_GOTO) {
-
+		Goto();
+		Statements();
     }
     else if (tk == TK_IF){
         IfStatement();
@@ -294,6 +300,38 @@ void Statements()
 
     
 
+}
+
+void Label()
+{	
+	char *peek = peek_next_token();
+	printf("peek: %s\n", peek);
+	printf("cur_token: %s\n", cur_token);
+	int tk = get_token_name(peek);
+	if (tk == TK_COLON){
+		//int index = get_token_value(cur_token);
+		//printf("The label is: %s\n", id_table->table[index].name);
+		matchi(TK_IDENTIFIER);
+		match(":");
+		
+		if(peek != NULL){
+			free(peek);
+		}
+		Statements();
+	}
+	else {
+		if(peek != NULL){
+			free(peek);
+		}
+		return;
+	}
+	
+}
+void Goto()
+{
+	match("goto");
+	matchi(TK_IDENTIFIER);
+	match(";");
 }
 
 void DoWhile()
@@ -442,6 +480,9 @@ void IfStatement()
 
 void Assignment()
 {
+	if (cur_token == NULL){
+		return;
+	}
     // Save Type And Address
     int index = get_token_value(cur_token);
     TYPE id_type = id_table->table[index].type;
@@ -481,6 +522,9 @@ void Assignment()
 
 void Declarations()
 {
+	if(cur_token == NULL){
+		return;
+	}
     //printf("\n\n");
     //printf("CUR_TOKEN: %s\n", cur_token);
     
