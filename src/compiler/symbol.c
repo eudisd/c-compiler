@@ -46,8 +46,9 @@ symbol_table *create_stab(char* t_name, size_t max)
 	strcpy(stab->t_name, t_name);
 
 	for(i = 0; i < max; i++){
-		stab->table[i].addr = 0;
+		stab->table[i].addr = -1;
 		stab->table[i].slot = EMPTY_SLOT;
+		stab->table[i].seen = 0;
 	}
 
 	return stab;

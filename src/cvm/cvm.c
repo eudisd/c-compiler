@@ -46,7 +46,6 @@ void run(char *program)
     fread(&code_count, sizeof(short), 1, i);
 
     fseek(i, cur_pos, SEEK_SET);
-    printf("code_count: %d, data_count: %d\n", code_count, data_count);
     
     /* Allocate data array (semi last short holds the code size) */
 
@@ -62,7 +61,7 @@ void run(char *program)
     sp = 0;
     dp = str_data_end + 1; /* The last byte is the terminating null, we cannot override it
                               when assigning run time allocation! */
-    
+    /*
     int j;
     printf("code_count: %d, data_count: %d, dp: %d\n", code_count, data_count, dp);
 
@@ -71,9 +70,9 @@ void run(char *program)
             printf("Code Segment: ");
             for(c = 0; c < data_count; c++){
                 printf("%x ", data[c]);
-            }
+            }*/
 
-    int alloc = 0;
+    int alloc = 0;  /**> Used as the base pointer for the static allocations (non-string)*/
 
     while( ip < code_count ){
            switch( code[ip].opcode ){

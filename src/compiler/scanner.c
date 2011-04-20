@@ -392,7 +392,7 @@ int parse_tokens(FILE *o, char *word)
 		}	
 		tmp[diff] = '\n';
 		
-		printf("Token: %s\n", token);
+		//printf("Token: %s\n", token);
 		tk = get_sval(token);
 
         if (tk.type == -1){
@@ -412,7 +412,7 @@ int parse_tokens(FILE *o, char *word)
         }
 		else if (tk.type == TK_IDENTIFIER) {
 			record *rec = (record*)get_record(token, "NULL", 'V', 0, "\0");
-            
+			(*rec).addr = -1;
             stab_insert("symbol", rec, id_table);
             index = hash(rec->name, id_table->size);
 

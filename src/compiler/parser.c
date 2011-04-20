@@ -46,6 +46,11 @@ void run_parser()
      
      //Declarations();
      Statements();
+     int i;
+    	for(i = 0; i < code_count; i++)
+        	printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);		
+
+		
      //CProgram();
      
      //E();
@@ -84,7 +89,7 @@ void match(char *token)
 {
      if( cur_token != NULL ){
          token_package tk = get_sval(token);
-         printf("match: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
+         //printf("match: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
          /*printf("cur_token: %d, tk: %d\n", get_token_name(cur_token), tk.val); */
          if( tk.val != get_token_name(cur_token) ){
              error(file.filename, 0, 0, "Token mismatch!");
@@ -100,7 +105,7 @@ void match(char *token)
 void matchi(int token)
 {
      int tk = get_token_name(cur_token);
-     printf("match: %s, Token Name: %d, tk: %d\n", cur_token, get_token_name(cur_token), tk);
+     //printf("match: %s, Token Name: %d, tk: %d\n", cur_token, get_token_name(cur_token), tk);
      if( cur_token != NULL ){
          if( token != tk ){
              error(file.filename, 0, 0, "Does not match current token!");
@@ -305,19 +310,45 @@ void Statements()
 void Label()
 {	
 	char *peek = peek_next_token();
-	printf("peek: %s\n", peek);
-	printf("cur_token: %s\n", cur_token);
 	int tk = get_token_name(peek);
+	Instruction inst_hole;
+
+	int hole, save;
+
 	if (tk == TK_COLON){
-		//int index = get_token_value(cur_token);
-		//printf("The label is: %s\n", id_table->table[index].name);
+		int index = get_token_value(cur_token);
+
+		/* First, we check and see if the label has been seen or not already */
+		if( id_table->table[index].seen == 0 ){
+			printf("\nSee: %d\n", id_table->table[index].addr);
+			if (id_table->table[index].addr == -1){
+				id_table->table[index].addr = code_count;
+			}
+			else {
+				
+				code[id_table->table[index].addr].operand.i = code_count;
+				id_table->table[index].seen = 1;
+			}
+			id_table->table[index].seen = 1;
+					
+		}		
+		
+
 		matchi(TK_IDENTIFIER);
 		match(":");
 		
 		if(peek != NULL){
 			free(peek);
 		}
+		
+
 		Statements();
+
+		
+
+
+	
+		
 	}
 	else {
 		if(peek != NULL){
@@ -329,7 +360,36 @@ void Label()
 }
 void Goto()
 {
+	if( cur_token == NULL ){
+		return;
+	}
+
 	match("goto");
+
+	int index = get_token_value(cur_token);
+	Instruction inst_hole;
+	int hole;
+
+	/* The label has been seen, so we just generate the actual address jump! */
+	if( id_table->table[index].seen == 1 ){
+		printf("%d: jmp @%d \n", code_count, id_table->table[index].addr);
+		inst_hole.opcode = OP_JMP;
+		inst_hole.operand.i = id_table->table[index].addr;
+		code[code_count] = inst_hole;
+		code_count++;
+	}
+	/* Generate Dummy Jump here, since the label has not been seen */
+	else {
+		hole = code_count;
+		printf("%d: jmp 0 (Hole)\n", code_count);
+		inst_hole.opcode = OP_JMP;
+		inst_hole.operand.i = hole; /* Store the hole so that we can restore it later */
+		code[hole] = inst_hole;
+		code_count++;
+		id_table->table[index].addr = hole; 
+
+	}
+
 	matchi(TK_IDENTIFIER);
 	match(";");
 }
