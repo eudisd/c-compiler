@@ -186,6 +186,11 @@ void MainEntry()
          Declarations();
          Statements();
         
+         /* Clear scope before leaving it */
+         int i;
+         for(i = 0; i < MAX_SLOTS; i++){ 
+             stab_stack[scope_ptr]->table[i].slot = EMPTY_SLOT;
+         }
          /* Exit scope here */
          scope_ptr--;
          match("}");
@@ -354,6 +359,11 @@ void Switch()
     scope_ptr++;
         
 
+    /* Clear scope before leaving it */
+    int i;
+    for(i = 0; i < MAX_SLOTS; i++){ 
+        stab_stack[scope_ptr]->table[i].slot = EMPTY_SLOT;
+    }
     scope_ptr--;
     match("}");
 
@@ -458,6 +468,12 @@ void DoWhile()
     scope_ptr++;
         Declarations();
         Statements();
+
+    /* Clear scope before leaving it */
+    int i;
+    for(i = 0; i < MAX_SLOTS; i++){ 
+        stab_stack[scope_ptr]->table[i].slot = EMPTY_SLOT;
+    }
     scope_ptr--;
     match("}");
     match("while");
@@ -515,6 +531,12 @@ void While()
         save = code_count;
         code[hole].operand.i = save;
 
+/* Clear scope before leaving it */
+        int i_;
+        for(i_ = 0; i_ < MAX_SLOTS; i_++){ 
+            stab_stack[scope_ptr]->table[i_].slot = EMPTY_SLOT;
+        }
+        
     scope_ptr--;
     match("}");
 
@@ -554,7 +576,13 @@ void IfStatement()
 
      Declarations();
      Statements();
-    
+
+     /* Clear scope before leaving it */
+        int i;
+        for(i = 0; i < MAX_SLOTS; i++){ 
+            stab_stack[scope_ptr]->table[i].slot = EMPTY_SLOT;
+        }
+     
     scope_ptr--;
     match("}");
      
@@ -581,8 +609,18 @@ void IfStatement()
         code_count++;
 
         match("else");
+        /* next we open a new scope, and signal all slots as empty once the are done */
         match("{");
+        scope_ptr++;
+         Declarations();
          Statements();
+
+        /* Clear scope before leaving it */
+        int i;
+        for(i = 0; i < MAX_SLOTS; i++){ 
+            stab_stack[scope_ptr]->table[i].slot = EMPTY_SLOT;
+        }
+        scope_ptr--;
         match("}");
     }
 
