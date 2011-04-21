@@ -51,8 +51,8 @@ void run_parser()
      /* Prepare stack of stabs */
      int g;
      for(g = 0; g < 8; g++){
-      
         stab_stack[g] = create_stab("stab_stack", MAX_SLOTS);
+        
      }
 
      //cur_token = get_token();
@@ -257,7 +257,12 @@ void Statements()
             int index = get_token_value(cur_token);
             TYPE id_type = stab_stack[scope_ptr]->table[index].type;
             int id_addr = stab_stack[scope_ptr]->table[index].addr;
-
+            
+            if (stab_stack[scope_ptr]->table[index].slot == EMPTY_SLOT){
+                fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", stab_stack[scope_ptr]->table[index].name);
+                exit(EXIT_FAILURE);
+            }
+            
             matchi(TK_IDENTIFIER);
             match(";");
 
@@ -655,6 +660,11 @@ void Assignment()
     int index = get_token_value(cur_token);
     TYPE id_type = stab_stack[scope_ptr]->table[index].type;
     int id_addr = stab_stack[scope_ptr]->table[index].addr;
+
+    if (stab_stack[scope_ptr]->table[index].slot == EMPTY_SLOT){
+        fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", id_table->table[index].name);
+        exit(EXIT_FAILURE);
+    }
     
     Instruction inst;
 
@@ -1347,6 +1357,11 @@ TYPE F()
         TYPE id_type = stab_stack[scope_ptr]->table[index].type;
         int id_addr = stab_stack[scope_ptr]->table[index].addr;
 
+        if( stab_stack[scope_ptr]->table[index].slot == EMPTY_SLOT ){
+            fprintf(stderr, "\n%s has not been declared!  Fatal Error, Exiting...\n", id_table->table[index].name );
+            exit(EXIT_FAILURE);            
+        }
+
         printf("%d: push @%s (Type: %c)\n", code_count, stab_stack[scope_ptr]->table[index].name, id_type);
         
         /* Encode the address into the instruction */
@@ -1446,7 +1461,7 @@ TYPE F()
      }
      else if ( tk == TK_PLUS ){
           match("+");
-          // Generate add
+          // 
 
           TYPE t = F();
           if( t == 'I' || t == 'F' )
