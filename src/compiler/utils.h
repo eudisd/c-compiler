@@ -22,6 +22,8 @@
 #define TRUE 1
 #define FALSE 0
 
+#define DEBUG FALSE
+
 typedef struct file_struct_Tag {
 	char calling_prog[64];
 	char filename[64];

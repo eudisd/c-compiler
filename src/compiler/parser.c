@@ -71,9 +71,9 @@ void run_parser()
      //E();
      //L();
      
-
+#if DEBUG == TRUE
      printf("code_count: %d, data_count: %d\n", code_count, data_max);
-
+#endif
      /* Write Out Data */
      fwrite(data, sizeof(char), data_max, output);
 
@@ -253,14 +253,15 @@ void Statements()
         if (tk == TK_IDENTIFIER){
             
             // Save Type And Address
+            /* Modified Wed 20, 10:09 - to handle the new scope rules */
             int index = get_token_value(cur_token);
-            TYPE id_type = id_table->table[index].type;
-            int id_addr = id_table->table[index].addr;
+            TYPE id_type = stab_stack[scope_ptr]->table[index].type;
+            int id_addr = stab_stack[scope_ptr]->table[index].addr;
 
             matchi(TK_IDENTIFIER);
             match(";");
 
-            printf("%d: writeintid @%s (Type: %c)\n", code_count, id_table->table[index].name, id_type);
+            printf("%d: writeintid @%s (Type: %c - Scope: %d)\n", code_count, stab_stack[scope_ptr]->table[index].name, id_type, scope_ptr);
 
             /* Encode the address into the instruction */
             inst.opcode = OP_WRITEINTID;
@@ -539,11 +540,11 @@ void While()
         
     scope_ptr--;
     match("}");
-
+#if DEBUG == TRUE
     int i;
     for(i = 0; i < code_count; i++)
         printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);
-        
+#endif
     
 }
 
@@ -652,8 +653,8 @@ void Assignment()
 	 }
     // Save Type And Address
     int index = get_token_value(cur_token);
-    TYPE id_type = id_table->table[index].type;
-    int id_addr = id_table->table[index].addr;
+    TYPE id_type = stab_stack[scope_ptr]->table[index].type;
+    int id_addr = stab_stack[scope_ptr]->table[index].addr;
     
     Instruction inst;
 
@@ -664,7 +665,7 @@ void Assignment()
     match(";");
     // Pop at an address!
 
-    printf("%d: pop @%s (Type: %c)\n", code_count, id_table->table[index].name, id_type);
+    printf("%d: pop @%s (Type: %c - Scope: %d)\n", code_count, stab_stack[scope_ptr]->table[index].name, id_type, scope_ptr);
 
         /* Encode the address into the instruction */
     inst.opcode = OP_POP;
@@ -750,8 +751,9 @@ int IntDec()
         
 
         int index = get_token_value(tmp);
+#if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
-
+#endif
         /* Here I modify the symbol table to account for type and address */
         
         
@@ -770,6 +772,7 @@ int IntDec()
         strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
        
         char tmpstr[16];
+
         sprintf(tmpstr, "stab#%d", scope_ptr);
 
         strcpy(stab_stack[scope_ptr]->t_name, tmpstr);
@@ -777,7 +780,9 @@ int IntDec()
         stab_stack[scope_ptr]->table[index].type = 'I';   
         stab_stack[scope_ptr]->table[index].slot = index;
         
-        print_stab(stab_stack[scope_ptr]);     
+#if DEBUG == TRUE
+        print_stab(stab_stack[scope_ptr]);  
+#endif   
     
         /*
         id_table->table[index].addr = dp;
@@ -807,8 +812,9 @@ int IntDec()
         matchi(TK_IDENTIFIER);
         
         int index = get_token_value(tmp);
+#if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
-
+#endif
 
         if (stab_stack[scope_ptr]->table[index].slot != EMPTY_SLOT){
             fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", stab_stack[scope_ptr]->table[index].name);
@@ -825,7 +831,9 @@ int IntDec()
         stab_stack[scope_ptr]->table[index].type = 'I';   
         stab_stack[scope_ptr]->table[index].slot = index;
         
+#if DEBUG == TRUE
         print_stab(stab_stack[scope_ptr]);   
+#endif
 
 
         /*
@@ -880,8 +888,9 @@ int FloatDec()
         }
 
         int index = get_token_value(tmp);
+#if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
-
+#endif
         if (stab_stack[scope_ptr]->table[index].slot != EMPTY_SLOT){
             fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", stab_stack[scope_ptr]->table[index].name);
             exit(EXIT_FAILURE);
@@ -897,7 +906,9 @@ int FloatDec()
         stab_stack[scope_ptr]->table[index].type = 'F';   
         stab_stack[scope_ptr]->table[index].slot = index;
         
+#if DEBUG == TRUE
         print_stab(stab_stack[scope_ptr]);   
+#endif
 
 
         /*
@@ -925,7 +936,9 @@ int FloatDec()
         matchi(TK_IDENTIFIER);
         
         int index = get_token_value(tmp);
+#if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+#endif
 
         if (stab_stack[scope_ptr]->table[index].slot != EMPTY_SLOT){
             fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", stab_stack[scope_ptr]->table[index].name);
@@ -941,8 +954,9 @@ int FloatDec()
         stab_stack[scope_ptr]->table[index].addr = dp;
         stab_stack[scope_ptr]->table[index].type = 'F';   
         stab_stack[scope_ptr]->table[index].slot = index;
-        
+#if DEBUG == TRUE
         print_stab(stab_stack[scope_ptr]);   
+#endif
 
 
         /*
@@ -994,7 +1008,9 @@ int CharDec()
         }
 
         int index = get_token_value(tmp);
+#if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
+#endif
 
         if (stab_stack[scope_ptr]->table[index].slot != EMPTY_SLOT){
             fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", stab_stack[scope_ptr]->table[index].name);
@@ -1011,8 +1027,9 @@ int CharDec()
         stab_stack[scope_ptr]->table[index].type = 'C';   
         stab_stack[scope_ptr]->table[index].slot = index;
         
+#if DEBUG == TRUE
         print_stab(stab_stack[scope_ptr]);   
-
+#endif
         
         /*
         id_table->table[index].addr = dp;
@@ -1037,8 +1054,9 @@ int CharDec()
         matchi(TK_IDENTIFIER);
         
         int index = get_token_value(tmp);
+#if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
-
+#endif
 
         if (stab_stack[scope_ptr]->table[index].slot != EMPTY_SLOT){
             fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", stab_stack[scope_ptr]->table[index].name);
@@ -1054,10 +1072,9 @@ int CharDec()
         stab_stack[scope_ptr]->table[index].addr = dp;
         stab_stack[scope_ptr]->table[index].type = 'C';   
         stab_stack[scope_ptr]->table[index].slot = index;
-        
+#if DEBUG == TRUE       
         print_stab(stab_stack[scope_ptr]);   
-
-
+#endif
 
         /*
 
@@ -1327,10 +1344,10 @@ TYPE F()
        // genarate push
        // return type
         int index = get_token_value(cur_token);
-        TYPE id_type = id_table->table[index].type;
-        int id_addr = id_table->table[index].addr;
+        TYPE id_type = stab_stack[scope_ptr]->table[index].type;
+        int id_addr = stab_stack[scope_ptr]->table[index].addr;
 
-        printf("%d: push @%s (Type: %c)\n", code_count, id_table->table[index].name, id_type);
+        printf("%d: push @%s (Type: %c)\n", code_count, stab_stack[scope_ptr]->table[index].name, id_type);
         
         /* Encode the address into the instruction */
         inst.opcode = OP_PUSH;
@@ -1353,7 +1370,7 @@ TYPE F()
         free(cur_token);
         cur_token = get_token();
         
-        return id_table->table[index].type;
+        return stab_stack[scope_ptr]->table[index].type;
      }
      else if ( tk == TK_INTLIT ){
        // generate pushi
