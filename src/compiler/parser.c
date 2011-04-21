@@ -19,6 +19,10 @@ char *data;
 int dec_rollback = 0;
 int str_start = 0; /**> Holds the begining position of statically allocated strings */
 
+
+int scope_ptr = 0;
+symbol_table stab_stack[8];  /**> Maximum scope nesting is 8.  Its pretty big already, 8*1000*~240bytes */
+
 void run_parser()
 {
      input = fopen(INTERIM_FILENAME, "r");
@@ -165,10 +169,13 @@ void MainEntry()
          match(")");
 
          match("{");
+         /* Enter new scope here */
+
 
          Declarations();
          Statements();
-
+        
+         /* Exit scope here */
          match("}");
      }
      else {

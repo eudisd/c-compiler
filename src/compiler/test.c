@@ -1,7 +1,6 @@
-
-int x;
-
 int main()
 {
+    int x;
+    int x;
     printf x;
 }
