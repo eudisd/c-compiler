@@ -76,6 +76,10 @@ void stab_insert(char* filename, record *rec, symbol_table *stab)
     
     if( stab->table[index].slot != EMPTY_SLOT ){
         //printf("Symbol table collision!! Do something!\n");
+        /* If there is an identifier already in the symtab, then there
+           is no need to insert it again! */
+        free(rec);
+        return;
     }  
     else {
 	    stab->table[index] = *rec;

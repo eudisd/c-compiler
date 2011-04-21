@@ -419,7 +419,7 @@ int parse_tokens(FILE *o, char *word)
         }
 		else if (tk.type == TK_IDENTIFIER) {
 			record *rec = (record*)get_record(token, "NULL", 'V', 0, "\0");
-			(*rec).addr = -1;
+			//rec->addr = -1;
             stab_insert("symbol", rec, id_table);
             index = hash(rec->name, id_table->size);
 
@@ -1020,6 +1020,7 @@ void i(FILE *o, char *word)
 }
 void l(FILE *o, char *word)
 {
+
     /* long */
     if( !strcmp(word, "long") ) {
         sprintf(tk_buffer0, "%d", TK_LONG);

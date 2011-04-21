@@ -46,7 +46,7 @@ void run_parser()
      
      
      //Declarations();
-     Statements();
+     //Statements();
 	 /*
      int i;
     	for(i = 0; i < code_count; i++)

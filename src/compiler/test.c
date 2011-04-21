@@ -1,4 +1,8 @@
-label1:
+int x;
+x = 0;
 
-
-    goto label1;
+int main()
+{
+    
+    printf (x);
+}
