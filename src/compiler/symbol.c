@@ -56,12 +56,14 @@ symbol_table *create_stab(char* t_name, size_t max)
 
 void stab_insert(char* filename, record *rec, symbol_table *stab)
 {	
+    /*
 	int addr;
 	char type;
 	char name[64];
 	char *value;
-	int slot;         /**> Either EMPTY_SLOT or NOT_EMPTY */
+	int slot;         
 	char *scope;
+    */
 	
 	/* Before inserting anything into the table, we check that the 
 	   given identifier is NOT a reserved keyword */
@@ -74,18 +76,10 @@ void stab_insert(char* filename, record *rec, symbol_table *stab)
 	size_t index = hash(rec->name, stab->size);
 	rec->slot = index;
     
-    if( stab->table[index].slot != EMPTY_SLOT ){
-        //printf("Symbol table collision!! Do something!\n");
-        /* If there is an identifier already in the symtab, then there
-           is no need to insert it again! */
-        free(rec);
-        return;
-    }  
-    else {
-	    stab->table[index] = *rec;
-	    stab->in_use++;
-	    stab->load_factor = ((float)stab->in_use) / stab->size;
-    }
+	stab->table[index] = *rec;
+	stab->in_use++;
+	stab->load_factor = ((float)stab->in_use) / stab->size;
+    
 }
 
 record *get_record(char *name, char*val, char type, int slot, char *scope)

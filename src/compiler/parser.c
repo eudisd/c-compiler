@@ -42,7 +42,7 @@ void run_parser()
      memset(data, 0, sizeof(char)*data_max);
 
 
-     cur_token = get_token();
+     //cur_token = get_token();
      
      
      //Declarations();
@@ -53,7 +53,7 @@ void run_parser()
         	printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);		
       */
 		
-     //CProgram();
+     CProgram();
      
      //E();
      //L();
@@ -92,7 +92,10 @@ void match(char *token)
              error(file.filename, 0, 0, "Token mismatch!");
          }
          else {
-			 
+			 if(cur_token == NULL){
+                printf("current toke is null at match()!\n");
+		        exit(EXIT_FAILURE);
+	         }
              free(cur_token);
              cur_token = get_token();
          }
@@ -109,6 +112,10 @@ void matchi(int token)
              error(file.filename, 0, 0, "Does not match current token!");
          }
          else {
+             if(cur_token == NULL){
+                printf("current toke is null at matchi()!\n");
+		        exit(EXIT_FAILURE);
+	        }
              free(cur_token);
              cur_token = get_token();
 
@@ -129,11 +136,10 @@ TYPE CProgram()
 void MainEntry()
 {
 	 if(cur_token == NULL){
-		fprintf(stderr, "\nFile Is Empty!  Exiting...\n\n");
-        exit(EXIT_FAILURE);
+        printf("current toke is null at MainEntry!\n");
+		exit(EXIT_FAILURE);
 	 }
      int tk = get_token_name(cur_token);
-
 
      if( tk == TK_INT ){
          match("int");
@@ -142,7 +148,7 @@ void MainEntry()
          int index = get_token_value(cur_token);
 
          if(strcmp(id_table->table[index].name, "main") == 0){
-            id_table->table[index].addr = -1;
+            //id_table->table[index].addr = -1;
             id_table->table[index].type = 'P';
             cur_token = get_token();
          }
@@ -174,12 +180,13 @@ void MainEntry()
 void Statements()
 {
 	if(cur_token == NULL){
+        printf("current toke is null at Statements!\n");
 		return;
 	}
     int tk = get_token_name(cur_token);
     
     if( tk == TK_IDENTIFIER ){
-		Label();
+		//Label();
 			
         Assignment();
         Statements();
@@ -312,9 +319,10 @@ void Statements()
 
 void Switch()
 {
-    if( cur_token == NULL ){
-		return;
-	}
+    if(cur_token == NULL){
+        printf("current toke is null at Switch()!\n");
+		exit(EXIT_FAILURE);
+	 }
     
     TYPE t;
     int index = get_token_value(cur_token);
@@ -385,9 +393,10 @@ void Label()
 }
 void Goto()
 {
-	if( cur_token == NULL ){
-		return;
-	}
+	if(cur_token == NULL){
+        printf("current toke is null at Goto()!\n");
+		exit(EXIT_FAILURE);
+	 }
 
 	match("goto");
 
@@ -519,6 +528,11 @@ void IfStatement()
     
      Statements();
     match("}");
+     
+    if(cur_token == NULL){
+        printf("current toke is null at IfStatement()!\n");
+		exit(EXIT_FAILURE);
+	 }
     int tk = get_token_name(cur_token);
     if(tk == TK_ELSE){
         Instruction inst2;
@@ -565,9 +579,10 @@ void IfStatement()
 
 void Assignment()
 {
-	if (cur_token == NULL){
-		return;
-	}
+	if(cur_token == NULL){
+        printf("current toke is null at Assignment()!\n");
+		exit(EXIT_FAILURE);
+	 }
     // Save Type And Address
     int index = get_token_value(cur_token);
     TYPE id_type = id_table->table[index].type;
@@ -608,8 +623,9 @@ void Assignment()
 void Declarations()
 {
 	if(cur_token == NULL){
-		return;
-	}
+        printf("current toke is null at Declarations()!\n");
+		exit(EXIT_FAILURE);
+	 }
     //printf("\n\n");
     //printf("CUR_TOKEN: %s\n", cur_token);
     

@@ -418,11 +418,20 @@ int parse_tokens(FILE *o, char *word)
             put_ulexeme(o, tk_buffer0);
         }
 		else if (tk.type == TK_IDENTIFIER) {
+            
 			record *rec = (record*)get_record(token, "NULL", 'V', 0, "\0");
-			//rec->addr = -1;
-            stab_insert("symbol", rec, id_table);
-            index = hash(rec->name, id_table->size);
+			rec->addr = -1;
 
+            index = hash(token, id_table->size);
+
+            if (id_table->table[index].slot != EMPTY_SLOT){
+                free(rec);
+            }
+            else {
+                stab_insert("symbol", rec, id_table);
+            }
+
+            printf("ID: %s, INDEX: %d\n", token, index);
 			sprintf(tk_buffer0, "%d", TK_IDENTIFIER);
             sprintf(tk_buffer1, "%d", index);
             put_lexeme(o, tk_buffer0, tk_buffer1);

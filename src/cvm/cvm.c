@@ -59,13 +59,20 @@ void run(char *program)
     
     ip = 0;
     sp = 0;
-    dp = str_data_end + 1; /* The last byte is the terminating null, we cannot override it
+    
+    /* This tests to see if we have any static strings allocated at all! */
+    if( str_data_end != 0){
+        dp = str_data_end + 1; /* The last byte is the terminating null, we cannot override it
                               when assigning run time allocation! */
-    /*
+    }
+    else {
+        dp = 0;
+    }   
+    
     int j;
     printf("code_count: %d, data_count: %d, dp: %d\n", code_count, data_count, dp);
 
-    
+    /*
     int c;
             printf("Code Segment: ");
             for(c = 0; c < data_count; c++){
