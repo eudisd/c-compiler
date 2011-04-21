@@ -431,7 +431,7 @@ int parse_tokens(FILE *o, char *word)
                 stab_insert("symbol", rec, id_table);
             }
 
-            printf("ID: %s, INDEX: %d\n", token, index);
+            //printf("ID: %s, INDEX: %d\n", token, index);
 			sprintf(tk_buffer0, "%d", TK_IDENTIFIER);
             sprintf(tk_buffer1, "%d", index);
             put_lexeme(o, tk_buffer0, tk_buffer1);

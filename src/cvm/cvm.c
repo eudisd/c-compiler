@@ -69,6 +69,7 @@ void run(char *program)
         dp = 0;
     }   
     
+    
     int j;
     printf("code_count: %d, data_count: %d, dp: %d\n", code_count, data_count, dp);
 
@@ -259,7 +260,7 @@ void run(char *program)
                     break;
                 case OP_WRITESTRING:
                 
-                    printf("%s\n", &data[code[ip].operand.i]);
+                    printf("%s", &data[code[ip].operand.i]);
                     
                     break;
                 default:

@@ -84,7 +84,7 @@ extern file_struct file;
 extern symbol_table *string_table;
 extern symbol_table *id_table;
 
-extern symbol_table stab_stack[];
+extern symbol_table *stab_stack[];
 
 /** Gets a lexeme.  _MUST_ be freed after use.
   */
