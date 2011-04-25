@@ -185,8 +185,9 @@ void MainEntry()
 
 
          
-         Declarations();
+         
          Statements();
+        
         
          /* Clear scope before leaving it */
          int i;
@@ -205,20 +206,24 @@ void MainEntry()
 
 void Statements()
 {
+    Declarations();
 	if(cur_token == NULL){
         printf("current toke is null at Statements!\n");
 		return;
 	}
+
+    
     int tk = get_token_name(cur_token);
     
+
     if( tk == TK_IDENTIFIER ){
 		Label();
-			
         Assignment();
         Statements();
     }
     else if (tk == TK_WHILE ){
         While();
+    
         Statements();
     }
     else if (tk == TK_FOR){
@@ -578,7 +583,7 @@ void DoWhile()
     match("do");
     match("{");
     scope_ptr++;
-        Declarations();
+        
         Statements();
 
     /* Clear scope before leaving it */
@@ -630,7 +635,7 @@ void While()
     match(")");
     match("{");
     scope_ptr++;
-        Declarations();
+       // Declarations();
         Statements();
 
         inst.opcode = OP_JMP;
@@ -686,7 +691,7 @@ void IfStatement()
      printf("%d: jfalse 0\n", code_count);
      code_count++;
 
-     Declarations();
+     //Declarations();
      Statements();
 
      /* Clear scope before leaving it */
@@ -724,7 +729,7 @@ void IfStatement()
         /* next we open a new scope, and signal all slots as empty once the are done */
         match("{");
         scope_ptr++;
-         Declarations();
+         //Declarations();
          Statements();
 
         /* Clear scope before leaving it */
@@ -1452,6 +1457,21 @@ TYPE TPrime()
          printf("%d: div\n", code_count);
          /* (/) : Need to implement this! */
          inst.opcode = OP_DIV;
+         inst.operand.i = 0;
+         
+         code[code_count] = inst;
+         /* I write code, so I increment counter */
+         code_count++;
+         
+         
+         TPrime();
+     }
+      else if ( tk == TK_MOD ){
+         match("%");
+         t = T();
+         printf("%d: mod\n", code_count);
+         /* (/) : Need to implement this! */
+         inst.opcode = OP_MOD;
          inst.operand.i = 0;
          
          code[code_count] = inst;

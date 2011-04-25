@@ -2,7 +2,8 @@
 /* This test demonstrates declaration of variables.
  * So far, only three are available. int, char, and float.
  * 
- * It also demonstrates assignment, and printing.
+ * It also demonstrates assignment, and printing. 
+ */
 /*--------------------------------------------------------*/
 
 /*

@@ -1,8 +1,7 @@
 /*--------------------------------------------------------*/
-/* This test demonstrates declaration of variables.
- * So far, only three are available. int, char, and float.
- * 
- * It also demonstrates assignment, and printing. 
+/* Here, I demonstrate while and do-while looping constructs.
+ * I do so, by presenting the iterative fibonacci algorithm, 
+ * for a very small set of numbers.
  */
 /*--------------------------------------------------------*/
 
@@ -11,13 +10,33 @@
  * Spring 2011
  */
 
-int x, y;
-float z, w;
-char a, b, c;
+
 
 int main()
 {
-    x = 1;
-    printf ("The value of X is: ");
-    printf(x);
+    
+
+    int a, b;
+
+    a = 10;
+    b = 5;
+
+    do {
+        
+        printf ("FUCK");
+    }while( b != 5 );
+    
+    printf ("The GCD is: ");
+    printf(b);
+
+
+
+
+
+
+
+
+
+
+    
 }
