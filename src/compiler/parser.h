@@ -137,6 +137,7 @@ void While();
 void Goto();
 void Label();
 void Switch();
+void Case();
 
 /* Expression Productions */
 /**

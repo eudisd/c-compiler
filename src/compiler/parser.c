@@ -23,7 +23,8 @@ int str_start = 0; /**> Holds the begining position of statically allocated stri
 int scope_ptr = -1;
 symbol_table *stab_stack[8];  /**> Maximum scope nesting is 8.  Its pretty big already, 8*1000*~240bytes */
 
-
+/* Used by the case and switch productions */
+int case_hole = 0;
 
 
 void run_parser()
@@ -55,7 +56,7 @@ void run_parser()
         
      }
 
-     //cur_token = get_token();
+     cur_token = get_token();
      
      
      //Declarations();
@@ -66,8 +67,8 @@ void run_parser()
         	printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);		
       */
 		
-     CProgram();
-     
+     //CProgram();
+     Switch();
      //E();
      //L();
      
@@ -352,28 +353,88 @@ void Switch()
 		exit(EXIT_FAILURE);
 	 }
     
-    TYPE t;
-    int index = get_token_value(cur_token);
+    
+    /*
+    int index = get_token_namee(cur_token);
 	Instruction inst_hole;
-	int hole;
-
+	int hole;*/
+    
 	match("switch");
     match("(");
-     t = E();
+    TYPE t = E();
     match(")");
     match("{");
     scope_ptr++;
         
 
-    /* Clear scope before leaving it */
+    Case();
+
+
+    /* End of cases, patch last hole */
+   
+    
+
     int i;
+    for(i = 0; i < code_count; i++)
+        printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);
+
+    
+    //int i;
     for(i = 0; i < MAX_SLOTS; i++){ 
         stab_stack[scope_ptr]->table[i].slot = EMPTY_SLOT;
     }
     scope_ptr--;
     match("}");
-
 	
+}
+
+
+void Case()
+{
+    if(cur_token == NULL){
+        printf("current token is null at Case()!\n");
+		exit(EXIT_FAILURE);
+	}
+    int tk = get_token_name(cur_token);
+
+    if(tk == TK_CASE){
+        match("case");
+        TYPE t = E();
+        if(t != 'C' && t != 'I'){
+            fprintf(stderr, "Error in switch statement!  Case must be integer constant!");
+            exit(EXIT_FAILURE);
+        }
+        match(":");
+
+        /* The result of E() is pushed onto the stack right now, we must save it then
+           compare down the chain */
+        
+        Instruction inst_hole;
+
+        printf("%d: dup \n", code_count);
+
+        code_count++;// There is a dup here
+
+        printf("%d: jfalse 0 (Dummy Hole) \n", code_count);
+    
+        /* Since this is the first case, we don't lookup the 
+           to see if there already a case hole */
+
+		inst_hole.opcode = OP_JFALSE;
+		inst_hole.operand.i = 0;
+		code[code_count] = inst_hole;
+        case_hole = code_count;
+
+		code_count++;
+        Statements();
+
+        code[case_hole].operand.i = code_count;
+
+        Case();
+    }
+    else {
+        return;
+    }
 }
 
 void Label()
@@ -1572,6 +1633,7 @@ char *get_token()
     while( (c = getc(input)) != EOF ){
         token[i] = c;
         i++;
+
         if(c == '>')
             break;
             
