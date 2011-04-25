@@ -1512,9 +1512,10 @@ TYPE F()
                 /* i from the previous look holds the scope where the variable was found, we assign it here */
                 id_type = stab_stack[i]->table[index].type;
                 id_addr = stab_stack[i]->table[index].addr;
+                stab_stack[i]->table[index].scope;
             }
 
-        printf("%d: push @%s (Type: %c)\n", code_count, stab_stack[scope_ptr]->table[index].name, id_type);
+        printf("%d: push @%s (Type: %c)\n", code_count, stab_stack[i]->table[index].name, id_type);
        
         /* Encode the address into the instruction */
         inst.opcode = OP_PUSH;
@@ -1537,7 +1538,7 @@ TYPE F()
         free(cur_token);
         cur_token = get_token();
         
-        return stab_stack[scope_ptr]->table[index].type;
+        return id_type;
      }
      else if ( tk == TK_INTLIT ){
        // generate pushi

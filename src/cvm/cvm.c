@@ -44,7 +44,7 @@ void run(char *program)
     /* Determine Code Segment size */
     
     fread(&code_count, sizeof(short), 1, i);
-    printf("Code Count!: %d\n", code_count);
+ 
     fseek(i, cur_pos, SEEK_SET);
     
     /* Allocate data array (semi last short holds the code size) */
@@ -69,10 +69,10 @@ void run(char *program)
         dp = 0;
     }   
     
-    
+    /*
     int j;
     printf("code_count: %d, data_count: %d, dp: %d\n", code_count, data_count, dp);
-
+    */
     /*
     int c;
             printf("Code Segment: ");
@@ -262,6 +262,7 @@ void run(char *program)
                 case OP_WRITESTRING:
                 
                     printf("%s", &data[code[ip].operand.i]);
+                    printf("\n");
                     
                     break;
                 default:

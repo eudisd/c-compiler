@@ -282,9 +282,12 @@ void remove_comments(file_struct *file)
 			
 			c = getc(i); /* Pop off the last '*' */
 			c = getc(i); /* Pop off the last '/' */
-			if (c == '\n'){
+
+            /* Why am I doing the below again?  Crap, I show really comment my code...*/
+			/*if (c == '\n'){
 				c = getc(i);
-			}
+                
+			}*/
 		} 
 		putc(c, o);
 	}
