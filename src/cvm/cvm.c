@@ -168,7 +168,7 @@ void run(char *program)
                     break;
                 case OP_EQL:
                     stack[sp - 2].i = stack[sp - 2].i == stack[sp - 1].i;
-                    break;
+                    sp--;
                     break;
                 case OP_NEG:
                     stack[sp - 1].i = -stack[sp - 1].i;

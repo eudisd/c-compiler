@@ -1,5 +1,5 @@
 
-    switch(1){
+    switch(2){
         case 1:
             printf (1);
         case 2:

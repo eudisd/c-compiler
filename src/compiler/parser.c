@@ -399,6 +399,21 @@ void Case()
 
     if(tk == TK_CASE){
         match("case");
+        
+      
+        /* The result of E() is pushed onto the stack right now, we must save it then
+           compare down the chain */
+        
+        Instruction inst_hole, inst_dup, inst_junk, inst_eql;
+
+        /* The dup happens before the E() */
+        printf("%d: dup \n", code_count);
+        
+        inst_dup.opcode = OP_DUP;
+        inst_dup.operand.i = 0;
+        code[code_count] = inst_dup;
+        code_count++;
+
         TYPE t = E();
         if(t != 'C' && t != 'I'){
             fprintf(stderr, "Error in switch statement!  Case must be integer constant!");
@@ -406,16 +421,16 @@ void Case()
         }
         match(":");
 
-        /* The result of E() is pushed onto the stack right now, we must save it then
-           compare down the chain */
-        
-        Instruction inst_hole;
+        /* generate code for equality test here */
 
-        printf("%d: dup \n", code_count);
-
-        code_count++;// There is a dup here
+        printf("%d: eql \n", code_count);
+        inst_eql.opcode = OP_EQL;
+        inst_eql.operand.i = 0;
+        code[code_count] = inst_eql;
+        code_count++;
 
         printf("%d: jfalse 0 (Dummy Hole) \n", code_count);
+
     
         /* Since this is the first case, we don't lookup the 
            to see if there already a case hole */
@@ -424,11 +439,20 @@ void Case()
 		inst_hole.operand.i = 0;
 		code[code_count] = inst_hole;
         case_hole = code_count;
-
 		code_count++;
-        Statements();
 
-        code[case_hole].operand.i = code_count;
+        Statements();
+        
+        
+        code[case_hole].operand.i = code_count; /* Fill in hole before we are done in this case */
+
+        /* Pop junk off the stack */
+        printf("%d: pop (Empty) \n", code_count);
+
+        inst_junk.opcode = OP_POPEMPTY;
+        inst_junk.operand.i = 0;
+        code[code_count] = inst_junk;
+        code_count++;
 
         Case();
     }
