@@ -70,8 +70,8 @@ void run_scanner(file_struct *file)
     //dispatcher['$'] = &constant;
     //dispatcher['$'] = &stringlit;
     
-	FILE *i = fopen(file->filename, "r");
-	FILE *o = fopen(INTERIM_FILENAME, "w");
+	FILE *i = fopen(INTERIM_FILENAME, "r");
+	FILE *o = fopen("tmp", "w");
 
     if( i == NULL ){
         error(file->filename, 0, 0, "Could not open file for processing!  Exiting");
@@ -89,6 +89,8 @@ void run_scanner(file_struct *file)
 
 	fclose(i);
 	fclose(o);
+    remove(INTERIM_FILENAME);
+    rename("tmp", INTERIM_FILENAME);
 
 }
 

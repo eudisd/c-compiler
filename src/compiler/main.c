@@ -68,11 +68,11 @@ int main(int argc, char *argv[])
 			ofile = (char*)xmalloc(sizeof(char)*o_name_len);
 			strcpy(ofile, (char*)scan_for_o(argc, argv));
 
-			/* Do stuff here */
-			//run_preprocessor(argv[0], argv[1], ofile);
-
             strcpy(file.filename, argv[1]);
             strcpy(file.default_o, ofile);
+
+
+			run_preprocessor(&file);
 
 			run_scanner(&file); /* Outputs an interim file */
             run_parser();  /* Generates Stack Code */

@@ -83,7 +83,7 @@ void run(char *program)
     int alloc = 0;  /**> Used as the base pointer for the static allocations (non-string)*/
 
     while( ip < code_count ){
-            printf("OPCODE: %d\n", code[ip].opcode);
+            
            switch( code[ip].opcode ){
                 case OP_ADD:
                     stack[sp - 2].i += stack[sp - 1].i;
