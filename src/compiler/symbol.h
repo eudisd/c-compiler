@@ -22,7 +22,7 @@ typedef struct record_TAG{
 	char name[64];
 	char *value;
 	int slot;         /**> Either EMPTY_SLOT or NOT_EMPTY */
-	char *scope;
+	char scope;
 	int seen;
 	char *block_info;
 }record;

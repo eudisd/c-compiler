@@ -44,7 +44,7 @@ void run(char *program)
     /* Determine Code Segment size */
     
     fread(&code_count, sizeof(short), 1, i);
-
+    printf("Code Count!: %d\n", code_count);
     fseek(i, cur_pos, SEEK_SET);
     
     /* Allocate data array (semi last short holds the code size) */
@@ -83,6 +83,7 @@ void run(char *program)
     int alloc = 0;  /**> Used as the base pointer for the static allocations (non-string)*/
 
     while( ip < code_count ){
+            printf("OPCODE: %d\n", code[ip].opcode);
            switch( code[ip].opcode ){
                 case OP_ADD:
                     stack[sp - 2].i += stack[sp - 1].i;

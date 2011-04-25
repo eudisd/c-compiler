@@ -20,7 +20,7 @@ int dec_rollback = 0;
 int str_start = 0; /**> Holds the begining position of statically allocated strings */
 
 
-int scope_ptr = -1;
+int scope_ptr = 0;  /* I am wasting a scope here... */
 symbol_table *stab_stack[8];  /**> Maximum scope nesting is 8.  Its pretty big already, 8*1000*~240bytes */
 
 /* Used by the case and switch productions */
@@ -56,7 +56,7 @@ void run_parser()
         
      }
 
-     cur_token = get_token();
+     //cur_token = get_token();
      
      
      //Declarations();
@@ -67,8 +67,8 @@ void run_parser()
         	printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);		
       */
 		
-     //CProgram();
-     Switch();
+     CProgram();
+     //Switch();
      //E();
      //L();
      
@@ -87,6 +87,7 @@ void run_parser()
      /* Write out Data Segment Size */
      fwrite(&data_max, sizeof(short), 1, output);
 
+    
      /* Write out Code Segment Size */
      fwrite(&code_count, sizeof(short), 1, output);
 
@@ -259,9 +260,29 @@ void Statements()
             TYPE id_type = stab_stack[scope_ptr]->table[index].type;
             int id_addr = stab_stack[scope_ptr]->table[index].addr;
             
-            if (stab_stack[scope_ptr]->table[index].slot == EMPTY_SLOT){
-                fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", stab_stack[scope_ptr]->table[index].name);
+
+            /* Check if variable exists */
+            int found = 0, i = 0;
+            for(i = 0; i <= scope_ptr; i++){
+                if(stab_stack[i]->table[index].slot == EMPTY_SLOT){
+         
+                }
+                else {
+                    found = 1;
+                    break;
+                }
+            }
+    
+            if (found == 0){
+                fprintf(stderr, "%s has not been declared! Fatal Error, exiting...\n", id_table->table[index].name);
                 exit(EXIT_FAILURE);
+            }
+            else {
+                printf("Found here: %d\n\n", i);
+                /* i from the previous look holds the scope where the variable was found, we assign it here */
+                id_type = stab_stack[i]->table[index].type;
+                id_addr = stab_stack[i]->table[index].addr;
+                printf("index: %d - id_addr: %d - i: %d\n", index,  id_addr, i);
             }
             
             matchi(TK_IDENTIFIER);
@@ -746,9 +767,32 @@ void Assignment()
     TYPE id_type = stab_stack[scope_ptr]->table[index].type;
     int id_addr = stab_stack[scope_ptr]->table[index].addr;
 
-    if (stab_stack[scope_ptr]->table[index].slot == EMPTY_SLOT){
-        fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", id_table->table[index].name);
+
+    /* Check all scopes up to current scope_ptr to see if the
+       variable has been declared! */
+    int found = 0, i = 0;
+    for(i = 0; i <= scope_ptr; i++){
+         
+        if(stab_stack[i]->table[index].slot == EMPTY_SLOT){
+            
+        }
+        else {
+            found = 1;
+            break;
+        }
+    }
+    
+    if (found == 0){
+        fprintf(stderr, "%s has not been declared! Fatal Error, exiting...\n", id_table->table[index].name);
         exit(EXIT_FAILURE);
+    }
+    else {
+
+        /* i from the previous lookup holds the scope where the variable was found, we assign it here */
+        id_type = stab_stack[i]->table[index].type;
+        id_addr = stab_stack[i]->table[index].addr;
+        printf("Found in scope: %d, current scope: %d\n", i, scope_ptr);
+        printf("Does this have? id_type: %c - id_addr: %d\n", id_type, id_addr);
     }
     
     Instruction inst;
@@ -760,8 +804,8 @@ void Assignment()
     match(";");
     // Pop at an address!
 
-    printf("%d: pop @%s (Type: %c - Scope: %d)\n", code_count, stab_stack[scope_ptr]->table[index].name, id_type, scope_ptr);
-
+    printf("%d: pop @%s (Type: %c - Scope: %d)\n", code_count, stab_stack[i]->table[index].name, id_type, i);
+    printf("%s - addr: %d\n", stab_stack[i]->table[index].name, id_addr);
         /* Encode the address into the instruction */
     inst.opcode = OP_POP;
     if ( id_type == 'I' ){
@@ -832,6 +876,7 @@ int IntDec()
 
         matchi(TK_IDENTIFIER);
 
+       
     
         /* Test to see that it's not a function */
         if( get_token_name(cur_token) == TK_LEFTPAREN ){
@@ -844,6 +889,7 @@ int IntDec()
             return -1;
         }
         
+        
 
         int index = get_token_value(tmp);
 #if DEBUG == TRUE
@@ -851,12 +897,13 @@ int IntDec()
 #endif
         /* Here I modify the symbol table to account for type and address */
         
-        
+         
 
         if (stab_stack[scope_ptr]->table[index].slot != EMPTY_SLOT){
             fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", stab_stack[scope_ptr]->table[index].name);
             exit(EXIT_FAILURE);
         }
+        
         
         /* What I'm doing here is copying the id_table to a scopped symbol table 
            the id table was just a convinient hash to store the indexes of 
@@ -874,6 +921,7 @@ int IntDec()
         stab_stack[scope_ptr]->table[index].addr = dp;
         stab_stack[scope_ptr]->table[index].type = 'I';   
         stab_stack[scope_ptr]->table[index].slot = index;
+        stab_stack[scope_ptr]->table[index].scope = scope_ptr;
         
 #if DEBUG == TRUE
         print_stab(stab_stack[scope_ptr]);  
@@ -1159,6 +1207,7 @@ int CharDec()
         }
       
         strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
+
        
         char tmpstr[16];
         sprintf(tmpstr, "stab#%d", scope_ptr);
@@ -1442,13 +1491,31 @@ TYPE F()
         TYPE id_type = stab_stack[scope_ptr]->table[index].type;
         int id_addr = stab_stack[scope_ptr]->table[index].addr;
 
-        if( stab_stack[scope_ptr]->table[index].slot == EMPTY_SLOT ){
-            fprintf(stderr, "\n%s has not been declared!  Fatal Error, Exiting...\n", id_table->table[index].name );
-            exit(EXIT_FAILURE);            
-        }
+         /* Check if variable exists */
+         int found = 0, i = 0;
+         for(i = 0; i <= scope_ptr; i++){
+             if(stab_stack[i]->table[index].slot == EMPTY_SLOT){
+         
+             }
+             else {
+                 found = 1;
+                 break;
+             }
+         }
+    
+         if (found == 0){
+             fprintf(stderr, "%s has not been declared! Fatal Error, exiting...\n", id_table->table[index].name);
+             exit(EXIT_FAILURE);
+         }
+         else {
+
+                /* i from the previous look holds the scope where the variable was found, we assign it here */
+                id_type = stab_stack[i]->table[index].type;
+                id_addr = stab_stack[i]->table[index].addr;
+            }
 
         printf("%d: push @%s (Type: %c)\n", code_count, stab_stack[scope_ptr]->table[index].name, id_type);
-        
+       
         /* Encode the address into the instruction */
         inst.opcode = OP_PUSH;
         if ( id_type == 'I' ){
@@ -1474,6 +1541,7 @@ TYPE F()
      }
      else if ( tk == TK_INTLIT ){
        // generate pushi
+
 
        printf("%d: pushi %d (Type: %c)\n", code_count, get_token_value(cur_token), 'I' );
 
