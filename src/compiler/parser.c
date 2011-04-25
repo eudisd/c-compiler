@@ -978,6 +978,7 @@ int IntDec()
         stab_stack[scope_ptr]->table[index].addr = dp;
         stab_stack[scope_ptr]->table[index].type = 'I';   
         stab_stack[scope_ptr]->table[index].slot = index;
+        stab_stack[scope_ptr]->table[index].scope = scope_ptr;
         
 #if DEBUG == TRUE
         print_stab(stab_stack[scope_ptr]);   

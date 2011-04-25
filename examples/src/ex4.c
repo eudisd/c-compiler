@@ -1,7 +1,7 @@
 /*--------------------------------------------------------*/
 /* Here, I demonstrate while and do-while looping constructs.
  * I do so, by presenting the iterative fibonacci algorithm, 
- * for a very small set of numbers.
+ * and the GCD algorithm for a very small set of numbers.
  */
 /*--------------------------------------------------------*/
 
@@ -34,28 +34,17 @@ int main()
 
     int a, b, c, d;
 
-    a = 10;
-    b = 5;
+    a = 6;
+    b = 6;
 
     printf ("Greatest Commond Divisisor");
     do {
         c = a % b;
         a = b;
         b = c;
-        printf "FUCK";
-    }while( b != 0 );
+    }while( b > 0 );
     
     printf ("The GCD is: ");
-    printf(b);
-
-
-
-
-
-
-
-
-
-
-    
+    printf(a);
+   
 }
