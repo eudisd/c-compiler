@@ -287,7 +287,7 @@ void Statements()
                 /* i from the previous look holds the scope where the variable was found, we assign it here */
                 id_type = stab_stack[i]->table[index].type;
                 id_addr = stab_stack[i]->table[index].addr;
-                printf("index: %d - id_addr: %d - i: %d\n", index,  id_addr, i);
+                //printf("index: %d - id_addr: %d - i: %d\n", index,  id_addr, i);
             }
             
             matchi(TK_IDENTIFIER);
@@ -796,8 +796,8 @@ void Assignment()
         /* i from the previous lookup holds the scope where the variable was found, we assign it here */
         id_type = stab_stack[i]->table[index].type;
         id_addr = stab_stack[i]->table[index].addr;
-        printf("Found in scope: %d, current scope: %d\n", i, scope_ptr);
-        printf("Does this have? id_type: %c - id_addr: %d\n", id_type, id_addr);
+        //printf("Found in scope: %d, current scope: %d\n", i, scope_ptr);
+        //printf("Does this have? id_type: %c - id_addr: %d\n", id_type, id_addr);
     }
     
     Instruction inst;
@@ -810,7 +810,7 @@ void Assignment()
     // Pop at an address!
 
     printf("%d: pop @%s (Type: %c - Scope: %d)\n", code_count, stab_stack[i]->table[index].name, id_type, i);
-    printf("%s - addr: %d\n", stab_stack[i]->table[index].name, id_addr);
+    //printf("%s - addr: %d\n", stab_stack[i]->table[index].name, id_addr);
         /* Encode the address into the instruction */
     inst.opcode = OP_POP;
     if ( id_type == 'I' ){
@@ -1212,6 +1212,7 @@ int CharDec()
             exit(EXIT_FAILURE);
         }
       
+
         strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
 
        

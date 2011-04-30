@@ -49,12 +49,10 @@ int main(int argc, char *argv[])
 		}
 		break;
 	case 3:
-		if(strcmp(argv[1], "-c")){
-			/* Stop the linking process, output object files.
-			(Highly unlikely that I'll implement this, but I'll keep it
-			here for posterity anyway).
-			*/
-		}
+        fprintf(stderr, "File input error!\n");
+        exit(EXIT_FAILURE);
+
+        
 		break;
 	default:
 		/* These next few lines handle the -o flag */	
@@ -82,6 +80,7 @@ int main(int argc, char *argv[])
 
 			free(ofile);
 		}
+        
 
 		break;
 	}
