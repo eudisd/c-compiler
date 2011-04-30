@@ -11,14 +11,16 @@ void print_stab(symbol_table *stab)
            "Total Used: %4d\t Size: %4d\t Load Factor: %4.2f\n"
 		   "\n", stab->t_name, (int)stab->in_use, (int)stab->size, stab->load_factor);
 	printf("-------\t----\t-----\t----\t-----\n"
-		   "Address\tName\tValue\tSlot\tType\tScope\n");
+		   "Address\tName\tValue\tSlot\tType\tScope\tIsArray\tArray-Size\n");
 	for(i = 0; i < stab->size; i++){
 		if( stab->table[i].slot != EMPTY_SLOT ){
-			printf("%4d\t%s\t%s\t%d\t%c\t%d\n",
+			printf("%4d\t%s\t%s\t%d\t%c\t%d\t%c\t%d\n",
                    stab->table[i].addr, stab->table[i].name, 
                    stab->table[i].value, stab->table[i].slot,
                    stab->table[i].type,
-                   stab->table[i].scope);
+                   stab->table[i].scope,
+                   stab->table[i].isarray,
+                   stab->table[i].arraysize);
 		}
 	} 	
 }
@@ -91,7 +93,7 @@ record *get_record(char *name, char*val, char type, int slot, char *scope)
 	/* NOTE: I have to purge all these allocations in the freeing of the records! */
 	
 	rec->value = (char*)xmalloc(sizeof(char)*strlen(val));
-	rec->scope = (char*)xmalloc(sizeof(char)*strlen(scope));
+	//rec->scope = (char*)xmalloc(sizeof(char)*strlen(scope));
 
 	strcpy(rec->name, name);
 	strcpy(rec->value, val);

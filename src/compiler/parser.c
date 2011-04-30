@@ -878,9 +878,50 @@ int IntDec()
            on the ID table 
            */
         char *tmp = (char*)cstr(cur_token);
-
+        int index = get_token_value(tmp);
         matchi(TK_IDENTIFIER);
 
+
+        /* Test to see if it's an array! */
+        
+        if(get_token_name(cur_token) == TK_LEFT_SQR_BRACKET){
+            int array_size = 0;
+            match("[");
+            array_size = get_token_value(cur_token);
+            printf("Array Size: %d\n", array_size);
+            TYPE t = E();
+
+            if( t != 'I' && t != 'C' ){
+                fprintf(stderr, "Array index must be of integer type!\n");
+                exit(EXIT_FAILURE);
+            }   
+
+            match("]");
+            match(";"); 
+            
+            /* Making the proper symtab entry */
+            strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
+       
+            char tmpstr[16];
+
+            sprintf(tmpstr, "stab#%d", scope_ptr);
+
+            strcpy(stab_stack[scope_ptr]->t_name, tmpstr);
+
+            stab_stack[scope_ptr]->table[index].addr = dp;
+            stab_stack[scope_ptr]->table[index].type = 'I';   
+            stab_stack[scope_ptr]->table[index].slot = index;
+            stab_stack[scope_ptr]->table[index].scope = scope_ptr;
+            stab_stack[scope_ptr]->table[index].arraysize = array_size;
+            stab_stack[scope_ptr]->table[index].isarray = 'Y';
+    
+#if DEBUG == TRUE
+            print_stab(stab_stack[scope_ptr]);  
+#endif  
+
+            free(tmp);
+            return -1;       
+        }
        
     
         /* Test to see that it's not a function */
@@ -896,7 +937,7 @@ int IntDec()
         
         
 
-        int index = get_token_value(tmp);
+        
 #if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 #endif
@@ -1505,7 +1546,9 @@ TYPE F()
      int tk = get_token_name(cur_token);
      Instruction inst;
      
-     if( tk == TK_IDENTIFIER ){
+     
+
+     else if( tk == TK_IDENTIFIER ){
        // Get type from stab
        // genarate push
        // return type

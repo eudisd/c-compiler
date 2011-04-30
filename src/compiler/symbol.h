@@ -24,6 +24,8 @@ typedef struct record_TAG{
 	int slot;         /**> Either EMPTY_SLOT or NOT_EMPTY */
 	char scope;
 	int seen;
+    char isarray;
+    int arraysize;
 	char *block_info;
 }record;
 
