@@ -1,4 +1,4 @@
 int main()
 {
-    int a[100];
+    int x[255], y[20];
 }

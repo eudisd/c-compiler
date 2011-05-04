@@ -4,7 +4,7 @@ CC    := gcc
 LIBS  := -lm
 FLAGS := -Wall -O2 -g
 
-OBJS := main.o error.o parser.o scanner.o symbol.o preprocessor.o semantic.o  utils.o stack.o
+OBJS := main.o error.o parser.o scanner.o symbol.o preprocessor.o utils.o 
 
 TARGET:=c
 
@@ -45,8 +45,4 @@ utils.o : utils.c utils.h
 	@echo "(Modified) Compiling Translation Unit: utils.c + utils.h"
 	$(CC) -c utils.c -o utils.o
 
-stack.o : stack.c stack.h
-	@echo "(Modified) Compiling Translation Unit: stack.c + stack.h"
-	$(CC) -c stack.c -o stack.o
-	
 	

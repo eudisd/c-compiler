@@ -391,14 +391,12 @@ void Switch()
     match(")");
     match("{");
     scope_ptr++;
-        
 
     Case();
 
 
     /* End of cases, patch last hole */
    
-    
 
     int i;
     for(i = 0; i < code_count; i++)
@@ -897,7 +895,7 @@ int IntDec()
             }   
 
             match("]");
-            match(";"); 
+            //match(";"); 
             
             /* Making the proper symtab entry */
             strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
@@ -919,8 +917,15 @@ int IntDec()
             print_stab(stab_stack[scope_ptr]);  
 #endif  
 
-            free(tmp);
-            return -1;       
+            int tmp_tk = get_token_name(cur_token);
+        	if( tmp_tk != TK_COMMA && tmp_tk != TK_SEMICOLON ){
+            	fprintf(stderr, "Error in 'int' declaration! Exiting...\n");
+            	exit(EXIT_FAILURE);
+        	}
+
+        	free(tmp);
+        
+        	return IntDec();       
         }
        
     
@@ -944,7 +949,6 @@ int IntDec()
         /* Here I modify the symbol table to account for type and address */
         
          
-
         if (stab_stack[scope_ptr]->table[index].slot != EMPTY_SLOT){
             fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", stab_stack[scope_ptr]->table[index].name);
             exit(EXIT_FAILURE);
@@ -1001,6 +1005,48 @@ int IntDec()
         matchi(TK_IDENTIFIER);
         
         int index = get_token_value(tmp);
+
+		/* Test to see if it's an array! */
+        
+        if(get_token_name(cur_token) == TK_LEFT_SQR_BRACKET){
+            int array_size = 0;
+            match("[");
+            array_size = get_token_value(cur_token);
+            printf("Array Size: %d\n", array_size);
+            TYPE t = E();
+
+            if( t != 'I' && t != 'C' ){
+                fprintf(stderr, "Array index must be of integer type!\n");
+                exit(EXIT_FAILURE);
+            }   
+
+            match("]");
+            
+            
+            /* Making the proper symtab entry */
+            strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
+       
+            char tmpstr[16];
+
+            sprintf(tmpstr, "stab#%d", scope_ptr);
+
+            strcpy(stab_stack[scope_ptr]->t_name, tmpstr);
+
+            stab_stack[scope_ptr]->table[index].addr = dp;
+            stab_stack[scope_ptr]->table[index].type = 'I';   
+            stab_stack[scope_ptr]->table[index].slot = index;
+            stab_stack[scope_ptr]->table[index].scope = scope_ptr;
+            stab_stack[scope_ptr]->table[index].arraysize = array_size;
+            stab_stack[scope_ptr]->table[index].isarray = 'Y';
+    
+#if DEBUG == TRUE
+            print_stab(stab_stack[scope_ptr]);  
+#endif  
+
+            free(tmp);
+            return IntDec();       
+        }
+
 #if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 #endif
@@ -1548,7 +1594,7 @@ TYPE F()
      
      
 
-     else if( tk == TK_IDENTIFIER ){
+     if( tk == TK_IDENTIFIER ){
        // Get type from stab
        // genarate push
        // return type
