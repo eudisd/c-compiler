@@ -20,6 +20,9 @@ the virtual machine.
 The example programs can be built in a similar fasion.
 Change directory to examples/ and execute a "make"
 call.  That will build all the examples for execution.
+In this case however, the Makefile will use my C compiler
+to build the examples, and will produce VM executables 
+in the bin folder under the examples folders.
 
 ### Windows:
 
@@ -42,7 +45,7 @@ the file:
 
 $ ./c test.c -o test.vm
 
-That would compile the c source and produce a a virtual machine
+That would compile the c source and produce a virtual machine
 bytecode executable.  To run that exectuable, type in the
 following:
 

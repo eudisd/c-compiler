@@ -50,6 +50,8 @@
 #define OP_NEGF 38
 
 #define OP_WRITESTRING 39
+#define OP_GET 40
+#define OP_PUT 41
 
 typedef unsigned char uchar;  
 typedef unsigned int uint;

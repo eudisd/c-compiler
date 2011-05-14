@@ -1,4 +1,6 @@
 int main()
 {
-    int x[255], y[20];
+    int y;
+    int x[10];
+    y = x[2];
 }

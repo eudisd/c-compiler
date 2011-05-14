@@ -3,8 +3,8 @@
   */
 #include "parser.h"
 
-FILE *input; /**> Global File Discriptor */
-FILE *output; /**> Global File Discriptor */
+FILE *input; /**> Global File Pointer */
+FILE *output; /**> Global File Pointer */
 
 short data_max = 1024; /**>  Default is 1kb, could be more */
 short code_max = 1024; /**>  Default is 1kb, could be more  */
@@ -66,14 +66,14 @@ void run_parser()
     	for(i = 0; i < code_count; i++)
         	printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);		
       */
-		
+	
      CProgram();
      //Switch();
      //E();
      //L();
      
 #if DEBUG == TRUE
-     printf("code_count: %d, data_count: %d\n", code_count, data_max);
+     //printf("code_count: %d, data_count: %d\n", code_count, data_max);
 #endif
      /* Write Out Data */
      fwrite(data, sizeof(char), data_max, output);
@@ -640,6 +640,7 @@ void While()
         inst.operand.i = target;
         code[code_count] = inst;
         printf("%d: jmp %d\n", code_count, target);
+
         code_count++;
     
         /* Fill in hole */
@@ -919,7 +920,7 @@ int IntDec()
 
             int tmp_tk = get_token_name(cur_token);
         	if( tmp_tk != TK_COMMA && tmp_tk != TK_SEMICOLON ){
-            	fprintf(stderr, "Error in 'int' declaration! Exiting...\n");
+            	fprintf(stderr, "Error in 'int' array declaration! Exiting...\n");
             	exit(EXIT_FAILURE);
         	}
 
@@ -1109,8 +1110,55 @@ int FloatDec()
         match("float");
 
         char *tmp = (char*)cstr(cur_token);
+		int index = get_token_value(tmp);
 
         matchi(TK_IDENTIFIER);
+
+		 /* Test to see if it's an array! */
+        
+        if(get_token_name(cur_token) == TK_LEFT_SQR_BRACKET){
+            int array_size = 0;
+            match("[");
+            array_size = get_token_value(cur_token);
+            printf("Array Size: %d\n", array_size);
+            TYPE t = E();
+
+            if( t != 'I' && t != 'C' ){
+                fprintf(stderr, "Array index must be of integer type!\n");
+                exit(EXIT_FAILURE);
+            }   
+
+            match("]");
+            
+            /* Making the proper symtab entry */
+            strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
+       
+            char tmpstr[16];
+
+            sprintf(tmpstr, "stab#%d", scope_ptr);
+
+            strcpy(stab_stack[scope_ptr]->t_name, tmpstr);
+
+            stab_stack[scope_ptr]->table[index].addr = dp;
+            stab_stack[scope_ptr]->table[index].type = 'R';   
+            stab_stack[scope_ptr]->table[index].slot = index;
+            stab_stack[scope_ptr]->table[index].scope = scope_ptr;
+            stab_stack[scope_ptr]->table[index].arraysize = array_size;
+            stab_stack[scope_ptr]->table[index].isarray = 'Y';
+    
+#if DEBUG == TRUE
+            print_stab(stab_stack[scope_ptr]);  
+#endif  
+
+            int tmp_tk = get_token_name(cur_token);
+        	if( tmp_tk != TK_COMMA && tmp_tk != TK_SEMICOLON ){
+            	fprintf(stderr, "Error in 'float' array declaration! Exiting...\n");
+            	exit(EXIT_FAILURE);
+        	}
+
+        	free(tmp);
+			return FloatDec();
+		}
 
         /* Test to see that it's not a function */
         if( get_token_name(cur_token) == TK_LEFTPAREN ){
@@ -1123,7 +1171,7 @@ int FloatDec()
             return -1;
         }
 
-        int index = get_token_value(tmp);
+        
 #if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 #endif
@@ -1172,6 +1220,47 @@ int FloatDec()
         matchi(TK_IDENTIFIER);
         
         int index = get_token_value(tmp);
+
+
+		if(get_token_name(cur_token) == TK_LEFT_SQR_BRACKET){
+            int array_size = 0;
+            match("[");
+            array_size = get_token_value(cur_token);
+            printf("Array Size: %d\n", array_size);
+            TYPE t = E();
+
+            if( t != 'I' && t != 'C' ){
+                fprintf(stderr, "Array index must be of integer type!\n");
+                exit(EXIT_FAILURE);
+            }   
+
+            match("]");
+            
+            
+            /* Making the proper symtab entry */
+            strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
+       
+            char tmpstr[16];
+
+            sprintf(tmpstr, "stab#%d", scope_ptr);
+
+            strcpy(stab_stack[scope_ptr]->t_name, tmpstr);
+
+            stab_stack[scope_ptr]->table[index].addr = dp;
+            stab_stack[scope_ptr]->table[index].type = 'R';   
+            stab_stack[scope_ptr]->table[index].slot = index;
+            stab_stack[scope_ptr]->table[index].scope = scope_ptr;
+            stab_stack[scope_ptr]->table[index].arraysize = array_size;
+            stab_stack[scope_ptr]->table[index].isarray = 'Y';
+    
+#if DEBUG == TRUE
+            print_stab(stab_stack[scope_ptr]);  
+#endif  
+
+            free(tmp);
+            return FloatDec();       
+        }
+
 #if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 #endif
@@ -1231,6 +1320,53 @@ int CharDec()
 
         matchi(TK_IDENTIFIER);
 
+		int index = get_token_value(tmp);
+
+		 /* Test to see if it's an array! */
+        
+        if(get_token_name(cur_token) == TK_LEFT_SQR_BRACKET){
+            int array_size = 0;
+            match("[");
+            array_size = get_token_value(cur_token);
+            printf("Array Size: %d\n", array_size);
+            TYPE t = E();
+
+            if( t != 'I' && t != 'C' ){
+                fprintf(stderr, "Array index must be of integer type!\n");
+                exit(EXIT_FAILURE);
+            }   
+
+            match("]");
+            
+            /* Making the proper symtab entry */
+            strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
+       
+            char tmpstr[16];
+
+            sprintf(tmpstr, "stab#%d", scope_ptr);
+
+            strcpy(stab_stack[scope_ptr]->t_name, tmpstr);
+
+            stab_stack[scope_ptr]->table[index].addr = dp;
+            stab_stack[scope_ptr]->table[index].type = 'C';   
+            stab_stack[scope_ptr]->table[index].slot = index;
+            stab_stack[scope_ptr]->table[index].scope = scope_ptr;
+            stab_stack[scope_ptr]->table[index].arraysize = array_size;
+            stab_stack[scope_ptr]->table[index].isarray = 'Y';
+    
+#if DEBUG == TRUE
+            print_stab(stab_stack[scope_ptr]);  
+#endif  
+
+            int tmp_tk = get_token_name(cur_token);
+        	if( tmp_tk != TK_COMMA && tmp_tk != TK_SEMICOLON ){
+            	fprintf(stderr, "Error in 'char' array declaration! Exiting...\n");
+            	exit(EXIT_FAILURE);
+        	}
+
+        	free(tmp);
+			return CharDec();
+		}
 
         /* Test to see that it's not a function */
         if( get_token_name(cur_token) == TK_LEFTPAREN ){
@@ -1243,7 +1379,7 @@ int CharDec()
             return -1;
         }
 
-        int index = get_token_value(tmp);
+        
 #if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 #endif
@@ -1290,6 +1426,47 @@ int CharDec()
         matchi(TK_IDENTIFIER);
         
         int index = get_token_value(tmp);
+
+
+		if(get_token_name(cur_token) == TK_LEFT_SQR_BRACKET){
+            int array_size = 0;
+            match("[");
+            array_size = get_token_value(cur_token);
+            printf("Array Size: %d\n", array_size);
+            TYPE t = E();
+
+            if( t != 'I' && t != 'C' ){
+                fprintf(stderr, "Array index must be of integer type!\n");
+                exit(EXIT_FAILURE);
+            }   
+
+            match("]");
+            
+            
+            /* Making the proper symtab entry */
+            strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
+       
+            char tmpstr[16];
+
+            sprintf(tmpstr, "stab#%d", scope_ptr);
+
+            strcpy(stab_stack[scope_ptr]->t_name, tmpstr);
+
+            stab_stack[scope_ptr]->table[index].addr = dp;
+            stab_stack[scope_ptr]->table[index].type = 'C';   
+            stab_stack[scope_ptr]->table[index].slot = index;
+            stab_stack[scope_ptr]->table[index].scope = scope_ptr;
+            stab_stack[scope_ptr]->table[index].arraysize = array_size;
+            stab_stack[scope_ptr]->table[index].isarray = 'Y';
+    
+#if DEBUG == TRUE
+            print_stab(stab_stack[scope_ptr]);  
+#endif  
+
+            free(tmp);
+            return CharDec();       
+        }
+
 #if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 #endif
@@ -1623,11 +1800,31 @@ TYPE F()
                 /* i from the previous look holds the scope where the variable was found, we assign it here */
                 id_type = stab_stack[i]->table[index].type;
                 id_addr = stab_stack[i]->table[index].addr;
-                stab_stack[i]->table[index].scope;
+                stab_stack[i]->table[index].scope = i;
             }
 
-        printf("%d: push @%s (Type: %c)\n", code_count, stab_stack[i]->table[index].name, id_type);
+        
        
+        /* Check to see if the variable is an array */
+        if( stab_stack[i]->table[index].isarray == 'Y' ){
+            matchi(TK_IDENTIFIER);
+            match("[");
+            TYPE t = E();
+            match("]");
+            if( id_type == 'R' || id_type == 'I' ){
+                printf("%d: pushi 4\n", code_count);
+                code_count++;
+                printf("%d: mul\n", code_count);
+            }
+            else if (id_type == 'C'){
+                printf("%d: pushi 1\n", code_count);
+                code_count++;
+                printf("%d: mul\n", code_count);
+            }
+            return id_type;
+        }
+
+        printf("%d: push @%s (Type: %c)\n", code_count, stab_stack[i]->table[index].name, id_type);
         /* Encode the address into the instruction */
         inst.opcode = OP_PUSH;
         if ( id_type == 'I' ){

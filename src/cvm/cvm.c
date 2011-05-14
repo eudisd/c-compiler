@@ -265,6 +265,9 @@ void run(char *program)
                     printf("\n");
                     
                     break;
+
+                case OP_GET:
+                    stack[sp].i = data[stack[sp].i];
                 default:
                     break;
            }
