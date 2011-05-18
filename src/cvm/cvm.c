@@ -268,6 +268,9 @@ void run(char *program)
 
                 case OP_GET:
                     stack[sp].i = data[stack[sp].i];
+					
+				case OP_PUT:
+                    stack[sp].i = data[stack[sp].i];
                 default:
                     break;
            }

@@ -801,8 +801,34 @@ void Assignment()
     
     Instruction inst;
 
-    free(cur_token);
-    cur_token = get_token();
+    
+	
+	
+		
+	/* Check to see if the variable is an array */
+        if( stab_stack[i]->table[index].isarray == 'Y' ){
+            matchi(TK_IDENTIFIER);
+            match("[");
+            TYPE t = E();
+            match("]");
+            if( id_type == 'R' || id_type == 'I' ){
+                printf("%d: pushi 4\n", code_count);
+                code_count++;
+                printf("%d: mul\n", code_count);
+				code_count++;
+            }
+            else if (id_type == 'C'){
+                printf("%d: pushi 1\n", code_count);
+                code_count++;
+                printf("%d: mul\n", code_count);
+				code_count++;
+            }
+			
+			
+
+        }
+
+	
     match("=");
     TYPE t = E();
     match(";");
