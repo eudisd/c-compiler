@@ -73,12 +73,12 @@ void run(char *program)
     int j;
     printf("code_count: %d, data_count: %d, dp: %d\n", code_count, data_count, dp);
     */
-    /*
+    
     int c;
             printf("Code Segment: ");
             for(c = 0; c < data_count; c++){
                 printf("%x ", data[c]);
-            }*/
+            }
 
     int alloc = 0;  /**> Used as the base pointer for the static allocations (non-string)*/
 
@@ -100,7 +100,7 @@ void run(char *program)
                     sp++;
                     break;
                 case OP_PUSHI: 
-                    
+                    printf("Push-i: %d\n", code[ip].operand.i);
                     stack[sp].i = code[ip].operand.i;
                     sp++;
                     //print_stack(sp);
@@ -269,13 +269,29 @@ void run(char *program)
                 case OP_GET:
                     stack[sp].i = data[stack[sp].i];
 					
+					alloc = code[ip].operand.i;
+                    stack[sp].i = *(int*)(data + (dp + alloc));
+                    sp++;
+					
 				case OP_PUT:
-                    stack[sp].i = data[stack[sp].i];
+					alloc = code[ip].operand.i;
+                    //*(int*)(data + (dp + alloc)) = stack[sp - 1].i;
+					printf("\nValue: %d\n", stack[sp].i);
+					printf("Address: %d\n", stack[sp-1].i);
+					//data[stack[sp-1].i] = stack[sp].i;
+					
+					*(int*)(data + (dp + stack[sp - 2].i)) = stack[sp - 1].i;
+                    sp--;
+					
                 default:
                     break;
            }
            ip++;
     }
+	printf("Code Segment: ");
+            for(c = 0; c < data_count; c++){
+                printf("%x ", data[c]);
+            }
 }
 
 void print_stack(int sp)
