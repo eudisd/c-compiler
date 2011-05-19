@@ -26,6 +26,8 @@ symbol_table *stab_stack[8];  /**> Maximum scope nesting is 8.  Its pretty big a
 /* Used by the case and switch productions */
 int case_hole = 0;
 
+/* This is a bit of a hack */
+int assignment_flag = 0;
 
 void run_parser()
 {
@@ -886,25 +888,28 @@ void Assignment()
     match(";");
     // Pop at an address!
 
-    printf("%d: pop @%s (Type: %c - Scope: %d)\n", code_count, stab_stack[i]->table[index].name, id_type, i);
-    //printf("%s - addr: %d\n", stab_stack[i]->table[index].name, id_addr);
-        /* Encode the address into the instruction */
-    inst.opcode = OP_POP;
-    if ( id_type == 'I' ){
-        inst.operand.i = id_addr; /* Int */
-        code[code_count] = inst;
-    }
-    else if (id_type == 'C'){
-        inst.operand.i = id_addr; /* Char */
-        code[code_count] = inst;
-    }
-    else if (id_type == 'F'){
-        inst.opcode = OP_POPF;
-        inst.operand.i = id_addr; /* Float */
-        code[code_count] = inst;
-    }
-
-    code_count++;
+	if( assignment_flag == 0 ){
+		printf("%d: pop @%s (Type: %c - Scope: %d)\n", code_count, stab_stack[i]->table[index].name, id_type, i);
+		//printf("%s - addr: %d\n", stab_stack[i]->table[index].name, id_addr);
+			/* Encode the address into the instruction */
+		inst.opcode = OP_POP;
+		if ( id_type == 'I' ){
+			inst.operand.i = id_addr; /* Int */
+			code[code_count] = inst;
+		}
+		else if (id_type == 'C'){
+			inst.operand.i = id_addr; /* Char */
+			code[code_count] = inst;
+		}
+		else if (id_type == 'F'){
+			inst.opcode = OP_POPF;
+			inst.operand.i = id_addr; /* Float */
+			code[code_count] = inst;
+		}
+		assignment_flag = 0;
+		code_count++;
+	}
+	
         
     
 }
@@ -1945,6 +1950,8 @@ TYPE F()
 			}
 
 			code_count++;
+			assignment_flag = 0;
+			
             return id_type;
         }
 

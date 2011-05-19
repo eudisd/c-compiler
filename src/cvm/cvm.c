@@ -267,19 +267,17 @@ void run(char *program)
                     break;
 
                 case OP_GET:
-                    stack[sp].i = data[stack[sp].i];
 					
 					alloc = code[ip].operand.i;
-                    stack[sp].i = *(int*)(data + (dp + alloc));
-                    sp++;
+					int addr = stack[sp - 1].i;
+                    stack[sp - 1].i = *(int*)(data + (dp + alloc + stack[sp - 1].i));
+                    
+					printf("\nAddress: %d\n", alloc + addr);
+					printf("\nValue: %d\n", stack[sp - 1].i);
+					sp++;
 					
 				case OP_PUT:
 					alloc = code[ip].operand.i;
-                    //*(int*)(data + (dp + alloc)) = stack[sp - 1].i;
-					printf("\nValue: %d\n", stack[sp].i);
-					printf("Address: %d\n", stack[sp-1].i);
-					//data[stack[sp-1].i] = stack[sp].i;
-					
 					*(int*)(data + (dp + stack[sp - 2].i)) = stack[sp - 1].i;
                     sp--;
 					
