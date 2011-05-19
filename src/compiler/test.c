@@ -1,9 +1,10 @@
 int main()
 {
-	int x;
+	int x, z;
 	int y[10];
 	y[0] = 5;
-	y[1] = 9;
+	z = x;
+
 	
 		
 }

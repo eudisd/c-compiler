@@ -270,7 +270,7 @@ void run(char *program)
 					
 					alloc = code[ip].operand.i;
 					int addr = stack[sp - 1].i;
-                    stack[sp - 1].i = *(int*)(data + (dp + alloc + stack[sp - 1].i));
+                    stack[sp - 1].i = *(int*)(data + (dp + stack[sp - 1].i));
                     
 					printf("\nAddress: %d\n", alloc + addr);
 					printf("\nValue: %d\n", stack[sp - 1].i);
