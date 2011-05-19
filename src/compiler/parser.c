@@ -813,6 +813,7 @@ void Assignment()
             match("[");
             TYPE t = E();
             match("]");
+
             if( id_type == 'R' || id_type == 'I' ){
 				inst.opcode = OP_PUSHI;
 				inst.operand.i = sizeof(int); /* Char */
@@ -879,7 +880,7 @@ void Assignment()
 			return;
         }
 
-	
+	matchi(TK_IDENTIFIER);
     match("=");
     t = E();
     match(";");
@@ -1880,24 +1881,70 @@ TYPE F()
                 stab_stack[i]->table[index].scope = i;
             }
 
-        
-       
         /* Check to see if the variable is an array */
         if( stab_stack[i]->table[index].isarray == 'Y' ){
+			Instruction inst, inst1, inst2, inst3, inst4;
             matchi(TK_IDENTIFIER);
             match("[");
             TYPE t = E();
             match("]");
             if( id_type == 'R' || id_type == 'I' ){
+				inst.opcode = OP_PUSHI;
+				inst.operand.i = sizeof(int); /* Char */
+				code[code_count] = inst;
                 printf("%d: pushi 4\n", code_count);
                 code_count++;
+				
+				inst2.opcode = OP_MUL;
+				code[code_count] = inst2;
                 printf("%d: mul\n", code_count);
+				code_count++;
             }
             else if (id_type == 'C'){
+				inst1.opcode = OP_PUSHI;
+				inst1.operand.i = sizeof(char); /* Char */
+				code[code_count] = inst1;
                 printf("%d: pushi 1\n", code_count);
                 code_count++;
+				
+				inst2.opcode = OP_MUL;
+				code[code_count] = inst2;
                 printf("%d: mul\n", code_count);
+				code_count++;
             }
+			
+			inst3.opcode = OP_PUSHI;
+			inst3.operand.i = id_addr;
+			code[code_count] = inst3;
+			printf("%d: pushi %d\n", code_count, id_addr);
+            code_count++;
+			
+			inst4.opcode = OP_ADD;
+			code[code_count] = inst4;
+            printf("%d: add\n", code_count);
+			code_count++;
+			
+			//printf("%s - addr: %d\n", stab_stack[i]->table[index].name, id_addr);
+			/* Encode the address into the instruction */
+			inst.opcode = OP_GET;
+			if ( id_type == 'I' ){
+				printf("%d: get %d (Size)(Type: %c - Scope: %d)\n", code_count, sizeof(int), id_type, i);
+				inst.operand.i = sizeof(int); /* Int */
+				code[code_count] = inst;
+			}
+			else if (id_type == 'C'){
+				printf("%d: get %d (Size)(Type: %c - Scope: %d)\n", code_count, sizeof(char), id_type, i);
+				inst.operand.i = sizeof(char); /* Char */
+				code[code_count] = inst;
+			}
+			else if (id_type == 'F'){
+				printf("%d: get %d (Size)(Type: %c - Scope: %d)\n", code_count, sizeof(float), id_type, i);
+				inst.opcode = OP_POPF;
+				inst.operand.i = id_addr; /* Float */
+				code[code_count] = inst;
+			}
+
+			code_count++;
             return id_type;
         }
 
