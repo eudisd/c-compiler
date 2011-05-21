@@ -1009,6 +1009,10 @@ int IntDec()
 
         	free(tmp);
         
+			/* The data pointer must be incremented by size * sizeof(type) */
+			dp += array_size * sizeof(int);
+			
+			
         	return IntDec();       
         }
        
