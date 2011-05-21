@@ -73,12 +73,12 @@ void run(char *program)
     int j;
     printf("code_count: %d, data_count: %d, dp: %d\n", code_count, data_count, dp);
     */
-    
+    /*
     int c;
             printf("Code Segment: ");
             for(c = 0; c < data_count; c++){
                 printf("%x ", data[c]);
-            }
+            }*/
 
     int alloc = 0;  /**> Used as the base pointer for the static allocations (non-string)*/
 
@@ -286,10 +286,11 @@ void run(char *program)
            }
            ip++;
     }
+    /*
 	printf("Code Segment: ");
             for(c = 0; c < data_count; c++){
                 printf("%x ", data[c]);
-            }
+            }*/
 }
 
 void print_stack(int sp)

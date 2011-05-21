@@ -221,6 +221,17 @@ char *cstr(char *s)
      return tmp;
 }
 
+int token_num(char *token)
+{
+    int i;
+    for(i = 0; i < strlen(token); i++){
+        if(token[i] == ','){
+            return 2;
+        }
+    }
+    return 1;
+}
+
 
 
 

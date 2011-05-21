@@ -504,12 +504,16 @@ void Label()
             exit(EXIT_FAILURE);
         }
 		else if( id_table->table[index].seen == 0 ){
+            
 			printf("\nSee: %d\n", id_table->table[index].addr);
+           
 			if (id_table->table[index].addr == -1){
+                
 				id_table->table[index].addr = code_count;
+                
 			}
 			else {
-				
+				 
 				code[id_table->table[index].addr].operand.i = code_count;
 				id_table->table[index].seen = 1;
 			}
@@ -558,6 +562,8 @@ void Goto()
 		inst_hole.operand.i = id_table->table[index].addr;
 		code[code_count] = inst_hole;
 		code_count++;
+
+        
 	}
 	/* Generate Dummy Jump here, since the label has not been seen */
 	else {
@@ -573,6 +579,7 @@ void Goto()
 
 	matchi(TK_IDENTIFIER);
 	match(";");
+
 }
 
 void DoWhile()
@@ -762,12 +769,18 @@ void IfStatement()
     printf("%d: pop (Empty)\n", code_count);
 }
 
+
+
 void Assignment()
 {
 	if(cur_token == NULL){
         printf("current toke is null at Assignment()!\n");
 		exit(EXIT_FAILURE);
 	 }
+
+    if( token_num(cur_token) == 1 ){
+        return;
+    }
     // Save Type And Address
     int index = get_token_value(cur_token);
     TYPE id_type = stab_stack[scope_ptr]->table[index].type;
@@ -862,17 +875,17 @@ void Assignment()
 			/* Encode the address into the instruction */
 			inst.opcode = OP_PUT;
 			if ( id_type == 'I' ){
-				printf("%d: put %d (Size)(Type: %c - Scope: %d)\n", code_count, sizeof(int), id_type, i);
+				printf("%d: put %d (Size)(Type: %c - Scope: %d)\n", code_count, (int)sizeof(int), id_type, i);
 				inst.operand.i = sizeof(int); /* Int */
 				code[code_count] = inst;
 			}
 			else if (id_type == 'C'){
-				printf("%d: put %d (Size)(Type: %c - Scope: %d)\n", code_count, sizeof(char), id_type, i);
+				printf("%d: put %d (Size)(Type: %c - Scope: %d)\n", code_count, (int)sizeof(char), id_type, i);
 				inst.operand.i = sizeof(char); /* Char */
 				code[code_count] = inst;
 			}
 			else if (id_type == 'F'){
-				printf("%d: put %d (Size)(Type: %c - Scope: %d)\n", code_count, sizeof(float), id_type, i);
+				printf("%d: put %d (Size)(Type: %c - Scope: %d)\n", code_count, (int)sizeof(float), id_type, i);
 				inst.opcode = OP_POPF;
 				inst.operand.i = id_addr; /* Float */
 				code[code_count] = inst;
@@ -1937,17 +1950,17 @@ TYPE F()
 			/* Encode the address into the instruction */
 			inst.opcode = OP_GET;
 			if ( id_type == 'I' ){
-				printf("%d: get %d (Size)(Type: %c - Scope: %d)\n", code_count, sizeof(int), id_type, i);
+				printf("%d: get %d (Size)(Type: %c - Scope: %d)\n", code_count, (int)sizeof(int), id_type, i);
 				inst.operand.i = sizeof(int); /* Int */
 				code[code_count] = inst;
 			}
 			else if (id_type == 'C'){
-				printf("%d: get %d (Size)(Type: %c - Scope: %d)\n", code_count, sizeof(char), id_type, i);
+				printf("%d: get %d (Size)(Type: %c - Scope: %d)\n", code_count, (int)sizeof(char), id_type, i);
 				inst.operand.i = sizeof(char); /* Char */
 				code[code_count] = inst;
 			}
 			else if (id_type == 'F'){
-				printf("%d: get %d (Size)(Type: %c - Scope: %d)\n", code_count, sizeof(float), id_type, i);
+				printf("%d: get %d (Size)(Type: %c - Scope: %d)\n", code_count, (int)sizeof(float), id_type, i);
 				inst.opcode = OP_POPF;
 				inst.operand.i = id_addr; /* Float */
 				code[code_count] = inst;

@@ -1,12 +1,28 @@
+/*--------------------------------------------------------*/
+/* This source file demonstrates gotos.  Branching accross
+ * scopes is not supported. */
+/*--------------------------------------------------------*/
+
+/*
+ * By: Eudis Duran
+ * Spring 2011
+ */
+
+
+
 int main()
 {
-	int x, z;
-	x = 1;
-	z = 3;
-	int y[10];
-	y[0] = 5;
-	z = x;
+    int x;
+    x = 10;
 
-	
-		
+    goto label2;
+
+    printf ("Do not print this");
+
+label2:
+   
+    x = 5;
+    printf(x);
+    
+
 }

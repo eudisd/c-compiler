@@ -107,6 +107,11 @@ int floatlit_comp(const void *a, const void *b);
   */
 char *cstr(char *s);
 
+/** 
+  */
+int token_num(char *token);
+
+
 
 /* Debug Functions */
 
