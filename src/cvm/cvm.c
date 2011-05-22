@@ -100,7 +100,7 @@ void run(char *program)
                     sp++;
                     break;
                 case OP_PUSHI: 
-                    printf("Push-i: %d\n", code[ip].operand.i);
+                    //printf("Push-i: %d\n", code[ip].operand.i);
                     stack[sp].i = code[ip].operand.i;
                     sp++;
                     //print_stack(sp);
@@ -272,8 +272,8 @@ void run(char *program)
 					int addr = stack[sp - 1].i;
                     stack[sp - 1].i = *(int*)(data + (dp + stack[sp - 1].i));
                     
-					printf("\nAddress: %d\n", alloc + addr);
-					printf("\nValue: %d\n", stack[sp - 1].i);
+					//printf("\nAddress: %d\n", alloc + addr);
+					//printf("\nValue: %d\n", stack[sp - 1].i);
 					sp++;
 					
 				case OP_PUT:

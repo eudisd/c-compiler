@@ -505,7 +505,7 @@ void Label()
         }
 		else if( id_table->table[index].seen == 0 ){
             
-			printf("\nSee: %d\n", id_table->table[index].addr);
+			//printf("\nSee: %d\n", id_table->table[index].addr);
            
 			if (id_table->table[index].addr == -1){
                 

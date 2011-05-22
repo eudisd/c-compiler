@@ -1,6 +1,6 @@
 /*--------------------------------------------------------*/
-/* This source file demonstrates gotos.  Branching accross
- * scopes is not supported. */
+/* This source file demonstrates integer array declaration and 
+   use. */
 /*--------------------------------------------------------*/
 
 /*
@@ -9,20 +9,21 @@
  */
 
 
-
 int main()
 {
-    int x;
-    x = 10;
+    int x, sorted;
+    x = 20;
 
-    goto label2;
+    int a[5];
+    a[0] = 10;
 
-    printf ("Do not print this");
+    /* First we print the original x */
 
-label2:
-   
-    x = 5;
     printf(x);
-    
+
+    /* Next, we print the newly assigned x */
+
+    x = a[0];    
+    printf (x);
 
 }

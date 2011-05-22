@@ -1,8 +1,6 @@
 /*--------------------------------------------------------*/
-/* Here, I demonstrate while and do-while looping constructs.
- * I do so, by presenting the iterative fibonacci algorithm, 
- * and the GCD algorithm for a very small set of numbers.
- */
+/* This source file demonstrates gotos/labels.  Branching accross
+ * scopes is not supported. */
 /*--------------------------------------------------------*/
 
 /*
@@ -11,40 +9,38 @@
  */
 
 
-
 int main()
 {
-    int fib_total;
+    int x;
+    x = 10;
 
-    fib_total = 20;
-    
-    int i, j, fib;
+    /* Goto First, Label Second */
+    goto label2;
 
-    i = 0;
-    j = 1;
-    
-    /* f(n) = f(n - 1) + f(n - 2) */
-    printf ("Fibonacci Sequence");
-    while( fib < fib_total ){
-        fib = i  + j;
-        j = i;
-        i = fib;
-        printf (fib);
-    }
+    printf ("Do not print this");
 
-    int a, b, c, d;
-
-    a = 6;
-    b = 6;
-
-    printf ("Greatest Commond Divisisor");
-    do {
-        c = a % b;
-        a = b;
-        b = c;
-    }while( b > 0 );
-    
-    printf ("The GCD is: ");
-    printf(a);
+label2:
    
+    x = 5;
+    printf("Print this: ");
+    printf(x);
+
+
+    /* Label First, Goto Second */
+    
+    int counter;
+    counter = 0;    
+
+label1:
+
+    printf ("This always gets printed!");
+
+    if( counter < 10 ){
+        counter = counter + 1;
+        goto label1;
+    }
+    
+    /* Here the loop ends */
+    
+
 }
