@@ -8,7 +8,6 @@
  * Spring 2011
  */
 
-
 int main()
 {
     int x, sorted;
