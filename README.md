@@ -9,14 +9,15 @@ By Eudis Duran
 
 You can build the source with a single command.
 Make sure you are in the root src directory, and 
-type: "make"  This will build both the compiler
+type: "make all"  This will build both the compiler
 and virtual machine.  The resulting executables will
 be placed in the root binary folder for the project.
 The programs are named "c" for the compiler, and "cvm" for 
 the virtual machine.
 
 ### Example Programs/Tests
-
+Once you have built the compiler and virtual machine, both
+executables are also copied to the bin folder under 'examples.'
 The example programs can be built in a similar fasion.
 Change directory to examples/ and execute a "make"
 call.  That will build all the examples for execution.
@@ -25,14 +26,10 @@ to build the examples, and will produce VM executables
 in the bin folder under the examples folders.
 
 ### Windows:
+Not tested.  
 
-Assuming you have visual C++, building the compiler is
-only a matter of creating a project and adding the files
-to that project and building.  The compiler is written in
-ansi C, so it should work just fine (I have not tested it).
 
 ## Usage:
-
 To compile a source file, first make sure that it adheres
 to the small C subset that is specified in the Documentation
 file, as not all of C is implemented yet.
