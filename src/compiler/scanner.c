@@ -1416,7 +1416,6 @@ void stringlit(FILE *o, char *word)
 
 void default_(FILE *o, char *word)
 {
-    
     /* Try To See if it's a identifier, if not: 
     ERROR! Given token is not part of the lang def. */
     parse_tokens(o, word);

@@ -59,23 +59,6 @@ symbol_table *create_stab(char* t_name, size_t max)
 
 void stab_insert(char* filename, record *rec, symbol_table *stab)
 {	
-    /*
-	int addr;
-	char type;
-	char name[64];
-	char *value;
-	int slot;         
-	char *scope;
-    */
-	
-	/* Before inserting anything into the table, we check that the 
-	   given identifier is NOT a reserved keyword */
-	  
-    //printf("Rect Name %s\n", rec->name);
-	//if( is_keyword(rec->name) ){
-	//	fprintf(stderr, "%s: This keyword is reserved!  Cannot be inserted into symbol table.", rec->name);	
-	//}
-	
 	size_t index = hash(rec->name, stab->size);
 	rec->slot = index;
     
@@ -87,13 +70,11 @@ void stab_insert(char* filename, record *rec, symbol_table *stab)
 
 record *get_record(char *name, char*val, char type, int slot, char *scope)
 {
-	
 	record *rec = (record*)xmalloc(sizeof(record)*1);
 
 	/* NOTE: I have to purge all these allocations in the freeing of the records! */
 	
 	rec->value = (char*)xmalloc(sizeof(char)*strlen(val));
-	//rec->scope = (char*)xmalloc(sizeof(char)*strlen(scope));
 
 	strcpy(rec->name, name);
 	strcpy(rec->value, val);
@@ -115,7 +96,6 @@ void purge_record(record *rec)
 
 void destroy_stab(symbol_table *stab)
 {
-	
 }
 
 int is_keyword(char *lexeme)
