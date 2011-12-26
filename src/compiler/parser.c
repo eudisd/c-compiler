@@ -1038,7 +1038,6 @@ int IntDec()
 #if DEBUG == TRUE
             print_stab(stab_stack[scope_ptr]);  
 #endif  
-
             free(tmp);
             return IntDec();       
         }
@@ -1066,11 +1065,6 @@ int IntDec()
 #if DEBUG == TRUE
         print_stab(stab_stack[scope_ptr]);   
 #endif
-
-
-        /*
-        id_table->table[index].addr = dp;
-        id_table->table[index].type = 'I';*/
 
         dp += 4;
 
@@ -1161,7 +1155,6 @@ int FloatDec()
             fseek(input, dec_rollback, SEEK_SET);
             free(cur_token);
             cur_token = get_token();
-            //printf("now: %s\n", cur_token);
             free(tmp);
             return -1;
         }
@@ -1189,13 +1182,6 @@ int FloatDec()
         print_stab(stab_stack[scope_ptr]);   
 #endif
 
-
-        /*
-        id_table->table[index].addr = dp;
-        id_table->table[index].type = 'F';
-
-        */
-
         dp += 4;
 
         int tmp_tk = get_token_name(cur_token);
@@ -1216,7 +1202,6 @@ int FloatDec()
         
         int index = get_token_value(tmp);
 
-
 		if(get_token_name(cur_token) == TK_LEFT_SQR_BRACKET){
             int array_size = 0;
             match("[");
@@ -1230,7 +1215,6 @@ int FloatDec()
             }   
 
             match("]");
-            
             
             /* Making the proper symtab entry */
             strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
@@ -1250,8 +1234,7 @@ int FloatDec()
     
 #if DEBUG == TRUE
             print_stab(stab_stack[scope_ptr]);  
-#endif  
-
+#endif
             free(tmp);
             return FloatDec();       
         }
@@ -1259,7 +1242,6 @@ int FloatDec()
 #if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 #endif
-
         if (stab_stack[scope_ptr]->table[index].slot != EMPTY_SLOT){
             fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", stab_stack[scope_ptr]->table[index].name);
             exit(EXIT_FAILURE);
@@ -1277,11 +1259,6 @@ int FloatDec()
 #if DEBUG == TRUE
         print_stab(stab_stack[scope_ptr]);   
 #endif
-
-
-        /*
-        id_table->table[index].addr = dp;
-        id_table->table[index].type = 'F';*/
 
         dp += 4;
 
@@ -1317,7 +1294,7 @@ int CharDec()
 
 		int index = get_token_value(tmp);
 
-		 /* Test to see if it's an array! */
+		/* Test to see if it's an array! */
         
         if(get_token_name(cur_token) == TK_LEFT_SQR_BRACKET){
             int array_size = 0;
@@ -1352,7 +1329,6 @@ int CharDec()
 #if DEBUG == TRUE
             print_stab(stab_stack[scope_ptr]);  
 #endif  
-
             int tmp_tk = get_token_name(cur_token);
         	if( tmp_tk != TK_COMMA && tmp_tk != TK_SEMICOLON ){
             	fprintf(stderr, "Error in 'char' array declaration! Exiting...\n");
@@ -1369,12 +1345,10 @@ int CharDec()
             fseek(input, dec_rollback, SEEK_SET);
             free(cur_token);
             cur_token = get_token();
-            //printf("now: %s\n", cur_token);
             free(tmp);
             return -1;
         }
 
-        
 #if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 #endif
@@ -1397,11 +1371,6 @@ int CharDec()
 #if DEBUG == TRUE
         print_stab(stab_stack[scope_ptr]);   
 #endif
-        
-        /*
-        id_table->table[index].addr = dp;
-        id_table->table[index].type = 'C';*/
-
         dp += 1;
 
         int tmp_tk = get_token_name(cur_token);
@@ -1422,7 +1391,6 @@ int CharDec()
         
         int index = get_token_value(tmp);
 
-
 		if(get_token_name(cur_token) == TK_LEFT_SQR_BRACKET){
             int array_size = 0;
             match("[");
@@ -1436,7 +1404,6 @@ int CharDec()
             }   
 
             match("]");
-            
             
             /* Making the proper symtab entry */
             strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
@@ -1457,7 +1424,6 @@ int CharDec()
 #if DEBUG == TRUE
             print_stab(stab_stack[scope_ptr]);  
 #endif  
-
             free(tmp);
             return CharDec();       
         }
@@ -1470,11 +1436,9 @@ int CharDec()
             fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", stab_stack[scope_ptr]->table[index].name);
             exit(EXIT_FAILURE);
         }
-      
 
         strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
 
-       
         char tmpstr[16];
         sprintf(tmpstr, "stab#%d", scope_ptr);
 
@@ -1485,13 +1449,6 @@ int CharDec()
 #if DEBUG == TRUE       
         print_stab(stab_stack[scope_ptr]);   
 #endif
-
-        /*
-
-        id_table->table[index].addr = dp;
-        id_table->table[index].type = 'C';*/
-
-
         dp += 1;
 
         int tmp_tk = get_token_name(cur_token);
@@ -1513,10 +1470,6 @@ int CharDec()
         exit(EXIT_FAILURE);
     }
 }
-
-
-
-
 
 TYPE E()
 {
@@ -1550,8 +1503,7 @@ TYPE EPrime()
           
          /* I write code, so I increment counter */
          code_count++;
-            
-         
+
          EPrime();
      }
      else if ( tk == TK_MINUS ){
@@ -1565,7 +1517,6 @@ TYPE EPrime()
          code[code_count] = inst;
          /* I write code, so I increment counter */
          code_count++;
-
          
          EPrime();
      }
@@ -1580,7 +1531,6 @@ TYPE EPrime()
          code[code_count] = inst;
          /* I write code, so I increment counter */
          code_count++;
-
          
          /* (||) */
          EPrime();
@@ -1593,7 +1543,6 @@ TYPE T()
 {
      TYPE t = F();
      TYPE t2 = TPrime();
-     //printf("Type1: %c, Type2: %c, %d, %d\n", t, t2, t, t2);
      return t;
 }
 
@@ -1724,7 +1673,6 @@ TYPE TPrime()
          /* I write code, so I increment counter */
          code_count++;
          
-         
          TPrime();
      }
       else if ( tk == TK_MOD ){
@@ -1738,7 +1686,6 @@ TYPE TPrime()
          code[code_count] = inst;
          /* I write code, so I increment counter */
          code_count++;
-         
          
          TPrime();
      }
@@ -1764,8 +1711,6 @@ TYPE F()
      int tk = get_token_name(cur_token);
      Instruction inst;
      
-     
-
      if( tk == TK_IDENTIFIER ){
        // Get type from stab
        // genarate push
@@ -1775,28 +1720,27 @@ TYPE F()
         int id_addr = stab_stack[scope_ptr]->table[index].addr;
 
          /* Check if variable exists */
-         int found = 0, i = 0;
-         for(i = 0; i <= scope_ptr; i++){
-             if(stab_stack[i]->table[index].slot == EMPTY_SLOT){
-         
-             }
-             else {
-                 found = 1;
-                 break;
-             }
-         }
-    
-         if (found == 0){
-             fprintf(stderr, "%s has not been declared! Fatal Error, exiting...\n", id_table->table[index].name);
-             exit(EXIT_FAILURE);
+        int found = 0, i = 0;
+        for(i = 0; i <= scope_ptr; i++){
+         if(stab_stack[i]->table[index].slot == EMPTY_SLOT){
+
          }
          else {
-
-                /* i from the previous look holds the scope where the variable was found, we assign it here */
-                id_type = stab_stack[i]->table[index].type;
-                id_addr = stab_stack[i]->table[index].addr;
-                stab_stack[i]->table[index].scope = i;
-            }
+             found = 1;
+             break;
+         }
+        }
+    
+        if (found == 0){
+         fprintf(stderr, "%s has not been declared! Fatal Error, exiting...\n", id_table->table[index].name);
+         exit(EXIT_FAILURE);
+        }
+        else {
+            /* i from the previous look holds the scope where the variable was found, we assign it here */
+            id_type = stab_stack[i]->table[index].type;
+            id_addr = stab_stack[i]->table[index].addr;
+            stab_stack[i]->table[index].scope = i;
+        }
 
         /* Check to see if the variable is an array */
         if( stab_stack[i]->table[index].isarray == 'Y' ){
@@ -1840,8 +1784,6 @@ TYPE F()
 			code[code_count] = inst4;
             printf("%d: add\n", code_count);
 			code_count++;
-			
-			//printf("%s - addr: %d\n", stab_stack[i]->table[index].name, id_addr);
 			/* Encode the address into the instruction */
 			inst.opcode = OP_GET;
 			if ( id_type == 'I' ){
@@ -1894,7 +1836,6 @@ TYPE F()
      else if ( tk == TK_INTLIT ){
        // generate pushi
 
-
        printf("%d: pushi %d (Type: %c)\n", code_count, get_token_value(cur_token), 'I' );
 
        inst.opcode = OP_PUSHI;
@@ -1917,7 +1858,6 @@ TYPE F()
 
             str_start = data_count;
           
-
             for(i = 1; i < strlen(string_table->table[index].name) - 1; i++){
                 //printf("%x ", string_table->table[index].name[i]);
 			
@@ -1926,35 +1866,27 @@ TYPE F()
             }
             /* These strings are null terminated, just like in real C. */
             data_count++;
-            
-            /*
-            int c;
-            printf("Code Segment: ");
-            for(c = 0; c < code_max; c++){
-                printf("%x ", data[c]);
-            }*/
 
             /* Put the string in the proper data segment */
 			
-
             return 'S';
      }
      else if ( tk == TK_FLOATLIT ){
-      // generate pushi 
-        
-       printf("%d: pushi %f (Type: %c)\n", code_count, get_token_value_f(cur_token), 'F' );
+        // generate pushi 
 
-       inst.opcode = OP_PUSHI;
-       inst.operand.f = get_token_value_f(cur_token);
-       
-       code[code_count] = inst;
-      
-       code_count++;
+        printf("%d: pushi %f (Type: %c)\n", code_count, get_token_value_f(cur_token), 'F' );
 
-       free(cur_token);
-       cur_token = get_token(); 
-        
-       return 'F';
+        inst.opcode = OP_PUSHI;
+        inst.operand.f = get_token_value_f(cur_token);
+
+        code[code_count] = inst;
+
+        code_count++;
+
+        free(cur_token);
+        cur_token = get_token(); 
+
+        return 'F';
      }
      else if ( tk == TK_LEFTPAREN ){
           match("(");
@@ -1966,7 +1898,6 @@ TYPE F()
      }
      else if ( tk == TK_PLUS ){
           match("+");
-          // 
 
           TYPE t = F();
           if( t == 'I' || t == 'F' )
@@ -2061,7 +1992,6 @@ char *get_token()
             i++;
             if(c == '>')
                 break;
-            
         }
     }
     else {
@@ -2080,7 +2010,6 @@ char *get_token()
 
         if(c == '>')
             break;
-            
     }
 
     token[i] = '\0';
@@ -2200,9 +2129,3 @@ char *peek_next_token()
     fseek(input, pos, SEEK_SET);
     return tmp;
 }
-
-
-
-
-
-
