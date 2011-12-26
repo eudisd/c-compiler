@@ -29,7 +29,6 @@ int main(int argc, char *argv[])
 	case 1:
 		printf("%s: no input files.\n Try --help for more options.\n", file.calling_prog);
 		break;
-
 	case 2:
 		if(strcmp(argv[1], "--help") == 0){
 			usage();
@@ -51,8 +50,6 @@ int main(int argc, char *argv[])
 	case 3:
         fprintf(stderr, "File input error!\n");
         exit(EXIT_FAILURE);
-
-        
 		break;
 	default:
 		/* These next few lines handle the -o flag */	
@@ -77,11 +74,9 @@ int main(int argc, char *argv[])
 
 			free(ofile);
 		}
-        
 
 		break;
 	}
-
 
 	return EXIT_SUCCESS;
 }

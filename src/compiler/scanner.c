@@ -67,9 +67,6 @@ void run_scanner(file_struct *file)
     dispatcher[':'] = &colon;
     dispatcher[';'] = &semicolon;
 
-    //dispatcher['$'] = &constant;
-    //dispatcher['$'] = &stringlit;
-    
 	FILE *i = fopen(INTERIM_FILENAME, "r");
 	FILE *o = fopen("tmp", "w");
 
@@ -86,7 +83,6 @@ void run_scanner(file_struct *file)
 		free(word);
 	}
     
-
 	fclose(i);
 	fclose(o);
     remove(INTERIM_FILENAME);
@@ -239,7 +235,6 @@ char *extract_token(char *word)
 		case ';':
 			return copy_alloced(";");
        
-
 		/* Constants */
 
 		case '\'':
@@ -257,10 +252,7 @@ char *extract_token(char *word)
 			else {
                 return return_keyword(word);
             }
-            
 			break;
-		
-		
 	}
     return NULL;
 }
@@ -296,7 +288,6 @@ char *return_integral(char *word)
     int i, j;
     size_t size = strlen(word);
     
-
     for(i = 0; i < size; i++){
         if( !isdigit(word[i]) && word[i] != '.' ){
             break;
@@ -309,35 +300,28 @@ char *return_integral(char *word)
         integral[j] = word[j];
     }
     integral[i] = '\0';
-    return integral;
-    
+    return integral; 
 }
 
 char *return_string(char *word)
 {	
-
     int i, j;
     size_t size = strlen(word);
     char *tmp;
-	
 	
     for(i = 1; i < size; i++){
         if( word[i] == '"' ){
             i++;
             break;
         }
-		
     }
     tmp = (char*)xmalloc(sizeof(char)*i + 1);
 
     for(j = 0; j < i; j++){
         tmp[j] = word[j];
     }
-
     tmp[i] = '\0';
-	//printf("String: %s\n", tmp);
-    
-    
+
     return tmp;
 }
 
@@ -390,8 +374,6 @@ int parse_tokens(FILE *o, char *word)
 
     token_package tk;
 
-	
-
 	while(tk_size > 0){
 		tmp = (char*)xmalloc(sizeof(char)*diff + 1);
 
@@ -400,20 +382,14 @@ int parse_tokens(FILE *o, char *word)
 		}	
 		tmp[diff] = '\n';
 		
-		//printf("Token: %s\n", token);
 		tk = get_sval(token);
 
-		
         if (tk.type == -1){
             sprintf(tk_buffer0, "%d", tk.val);
             put_ulexeme(o, tk_buffer0);
         }
         else if (tk.type == TK_KEYWORD) {
-            /*
-            sprintf(tk_buffer0, "%d", TK_KEYWORD);
-            sprintf(tk_buffer1, "%d", tk.val);
-            put_lexeme(o, tk_buffer0, tk_buffer1);
-            */
+            
             // Switching from <TK_KEYWORD, TK_VALUE> to <TK_VALUE> only
             sprintf(tk_buffer0, "%d", tk.val);
            
@@ -433,7 +409,6 @@ int parse_tokens(FILE *o, char *word)
                 stab_insert("symbol", rec, id_table);
             }
 
-            //printf("ID: %s, INDEX: %d\n", token, index);
 			sprintf(tk_buffer0, "%d", TK_IDENTIFIER);
             sprintf(tk_buffer1, "%d", index);
             put_lexeme(o, tk_buffer0, tk_buffer1);
@@ -464,7 +439,6 @@ int parse_tokens(FILE *o, char *word)
             put_lexeme(o, tk_buffer0, tk_buffer1);
         } 
         
-		
         if(token != NULL){
 			free(token);
 		}
@@ -477,7 +451,6 @@ int parse_tokens(FILE *o, char *word)
 
 		/* HUGE BUG HERE, I cannot figure out why it keeps crashing on this free call
            I've solved the problem by introducing another bug.  There is memory leaking here */
-		
 		/*
 		if(tmp != NULL){
 			printf("tmp_value: %x\n", tmp[0]);
@@ -868,7 +841,6 @@ token_package get_sval(char *s)
 int extract_char(char *word)
 {
 	/* This looks like it's going to break any minute! */
-
 	size_t size = strlen(word);
 	char tmp[4];
 	sprintf(tmp, "%d", word[1]);

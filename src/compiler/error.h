@@ -38,6 +38,4 @@ inline int get_line(FILE *i);
 */
 inline int get_column(FILE *i);
 
-
-	  
 #endif
