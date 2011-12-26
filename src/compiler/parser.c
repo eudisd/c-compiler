@@ -501,8 +501,6 @@ void Goto()
 		inst_hole.operand.i = id_table->table[index].addr;
 		code[code_count] = inst_hole;
 		code_count++;
-
-        
 	}
 	/* Generate Dummy Jump here, since the label has not been seen */
 	else {
@@ -528,9 +526,9 @@ void DoWhile()
 
     match("do");
     match("{");
+    
     scope_ptr++;
-        
-        Statements();
+    Statements();
 
     /* Clear scope before leaving it */
     int i;
@@ -581,25 +579,24 @@ void While()
     match(")");
     match("{");
     scope_ptr++;
-       // Declarations();
-        Statements();
+    Statements();
 
-        inst.opcode = OP_JMP;
-        inst.operand.i = target;
-        code[code_count] = inst;
-        printf("%d: jmp %d\n", code_count, target);
+    inst.opcode = OP_JMP;
+    inst.operand.i = target;
+    code[code_count] = inst;
+    printf("%d: jmp %d\n", code_count, target);
 
-        code_count++;
+    code_count++;
     
-        /* Fill in hole */
-        save = code_count;
-        code[hole].operand.i = save;
+    /* Fill in hole */
+    save = code_count;
+    code[hole].operand.i = save;
 
-/* Clear scope before leaving it */
-        int i_;
-        for(i_ = 0; i_ < MAX_SLOTS; i_++){ 
-            stab_stack[scope_ptr]->table[i_].slot = EMPTY_SLOT;
-        }
+    /* Clear scope before leaving it */
+    int i_;
+    for(i_ = 0; i_ < MAX_SLOTS; i_++){ 
+        stab_stack[scope_ptr]->table[i_].slot = EMPTY_SLOT;
+    }
         
     scope_ptr--;
     match("}");
@@ -619,33 +616,32 @@ void IfStatement()
 
     match("if");
     match("(");
-     TYPE t = L();
-     if( t != 'I' && t != 'C' ){
+    TYPE t = L();
+    if( t != 'I' && t != 'C' ){
         fprintf(stderr, "\n'if' conditional expression must be of integer type! Exiting...\n\n");
         exit(EXIT_FAILURE);
-     }
+    }
     
      
     match(")");
     match("{");
     scope_ptr++;     
 
-     hole = code_count;
-     /* Generate Code (but don't write it out yet) */
-     inst.opcode = OP_JFALSE;
-     inst.operand.i = 0;
-     code[code_count] = inst;
-     printf("%d: jfalse 0\n", code_count);
-     code_count++;
+    hole = code_count;
+    /* Generate Code (but don't write it out yet) */
+    inst.opcode = OP_JFALSE;
+    inst.operand.i = 0;
+    code[code_count] = inst;
+    printf("%d: jfalse 0\n", code_count);
+    code_count++;
 
-     //Declarations();
-     Statements();
+    Statements();
 
-     /* Clear scope before leaving it */
-        int i;
-        for(i = 0; i < MAX_SLOTS; i++){ 
-            stab_stack[scope_ptr]->table[i].slot = EMPTY_SLOT;
-        }
+    /* Clear scope before leaving it */
+    int i;
+    for(i = 0; i < MAX_SLOTS; i++){ 
+        stab_stack[scope_ptr]->table[i].slot = EMPTY_SLOT;
+    }
      
     scope_ptr--;
     match("}");
@@ -653,15 +649,13 @@ void IfStatement()
     if(cur_token == NULL){
         printf("current toke is null at IfStatement()!\n");
 		exit(EXIT_FAILURE);
-	 }
+	}
+    
     int tk = get_token_name(cur_token);
     if(tk == TK_ELSE){
         Instruction inst2;
-
         save = code_count;
-
         code[hole].operand.i = save;
-        
         inst2.opcode = OP_JTRUE;
         inst2.operand.i = 0;  // Dummy jmp
        
@@ -676,8 +670,7 @@ void IfStatement()
         /* next we open a new scope, and signal all slots as empty once the are done */
         match("{");
         scope_ptr++;
-         //Declarations();
-         Statements();
+        Statements();
 
         /* Clear scope before leaving it */
         int i;
@@ -693,10 +686,6 @@ void IfStatement()
     code[hole].operand.i = save;
     code_count = save;
 
-    //int i;
-    //for(i = 0; i < code_count; i++)
-    //    printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);
-    
     /* Once the else is done, we pop off the value in the
        stack that holds the conditional result */
 
@@ -708,18 +697,17 @@ void IfStatement()
     printf("%d: pop (Empty)\n", code_count);
 }
 
-
-
 void Assignment()
 {
 	if(cur_token == NULL){
-        printf("current toke is null at Assignment()!\n");
+        printf("current token is null at Assignment()!\n");
 		exit(EXIT_FAILURE);
-	 }
+	}
 
     if( token_num(cur_token) == 1 ){
         return;
     }
+    
     // Save Type And Address
     int index = get_token_value(cur_token);
     TYPE id_type = stab_stack[scope_ptr]->table[index].type;
@@ -743,9 +731,7 @@ void Assignment()
     if (found == 0){
         fprintf(stderr, "%s has not been declared! Fatal Error, exiting...\n", id_table->table[index].name);
         exit(EXIT_FAILURE);
-    }
-    else {
-
+    } else {
         /* i from the previous lookup holds the scope where the variable was found, we assign it here */
         id_type = stab_stack[i]->table[index].type;
         id_addr = stab_stack[i]->table[index].addr;
@@ -762,77 +748,74 @@ void Assignment()
 	TYPE t;
 		
 	/* Check to see if the variable is an array */
-        if( stab_stack[i]->table[index].isarray == 'Y' ){
-            matchi(TK_IDENTIFIER);
-            match("[");
-            TYPE t = E();
-            match("]");
+    if( stab_stack[i]->table[index].isarray == 'Y' ){
+        matchi(TK_IDENTIFIER);
+        match("[");
+        TYPE t = E();
+        match("]");
 
-            if( id_type == 'R' || id_type == 'I' ){
-				inst.opcode = OP_PUSHI;
-				inst.operand.i = sizeof(int); /* Char */
-				code[code_count] = inst;
-                printf("%d: pushi 4\n", code_count);
-                code_count++;
-				
-				inst2.opcode = OP_MUL;
-				code[code_count] = inst2;
-                printf("%d: mul\n", code_count);
-				code_count++;
-            }
-            else if (id_type == 'C'){
-				inst1.opcode = OP_PUSHI;
-				inst1.operand.i = sizeof(char); /* Char */
-				code[code_count] = inst1;
-                printf("%d: pushi 1\n", code_count);
-                code_count++;
-				
-				inst2.opcode = OP_MUL;
-				code[code_count] = inst2;
-                printf("%d: mul\n", code_count);
-				code_count++;
-            }
-			
-			inst3.opcode = OP_PUSHI;
-			inst3.operand.i = id_addr;
-			code[code_count] = inst3;
-			printf("%d: pushi %d\n", code_count, id_addr);
+        if( id_type == 'R' || id_type == 'I' ){
+            inst.opcode = OP_PUSHI;
+            inst.operand.i = sizeof(int); /* Char */
+            code[code_count] = inst;
+            printf("%d: pushi 4\n", code_count);
             code_count++;
-			
-			inst4.opcode = OP_ADD;
-			code[code_count] = inst4;
-            printf("%d: add\n", code_count);
-			code_count++;
-
-			match("=");
-			t = E();
-			match(";");
-			// Put at an address!
-
-			
-			//printf("%s - addr: %d\n", stab_stack[i]->table[index].name, id_addr);
-			/* Encode the address into the instruction */
-			inst.opcode = OP_PUT;
-			if ( id_type == 'I' ){
-				printf("%d: put %d (Size)(Type: %c - Scope: %d)\n", code_count, (int)sizeof(int), id_type, i);
-				inst.operand.i = sizeof(int); /* Int */
-				code[code_count] = inst;
-			}
-			else if (id_type == 'C'){
-				printf("%d: put %d (Size)(Type: %c - Scope: %d)\n", code_count, (int)sizeof(char), id_type, i);
-				inst.operand.i = sizeof(char); /* Char */
-				code[code_count] = inst;
-			}
-			else if (id_type == 'F'){
-				printf("%d: put %d (Size)(Type: %c - Scope: %d)\n", code_count, (int)sizeof(float), id_type, i);
-				inst.opcode = OP_POPF;
-				inst.operand.i = id_addr; /* Float */
-				code[code_count] = inst;
-			}
-
-			code_count++;
-			return;
+            
+            inst2.opcode = OP_MUL;
+            code[code_count] = inst2;
+            printf("%d: mul\n", code_count);
+            code_count++;
         }
+        else if (id_type == 'C'){
+            inst1.opcode = OP_PUSHI;
+            inst1.operand.i = sizeof(char); /* Char */
+            code[code_count] = inst1;
+            printf("%d: pushi 1\n", code_count);
+            code_count++;
+            
+            inst2.opcode = OP_MUL;
+            code[code_count] = inst2;
+            printf("%d: mul\n", code_count);
+            code_count++;
+        }
+        
+        inst3.opcode = OP_PUSHI;
+        inst3.operand.i = id_addr;
+        code[code_count] = inst3;
+        printf("%d: pushi %d\n", code_count, id_addr);
+        code_count++;
+        
+        inst4.opcode = OP_ADD;
+        code[code_count] = inst4;
+        printf("%d: add\n", code_count);
+        code_count++;
+
+        match("=");
+        t = E();
+        match(";");
+        // Put at an address!
+
+        /* Encode the address into the instruction */
+        inst.opcode = OP_PUT;
+        if ( id_type == 'I' ){
+            printf("%d: put %d (Size)(Type: %c - Scope: %d)\n", code_count, (int)sizeof(int), id_type, i);
+            inst.operand.i = sizeof(int); /* Int */
+            code[code_count] = inst;
+        }
+        else if (id_type == 'C'){
+            printf("%d: put %d (Size)(Type: %c - Scope: %d)\n", code_count, (int)sizeof(char), id_type, i);
+            inst.operand.i = sizeof(char); /* Char */
+            code[code_count] = inst;
+        }
+        else if (id_type == 'F'){
+            printf("%d: put %d (Size)(Type: %c - Scope: %d)\n", code_count, (int)sizeof(float), id_type, i);
+            inst.opcode = OP_POPF;
+            inst.operand.i = id_addr; /* Float */
+            code[code_count] = inst;
+        }
+        code_count++;
+        return;
+    }
 
 	matchi(TK_IDENTIFIER);
     match("=");
@@ -842,8 +825,8 @@ void Assignment()
 
 	if( assignment_flag == 0 ){
 		printf("%d: pop @%s (Type: %c - Scope: %d)\n", code_count, stab_stack[i]->table[index].name, id_type, i);
-		//printf("%s - addr: %d\n", stab_stack[i]->table[index].name, id_addr);
-			/* Encode the address into the instruction */
+		
+		/* Encode the address into the instruction */
 		inst.opcode = OP_POP;
 		if ( id_type == 'I' ){
 			inst.operand.i = id_addr; /* Int */
@@ -861,9 +844,6 @@ void Assignment()
 		assignment_flag = 0;
 		code_count++;
 	}
-	
-        
-    
 }
 
 void Declarations()
@@ -871,22 +851,15 @@ void Declarations()
 	if(cur_token == NULL){
         printf("current toke is null at Declarations()!\n");
 		exit(EXIT_FAILURE);
-	 }
-    //printf("\n\n");
-    //printf("CUR_TOKEN: %s\n", cur_token);
-    
+	}
     int tk = get_token_name(cur_token);
-   
-    
-    //printf("Initial Dec: %d\n", dec_rollback);
-
+  
     if( tk == TK_INT ){
         if( IntDec() != -1 ) { //Exit loop
             Declarations();
         }
         
     }
-    
     else if (tk == TK_FLOAT){
         if( FloatDec() != -1 ) { //Exit loop
             Declarations();
@@ -897,7 +870,6 @@ void Declarations()
             Declarations();
         }
     }
-    
 }
 
 int IntDec()
@@ -907,14 +879,14 @@ int IntDec()
         
         match("int");
 
-        /* We store the current token first, since we need to test
-           if the token indeed matches an ID first before we can operate 
-           on the ID table 
-           */
+        /**
+        * We store the current token first, since we need to test
+        * if the token indeed matches an ID first before we can operate 
+        * on the ID table 
+        **/
         char *tmp = (char*)cstr(cur_token);
         int index = get_token_value(tmp);
         matchi(TK_IDENTIFIER);
-
 
         /* Test to see if it's an array! */
         
@@ -931,7 +903,6 @@ int IntDec()
             }   
 
             match("]");
-            //match(";"); 
             
             /* Making the proper symtab entry */
             strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
@@ -964,43 +935,34 @@ int IntDec()
 			/* The data pointer must be incremented by size * sizeof(type) */
 			dp += array_size * sizeof(int);
 			
-			
         	return IntDec();       
         }
        
-    
         /* Test to see that it's not a function */
         if( get_token_name(cur_token) == TK_LEFTPAREN ){
-            //printf("\nLooking at the current(int)\n");
             fseek(input, dec_rollback, SEEK_SET);
             free(cur_token);
             cur_token = get_token();
-            //printf("now: %s\n", cur_token);
             free(tmp);
             return -1;
         }
-        
-        
-
         
 #if DEBUG == TRUE
         printf("\nStoring Identifier: %s at address: %d\n", id_table->table[index].name, dp);
 #endif
         /* Here I modify the symbol table to account for type and address */
         
-         
         if (stab_stack[scope_ptr]->table[index].slot != EMPTY_SLOT){
             fprintf(stderr, "%s has already been declared! Fatal Error, exiting...\n", stab_stack[scope_ptr]->table[index].name);
             exit(EXIT_FAILURE);
         }
         
-        
-        /* What I'm doing here is copying the id_table to a scopped symbol table 
-           the id table was just a convinient hash to store the indexes of 
-           identifiers.  The actual scoping semantics are defined in the stack structure
-           given by stab_stack
-        
-        */
+        /**
+        * What I'm doing here is copying the id_table to a scopped symbol 
+        * table the id table was just a convinient hash to store the 
+        * indexes of identifiers.  The actual scoping semantics are defined 
+        * in the stack structure given by stab_stack
+        **/
         strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
        
         char tmpstr[16];
@@ -1016,11 +978,6 @@ int IntDec()
 #if DEBUG == TRUE
         print_stab(stab_stack[scope_ptr]);  
 #endif   
-    
-        /*
-        id_table->table[index].addr = dp;
-        id_table->table[index].type = 'I';
-        */
 
         dp += 4;
         
@@ -1061,7 +1018,6 @@ int IntDec()
             }   
 
             match("]");
-            
             
             /* Making the proper symtab entry */
             strcpy(stab_stack[scope_ptr]->table[index].name, id_table->table[index].name);
