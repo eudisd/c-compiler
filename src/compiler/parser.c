@@ -40,12 +40,6 @@ void run_parser()
 
      code = (Instruction*)malloc(sizeof(Instruction)*code_max);
      data = (char*)malloc(sizeof(char)*data_max);
-     /*
-     int c;
-     printf("Code Segment: ");
-     for(c = 0; c < code_max; c++){
-        printf("%x ", data[c]);
-     }*/
     
      /* Clear both data and code segment */
      memset(code, 0, sizeof(Instruction)*code_max);
@@ -58,21 +52,7 @@ void run_parser()
         
      }
 
-     //cur_token = get_token();
-     
-     
-     //Declarations();
-     //Statements();
-	 /*
-     int i;
-    	for(i = 0; i < code_count; i++)
-        	printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);		
-      */
-	
-     CProgram();
-     //Switch();
-     //E();
-     //L();
+     CProgram();  // Main C program production
      
 #if DEBUG == TRUE
      //printf("code_count: %d, data_count: %d\n", code_count, data_max);
@@ -103,8 +83,6 @@ void match(char *token)
 {
      if( cur_token != NULL ){
          token_package tk = get_sval(token);
-         //printf("match: %s, Token Name: %d, tk.val: %d\n", cur_token, get_token_name(cur_token), tk.val);
-         /*printf("cur_token: %d, tk: %d\n", get_token_name(cur_token), tk.val); */
          if( tk.val != get_token_name(cur_token) ){
              error(file.filename, 0, 0, "Token mismatch!");
          }
@@ -123,7 +101,6 @@ void match(char *token)
 void matchi(int token)
 {
      int tk = get_token_name(cur_token);
-     //printf("match: %s, Token Name: %d, tk: %d\n", cur_token, get_token_name(cur_token), tk);
      if( cur_token != NULL ){
          if( token != tk ){
              error(file.filename, 0, 0, "Does not match current token!");
@@ -141,14 +118,12 @@ void matchi(int token)
 
 }
 
-
 TYPE CProgram()
 {
       cur_token = get_token();  /* INITIAL CUR_TOKEN CALL */
       Declarations();
       MainEntry();
 }
-
 
 void MainEntry()
 {
@@ -165,7 +140,6 @@ void MainEntry()
          int index = get_token_value(cur_token);
 
          if(strcmp(id_table->table[index].name, "main") == 0){
-            //id_table->table[index].addr = -1;
             id_table->table[index].type = 'P';
             cur_token = get_token();
          }
@@ -185,17 +159,14 @@ void MainEntry()
          /* Enter new scope here */
          scope_ptr++;
 
-
-         
-         
          Statements();
-        
-        
+
          /* Clear scope before leaving it */
          int i;
          for(i = 0; i < MAX_SLOTS; i++){ 
              stab_stack[scope_ptr]->table[i].slot = EMPTY_SLOT;
          }
+         
          /* Exit scope here */
          scope_ptr--;
          match("}");
@@ -213,10 +184,8 @@ void Statements()
         printf("current toke is null at Statements!\n");
 		return;
 	}
-
     
     int tk = get_token_name(cur_token);
-    
 
     if( tk == TK_IDENTIFIER ){
 		Label();
@@ -260,19 +229,16 @@ void Statements()
         int tk = get_token_name(cur_token);
        
         if (tk == TK_IDENTIFIER){
-            
             // Save Type And Address
             /* Modified Wed 20, 10:09 - to handle the new scope rules */
             int index = get_token_value(cur_token);
             TYPE id_type = stab_stack[scope_ptr]->table[index].type;
             int id_addr = stab_stack[scope_ptr]->table[index].addr;
-            
 
             /* Check if variable exists */
             int found = 0, i = 0;
             for(i = 0; i <= scope_ptr; i++){
                 if(stab_stack[i]->table[index].slot == EMPTY_SLOT){
-         
                 }
                 else {
                     found = 1;
@@ -289,7 +255,6 @@ void Statements()
                 /* i from the previous look holds the scope where the variable was found, we assign it here */
                 id_type = stab_stack[i]->table[index].type;
                 id_addr = stab_stack[i]->table[index].addr;
-                //printf("index: %d - id_addr: %d - i: %d\n", index,  id_addr, i);
             }
             
             matchi(TK_IDENTIFIER);
@@ -328,11 +293,8 @@ void Statements()
 
             TYPE t = E();
             match(";");
-        
-            
-            
+
             // generate print
-            
 
             /* Encode the address into the instruction */
             if( str_flag == 0 ){
@@ -362,7 +324,6 @@ void Statements()
                 code[code_count] = inst;
                 code_count++;
             }
-
             
         }
         Statements();
@@ -381,12 +342,6 @@ void Switch()
 		exit(EXIT_FAILURE);
 	 }
     
-    
-    /*
-    int index = get_token_namee(cur_token);
-	Instruction inst_hole;
-	int hole;*/
-    
 	match("switch");
     match("(");
     TYPE t = E();
@@ -396,24 +351,18 @@ void Switch()
 
     Case();
 
-
     /* End of cases, patch last hole */
-   
-
+ 
     int i;
     for(i = 0; i < code_count; i++)
         printf("opcode: %d, operand: %d\n", code[i].opcode, code[i].operand.i);
 
-    
-    //int i;
     for(i = 0; i < MAX_SLOTS; i++){ 
         stab_stack[scope_ptr]->table[i].slot = EMPTY_SLOT;
     }
     scope_ptr--;
     match("}");
-	
 }
-
 
 void Case()
 {
@@ -457,7 +406,6 @@ void Case()
 
         printf("%d: jfalse 0 (Dummy Hole) \n", code_count);
 
-    
         /* Since this is the first case, we don't lookup the 
            to see if there already a case hole */
 
@@ -468,7 +416,6 @@ void Case()
 		code_count++;
 
         Statements();
-        
         
         code[case_hole].operand.i = code_count; /* Fill in hole before we are done in this case */
 
@@ -504,23 +451,18 @@ void Label()
             exit(EXIT_FAILURE);
         }
 		else if( id_table->table[index].seen == 0 ){
-            
-			//printf("\nSee: %d\n", id_table->table[index].addr);
-           
+
 			if (id_table->table[index].addr == -1){
                 
 				id_table->table[index].addr = code_count;
                 
 			}
 			else {
-				 
 				code[id_table->table[index].addr].operand.i = code_count;
 				id_table->table[index].seen = 1;
 			}
-			id_table->table[index].seen = 1;
-					
+			id_table->table[index].seen = 1;	
 		}		
-		
 
 		matchi(TK_IDENTIFIER);
 		match(":");
@@ -529,10 +471,7 @@ void Label()
 			free(peek);
 		}
 		
-
 		Statements();
-
-		
 	}
 	else {
 		if(peek != NULL){
