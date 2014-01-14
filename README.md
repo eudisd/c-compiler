@@ -40,22 +40,29 @@ through the command line.  Assuming you have a test
 file, say test.c, you could type in the following to compile
 the file:
 
+```bash
 $ ./c test.c -o test.vm
+```
 
 That would compile the c source and produce a virtual machine
 bytecode executable.  To run that exectuable, type in the
 following:
 
+```bash
 $ ./cvm test.vm
+```
 
 That would execute the program.
 
 You can display a help screen by typing in --help in either of the
 program's command line arguments, like so:
 
+```bash
 $ ./c --help
+```
 
 or
 
+```bash
 $ ./cvm --help
-
+```
